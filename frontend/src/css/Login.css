@@ -1,0 +1,17 @@
+.custom-google-login {
+    background-color: black;
+    padding:20px;
+    border-radius: .5rem;
+    color:white;
+    border:none;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+button:hover{
+    border:2px solid white;
+  }
+  
+  button i{
+    margin-right: 10px;
+  }

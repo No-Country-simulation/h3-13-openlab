@@ -1,0 +1,26 @@
+.contenedor-header {
+    display: flex;
+    border: 1px solid black;
+    justify-content: space-between;
+    align-items: center;
+    background-color: bisque;
+}
+
+.icono img {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.atajos {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+}
+
+.atajos li {
+    list-style: none;
+}
+.atajos a {
+    text-decoration: none;
+}
