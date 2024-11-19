@@ -42,6 +42,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/admin/getAll", "/api/cliente/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/admin/update").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/admin/{id}").authenticated()
+                        //Contratos Controller
+                        .requestMatchers(HttpMethod.GET, "/orderbook/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/orderbook/**").permitAll()
                         //Swagger
                         .requestMatchers(HttpMethod.GET,"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())
