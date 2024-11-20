@@ -16,6 +16,13 @@ export default {
         "color-4": "#0F0F30",
         "color-5": "#3D7BFF",
       },
+      white:"#ffffff",
+      blue: {
+        700: '#1D4ED8',
+      },
+      sky: {
+        400: '#38BDF8',
+      },
       fontFamily: {
         primary: ["Commissioner", "serif"],
         secondary: ["Montserrat", "serif"],
