@@ -1,9 +1,11 @@
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider } from "@auth0/auth0-react"; 
 import { Ethers5Adapter } from "@reown/appkit-adapter-ethers5";
 import { sepolia } from "@reown/appkit/networks";
 import { createAppKit } from "@reown/appkit/react";
 import { RouterProvider } from "react-router-dom";
 import { AppRouter } from "./router/AppRouter";
+import { Provider } from "react-redux";
+import { store } from "./store/store"; 
 
 // 1. Get projectId
 const projectId = import.meta.env.VITE_PROJECT_ID;
@@ -23,7 +25,7 @@ createAppKit({
   networks: [sepolia],
   projectId,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
+    analytics: true, // Optional -
   },
 });
 
@@ -36,7 +38,10 @@ export const App = () => {
         redirect_uri: import.meta.env.VITE_AUTH_REDIRECT,
       }}
     >
-      <RouterProvider router={AppRouter} />
+
+      <Provider store={store}>
+        <RouterProvider router={AppRouter} />
+      </Provider>
     </Auth0Provider>
   );
 };
