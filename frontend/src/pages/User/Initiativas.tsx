@@ -67,7 +67,7 @@ const initiativas = () => {
           <h1 className="text-3xl p-4">Initiatives</h1>
         </div>
 
-        <div className="p-4">
+        <div className="p-5">
           <div className="flex flex-row items-center  place-content-between p-4">
             <div className="flex flex-row gap-4">
               <button className="text-sm font-semibold rounded-lg border p-3 w-[116px] text-color-1 border-color-1">Initiatives</button>
@@ -81,36 +81,40 @@ const initiativas = () => {
             </div>
           </div>
 
-        
-        <div className="grid grid-cols-9 grid-rows-1 gap-0 bg-[#6193FF]/10 h-[68px] p-2">
-            <div className="flex items-center m-auto text-sm font-semibold">Name</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Price Fluctuaction</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Colaborators</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Buy/Sell Price</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Tokens</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Missions</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Likes </div>
-            <div className="flex items-center m-auto text-sm font-semibold">Shares</div>
-            <div className="flex items-center m-auto text-sm font-semibold"></div>
-        </div>
-        {init.map((item, index) => (
-          <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b">
-            <div className="flex items-center m-auto text-sm">{item.name}</div>
-            <div className="flex items-center m-auto text-sm">   <MiniGraph data={item.priceFluctuation} color="#3D7BFF" /></div>
-            <div className="flex items-center justify-center m-auto text-sm bg-[#00B2FF]/20 rounded-lg p-1 w-[73px]">{item.colaborator}</div>
-            <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm">{item.buySellPrice}</div>
-            <div className="flex items-center m-auto text-sm">{item.tokens}</div>
-            <div className="flex items-center m-auto text-sm">{item.missions}</div>
-            <div className="flex items-center m-auto text-sm">{item.likes}</div>
-            <div className="flex items-center m-auto text-sm">{item.shares}</div>
-            <div className="flex items-center m-auto text-sm flex-row gap-3">
-              <button className="bg-[#00B2FF] text-white p-2 rounded-full w-[54px] h-[34px]">Buy</button>
-              <button className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px]">Join</button>
-              <button className="m-1"><img src={likeIcon}/></button>
-              <button className="m-1"><img src={shareIcon}/></button>
-            </div>
+        <div className="p-5">
+
+          <div className="grid grid-cols-9 grid-rows-1 gap-0 bg-[#6193FF]/10 h-[68px] ">
+              <div className="flex items-center m-auto text-sm font-semibold">Name</div>
+              <div className="flex items-center m-auto text-sm font-semibold">Price Fluctuaction</div>
+              <div className="flex items-center m-auto text-sm font-semibold">Colaborators</div>
+              <div className="flex items-center m-auto text-sm font-semibold">Buy/Sell Price</div>
+              <div className="flex items-center m-auto text-sm font-semibold">Tokens</div>
+              <div className="flex items-center m-auto text-sm font-semibold">Missions</div>
+              <div className="flex items-center m-auto text-sm font-semibold">Likes </div>
+              <div className="flex items-center m-auto text-sm font-semibold">Shares</div>
+              <div className="flex items-center m-auto text-sm font-semibold">       </div>
           </div>
-        ))}
+
+          {init.map((item, index) => (
+            <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b">
+              <div className="flex items-center m-auto text-sm">{item.name}</div>
+              <div className="flex items-center m-auto text-sm">   <MiniGraph data={item.priceFluctuation} color="#3D7BFF" /></div>
+              <div className="flex items-center justify-center m-auto text-sm bg-[#00B2FF]/20 rounded-lg p-1 w-[73px]">{item.colaborator}</div>
+              <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm">{item.buySellPrice}</div>
+              <div className="flex items-center m-auto text-sm">{item.tokens}</div>
+              <div className="flex items-center m-auto text-sm">{item.missions}</div>
+              <div className="flex items-center m-auto text-sm">{item.likes}</div>
+              <div className="flex items-center m-auto text-sm">{item.shares}</div>
+              <div className="flex items-center m-auto text-sm flex-row gap-3">
+                <button className="bg-[#00B2FF] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center">Buy</button>
+                <button className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px] flex items-center">Join</button>
+                <button className="m-1"><img src={likeIcon} className="h-[20px]"/></button>
+                <button className="m-1 mr-2"><img src={shareIcon} className="h-[20px]"/></button>
+              </div>
+            </div>
+          ))}
+        </div>
+
         </div>
       </div>
     );
