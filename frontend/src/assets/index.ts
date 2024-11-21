@@ -14,6 +14,9 @@ import createW from "./icons/CreateIniW.svg"
 import sumIcon from "./icons/sumIcon.svg"
 import likeIcon from "./icons/likeIcon.svg"
 import shareIcon from "./icons/share.svg"
+import close from "./icons/close-square.svg"
+import addCircle from "./icons/add-circle.svg"
+import tickCircle from "./icons/tick-circle.svg"
 
 export{
     profile,
@@ -31,5 +34,8 @@ export{
     createW,
     sumIcon,
     likeIcon,
-    shareIcon
+    shareIcon,
+    close,
+    addCircle,
+    tickCircle
 };

@@ -1,10 +1,12 @@
+import { useDispatch } from "react-redux";
 import { sumIcon , likeIcon, shareIcon } from "../../assets";
 import MiniGraph from "../../components/graf/Mini";
+import { openModal } from "../../store/Initiatives/createIniSlice";
 
-const initiativas = () => {
+const Initiativas = () => {
 
-  const init = [
-  {
+  const init = 
+  [{
     "name": "CryptoStar",
     "priceFluctuation": [500, 510, 505, 520, 515],
     "colaborator": 123,
@@ -61,6 +63,21 @@ const initiativas = () => {
   }
 ]
 
+    const dispatch = useDispatch();
+
+    function handleCreate(){
+      console.log("abro")
+      dispatch(openModal())
+    }
+
+    // function handleJoin (){
+
+    // }
+
+    // function handleBuy (){
+
+    // }
+
     return (
       <div className="bg-white h-screen flex flex-col justify">
         <div className="flex">
@@ -75,7 +92,10 @@ const initiativas = () => {
             </div>
             <div>
 
-            <button className="flex items-center justify-center bg-color-5 text-white text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg">
+            <button 
+            className="flex items-center justify-center bg-color-5 text-white text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
+            onClick={handleCreate}
+            >
               <img src={sumIcon}/>Create
               </button>
             </div>
@@ -121,5 +141,5 @@ const initiativas = () => {
   };
 
   
-  export default initiativas;
+  export default Initiativas;
   

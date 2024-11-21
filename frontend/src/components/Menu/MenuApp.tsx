@@ -13,7 +13,7 @@ const MenuApp = () => {
   const links = [
     { id: "home", name: "Home", img: home, imgActive: homeW, path: "/test" },
     { id: "create", name: "Create New", img: create, imgActive: createW, path: "/create" },
-    { id: "newini", name: "New Initiatives", img: newini, imgActive: newiniW, path: "/newinitiatives" },
+    { id: "newini", name: "New Initiatives", img: newini, imgActive: newiniW, path: "" },
     { id: "init", name: "Initiatives", img: init, imgActive: initW, path: "/initiatives" },
   ];
 

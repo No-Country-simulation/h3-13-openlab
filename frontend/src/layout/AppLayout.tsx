@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavbarApp from "../components/navbar/NavbarApp";
 import MenuApp from "../components/Menu/MenuApp";
+import Modal from "../components/createInit/modalCreate";
 
 const AppLayout = () => {
     return (
@@ -16,6 +17,7 @@ const AppLayout = () => {
   
           <main className="flex-1 overflow-y-auto">
             <Outlet />
+            <Modal/>
           </main>
         </div>
       </div>
