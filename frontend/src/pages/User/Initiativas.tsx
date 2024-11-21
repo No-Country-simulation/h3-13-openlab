@@ -1,12 +1,13 @@
 import { sumIcon , likeIcon, shareIcon } from "../../assets";
+import MiniGraph from "../../components/graf/Mini";
 
 const initiativas = () => {
- 
+
   const init = [
   {
     "name": "CryptoStar",
-    "priceFluctuation": "5%",
-    "colaborator": "John Doe",
+    "priceFluctuation": [500, 510, 505, 520, 515],
+    "colaborator": 123,
     "buySellPrice": "$500 / $520",
     "tokens": "150",
     "missions": "3/5",
@@ -16,8 +17,8 @@ const initiativas = () => {
   },
   {
     "name": "TokenFlow",
-    "priceFluctuation": "-3%",
-    "colaborator": "Jane Smith",
+    "priceFluctuation": [100, 2000, 305, 420, 515],
+    "colaborator": 523,
     "buySellPrice": "$1200 / $1150",
     "tokens": "300",
     "missions": "2/4",
@@ -27,8 +28,8 @@ const initiativas = () => {
   },
   {
     "name": "BlockStream",
-    "priceFluctuation": "8%",
-    "colaborator": "Alice Johnson",
+    "priceFluctuation": [500, 510, 505, 520, 515],
+    "colaborator": 111,
     "buySellPrice": "$750 / $800",
     "tokens": "200",
     "missions": "4/6",
@@ -38,8 +39,8 @@ const initiativas = () => {
   },
   {
     "name": "ChainSecure",
-    "priceFluctuation": "0%",
-    "colaborator": "Bob Brown",
+    "priceFluctuation": [500, 310, 205, 420, 515],
+    "colaborator": 200,
     "buySellPrice": "$400 / $400",
     "tokens": "120",
     "missions": "1/3",
@@ -49,8 +50,8 @@ const initiativas = () => {
   },
   {
     "name": "EcoCoin",
-    "priceFluctuation": "10%",
-    "colaborator": "Charlie Green",
+    "priceFluctuation": [500, 410, 305, 220, 115],
+    "colaborator": 400,
     "buySellPrice": "$1000 / $1100",
     "tokens": "500",
     "missions": "5/5",
@@ -95,9 +96,9 @@ const initiativas = () => {
         {init.map((item, index) => (
           <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b">
             <div className="flex items-center m-auto text-sm">{item.name}</div>
-            <div className="flex items-center m-auto text-sm">{item.priceFluctuation}</div>
-            <div className="flex items-center m-auto text-sm">{item.colaborator}</div>
-            <div className="flex items-center m-auto text-sm">{item.buySellPrice}</div>
+            <div className="flex items-center m-auto text-sm">   <MiniGraph data={item.priceFluctuation} color="#3D7BFF" /></div>
+            <div className="flex items-center justify-center m-auto text-sm bg-[#00B2FF]/20 rounded-lg p-1 w-[73px]">{item.colaborator}</div>
+            <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm">{item.buySellPrice}</div>
             <div className="flex items-center m-auto text-sm">{item.tokens}</div>
             <div className="flex items-center m-auto text-sm">{item.missions}</div>
             <div className="flex items-center m-auto text-sm">{item.likes}</div>
@@ -114,6 +115,7 @@ const initiativas = () => {
       </div>
     );
   };
+
   
   export default initiativas;
   
