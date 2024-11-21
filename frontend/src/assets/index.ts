@@ -11,6 +11,9 @@ import newiniW from "./icons/NewIniW.svg"
 import homeW from "./icons/homeW.svg"
 import initW from "./icons/InitW.svg"
 import createW from "./icons/CreateIniW.svg"
+import sumIcon from "./icons/sumIcon.svg"
+import likeIcon from "./icons/likeIcon.svg"
+import shareIcon from "./icons/share.svg"
 
 export{
     profile,
@@ -26,4 +29,7 @@ export{
     homeW ,
     initW ,
     createW,
+    sumIcon,
+    likeIcon,
+    shareIcon
 };
