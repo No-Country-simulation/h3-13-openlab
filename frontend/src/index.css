@@ -7,3 +7,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+#hero_bg {
+  mask-image: url("assets/landing/hero_bg.svg");
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-position: bottom;
+}
