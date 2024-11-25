@@ -15,7 +15,6 @@ interface Initiative {
   }
 
 const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: () => void }) => {
-    // const [open, setOpen]= useState(true);
     // const dispatch = useDispatch();
     const [quantity, setQuantity]= useState(1);
     const { width } = useWindowSize();
@@ -23,7 +22,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
     const isMobile = width <= 768;
 
     function handleClose(){
-    //    setOpen(false);
+
        onClose();
     }
 
