@@ -13,7 +13,6 @@ export const createMSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state) => {
-      console.log("abroModal")
       state.isOpen = true;
     },
     closeModal: (state) => {

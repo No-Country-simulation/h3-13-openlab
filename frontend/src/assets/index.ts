@@ -17,6 +17,8 @@ import shareIcon from "./icons/share.svg"
 import close from "./icons/close-square.svg"
 import addCircle from "./icons/add-circle.svg"
 import tickCircle from "./icons/tick-circle.svg"
+import flecha1 from "./icons/Flecha1.svg"
+import flecha2 from "./icons/Flecha2.svg"
 
 export{
     profile,
@@ -37,5 +39,7 @@ export{
     shareIcon,
     close,
     addCircle,
-    tickCircle
+    tickCircle,
+    flecha1,
+    flecha2
 };
