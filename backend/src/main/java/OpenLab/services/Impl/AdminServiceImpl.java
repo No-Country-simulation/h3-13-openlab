@@ -20,12 +20,12 @@ public class AdminServiceImpl extends GenericServiceImpl<Admin, Long> implements
     private IAdminRepository repo;
 
     private final IUserRepository userRepo;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminServiceImpl(IUserRepository userRepo, PasswordEncoder passwordEncoder) {
+    public AdminServiceImpl(IUserRepository userRepo) {
         this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
+//        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,11 +36,11 @@ public class AdminServiceImpl extends GenericServiceImpl<Admin, Long> implements
     @Override
     public Admin save(Admin admin) {
         try {
-            if (userRepo.existsByEmail(admin.getUsuario().getUsername())) {
-                throw new ApplicationException("Admin ya existente: " + admin.getUsuario().getUsername());
+            if (userRepo.existsByEmail(admin.getUsuario().getEmail())) {
+                throw new ApplicationException("Admin ya existente: " + admin.getUsuario().getEmail());
             }
-            String encodedPassword = passwordEncoder.encode(admin.getUsuario().getPassword());
-            admin.getUsuario().setPassword(encodedPassword);
+//            String encodedPassword = passwordEncoder.encode(admin.getUsuario().getPassword());
+//            admin.getUsuario().setPassword(encodedPassword);
             admin.getUsuario().setRol(Roles.ADMIN);
             User savedUser = userRepo.save(admin.getUsuario());
             admin.setUsuario(savedUser);

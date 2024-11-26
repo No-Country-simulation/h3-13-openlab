@@ -7,8 +7,6 @@ import OpenLab.dtos.UserDTO.GoogleUserInfoCompleta;
 
 public interface IAutenticacionService {
 
-    JWTTokenDTO autenticar(DatosAutenticacionUsuario datosAutenticacionUsuario);
-
-    JWTTokenDTO autenticarConGooglePersonalizado(GoogleUserInfoCompleta googleUserInfoCompleta);
+    String autenticarConGooglePersonalizado(GoogleUserInfoCompleta googleUserInfoCompleta);
 
 }

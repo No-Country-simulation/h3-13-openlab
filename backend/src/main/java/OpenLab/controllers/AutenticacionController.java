@@ -1,12 +1,13 @@
 package OpenLab.controllers;
 
-import OpenLab.dtos.TokenDTO.JWTTokenDTO;
-import OpenLab.dtos.UserDTO.DatosAutenticacionUsuario;
 import OpenLab.dtos.UserDTO.GoogleUserInfoCompleta;
 import OpenLab.services.IAutenticacionService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/login")
@@ -18,15 +19,32 @@ public class AutenticacionController {
         this.autenticacionService = autenticacionService;
     }
 
-    @PostMapping
-    public ResponseEntity<JWTTokenDTO> autenticar(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
-        JWTTokenDTO jwtTokenDTO = autenticacionService.autenticar(datosAutenticacionUsuario);
-        return ResponseEntity.ok(jwtTokenDTO);
-    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@AuthenticationPrincipal Jwt jwt) {
 
-    @PostMapping("/googlePersonalizado")
-    public ResponseEntity<JWTTokenDTO> autenticarConGooglePersonalizado(@RequestBody GoogleUserInfoCompleta googleUserInfoCompleta) {
-        JWTTokenDTO jwtTokenDTO = autenticacionService.autenticarConGooglePersonalizado(googleUserInfoCompleta);
-        return ResponseEntity.ok(jwtTokenDTO);
+        System.out.println(jwt.getTokenValue());
+
+        // Recuperar claims del token
+        Map<String, Object> claims = jwt.getClaims();
+
+        // Extraer datos personalizados del namespace
+        String namespace = "https://open-lab.com/";
+        String userId = (String) claims.get("sub");
+        String name = (String) claims.get(namespace + "name");
+        String familyName = (String) claims.get(namespace + "family_name");
+        String givenName = (String) claims.get(namespace + "given_name");
+        String picture = (String) claims.get(namespace + "picture");
+        String email = (String) claims.get(namespace + "email");
+
+        GoogleUserInfoCompleta googleUserInfoCompleta = new GoogleUserInfoCompleta(
+                userId, name, givenName, familyName, picture, email
+        );
+
+        System.out.println(googleUserInfoCompleta);
+
+        // Usar el mensaje devuelto por el servicio
+        String result = autenticacionService.autenticarConGooglePersonalizado(googleUserInfoCompleta);
+
+        return ResponseEntity.ok(result);
     }
 }

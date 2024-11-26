@@ -1,15 +1,10 @@
 package OpenLab.services.Impl;
 
-import OpenLab.dtos.ClienteDTO.ClienteUpdateDTO;
-import OpenLab.enums.Roles;
 import OpenLab.exceptions.ApplicationException;
 import OpenLab.models.Cliente;
-import OpenLab.models.User;
 import OpenLab.repositorys.*;
 import OpenLab.services.IClienteService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,12 +16,10 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente, Long> implem
     private IClienteRepository repo;
 
     private final IUserRepository userRepo;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ClienteServiceImpl(IUserRepository userRepo, PasswordEncoder passwordEncoder) {
+    public ClienteServiceImpl(IUserRepository userRepo) {
         this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -34,21 +27,11 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente, Long> implem
         return repo;
     }
 
+
     @Override
-    public Cliente save(Cliente cliente) {
-        try {
-            if (userRepo.existsByEmail(cliente.getUsuario().getUsername())) {
-                throw new ApplicationException("Usuario ya existente: " + cliente.getUsuario().getUsername());
-            }
-            String encodedPassword = passwordEncoder.encode(cliente.getUsuario().getPassword());
-            cliente.getUsuario().setPassword(encodedPassword);
-            cliente.getUsuario().setRol(Roles.CLIENTE);
-            User savedUser = userRepo.save(cliente.getUsuario());
-            cliente.setUsuario(savedUser);
-            return repo.save(cliente);
-        } catch (ApplicationException e) {
-            throw new ApplicationException("Error al guardar el usuario: " + e.getMessage());
-        }
+    public Optional<Cliente> findByEmail(String correo) {
+        Optional<Cliente> existingEntityOpt = repo.findByUsuarioEmail(correo);
+        return existingEntityOpt;
     }
 
     @Override
