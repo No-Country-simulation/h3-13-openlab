@@ -27,6 +27,7 @@ public interface IniciativaMapper {
     @Mapping(target = "cliente", ignore = true) // Se asigna cliente manualmente
     Iniciativa toEntity(IniciativaRequestDTO iniciativaRequestDTO);
 
+    @Mapping(source = "fecha_creacion", target = "fechaCreacion")
     IniciativaResponseDTO toResponseDTO(Iniciativa iniciativa);
 
     List<IniciativaResponseDTO> toListResponseDTO(List<Iniciativa> iniciativa);

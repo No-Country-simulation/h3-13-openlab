@@ -1,11 +1,16 @@
 package OpenLab.dtos.IiniciativaDTO;
 
+import java.time.LocalDate;
+
 public record IniciativaResponseDTO(
+        String imagen,
+        String billetera,
         String nombre,
         String idea,
         String problema,
         String oportunidad,
         String solucion,
+        LocalDate fechaCreacion,
         int monto_requerido,
         int buy_price,
         int sell_price,

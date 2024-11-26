@@ -3,6 +3,7 @@ package OpenLab.mappers;
 import OpenLab.dtos.IiniciativaDTO.IniciativaRequestDTO;
 import OpenLab.dtos.IiniciativaDTO.IniciativaResponseDTO;
 import OpenLab.models.Iniciativa;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-26T18:40:58-0300",
+    date = "2024-11-26T20:32:42-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.2 (Oracle Corporation)"
 )
 @Component
@@ -24,6 +25,8 @@ public class IniciativaMapperImpl implements IniciativaMapper {
 
         Iniciativa iniciativa = new Iniciativa();
 
+        iniciativa.setImagen( iniciativaRequestDTO.imagen() );
+        iniciativa.setBilletera( iniciativaRequestDTO.billetera() );
         iniciativa.setNombre( iniciativaRequestDTO.nombre() );
         iniciativa.setIdea( iniciativaRequestDTO.idea() );
         iniciativa.setProblema( iniciativaRequestDTO.problema() );
@@ -49,6 +52,9 @@ public class IniciativaMapperImpl implements IniciativaMapper {
             return null;
         }
 
+        LocalDate fechaCreacion = null;
+        String imagen = null;
+        String billetera = null;
         String nombre = null;
         String idea = null;
         String problema = null;
@@ -63,6 +69,9 @@ public class IniciativaMapperImpl implements IniciativaMapper {
         int likes = 0;
         int shares = 0;
 
+        fechaCreacion = iniciativa.getFecha_creacion();
+        imagen = iniciativa.getImagen();
+        billetera = iniciativa.getBilletera();
         nombre = iniciativa.getNombre();
         idea = iniciativa.getIdea();
         problema = iniciativa.getProblema();
@@ -77,7 +86,7 @@ public class IniciativaMapperImpl implements IniciativaMapper {
         likes = iniciativa.getLikes();
         shares = iniciativa.getShares();
 
-        IniciativaResponseDTO iniciativaResponseDTO = new IniciativaResponseDTO( nombre, idea, problema, oportunidad, solucion, monto_requerido, buy_price, sell_price, misiones_actuales, misiones_objetivo, colaboradores, likes, shares );
+        IniciativaResponseDTO iniciativaResponseDTO = new IniciativaResponseDTO( imagen, billetera, nombre, idea, problema, oportunidad, solucion, fechaCreacion, monto_requerido, buy_price, sell_price, misiones_actuales, misiones_objetivo, colaboradores, likes, shares );
 
         return iniciativaResponseDTO;
     }

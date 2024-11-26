@@ -11,6 +11,8 @@ import OpenLab.repositorys.IniciativaRepository;
 import OpenLab.services.IniciativaService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class IniciativaServiceImpl extends GenericServiceImpl<Iniciativa, Long> implements IniciativaService {
 
@@ -32,6 +34,7 @@ public class IniciativaServiceImpl extends GenericServiceImpl<Iniciativa, Long> 
         Cliente existingCliente = clienteRepository.findById(iniciativa.clienteId())
                 .orElseThrow(()-> new IllegalArgumentException("Cliente no encontrado con ID: " + iniciativa.clienteId()));
         Iniciativa nuevaIniciativa = iniciativaMapper.toEntity(iniciativa);
+        nuevaIniciativa.setFecha_creacion(LocalDate.now());
         nuevaIniciativa.setCliente(existingCliente);
         iniciativaRepository.save(nuevaIniciativa);
         IniciativaResponseDTO iniciativaResponseDTO = iniciativaMapper.toResponseDTO(nuevaIniciativa);

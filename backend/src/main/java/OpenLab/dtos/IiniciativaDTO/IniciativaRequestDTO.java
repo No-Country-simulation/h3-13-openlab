@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotNull;
 
 public record IniciativaRequestDTO(
         @NotBlank
+        String imagen,
+        @NotBlank
+        String billetera,
+        @NotBlank
         String nombre,
         @NotBlank
         String idea,

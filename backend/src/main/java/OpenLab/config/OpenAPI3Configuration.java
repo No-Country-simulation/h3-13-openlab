@@ -25,7 +25,7 @@ public class OpenAPI3Configuration {
             description("Server URL in Development environment");
 
     Server prodServer = new Server().
-            url("").
+            url("https://h3-13-openlab.onrender.com").
             description("Server URL in Production environment");
 
     Info info = new Info()

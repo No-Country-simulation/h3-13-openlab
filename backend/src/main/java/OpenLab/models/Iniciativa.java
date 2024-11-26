@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter @Setter
 @NoArgsConstructor
@@ -15,11 +17,14 @@ public class Iniciativa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String imagen;
+    private String billetera;
     private String nombre;
     private String idea;
     private String problema;
     private String oportunidad;
     private String solucion;
+    private LocalDate fecha_creacion;
     private int monto_requerido;
     private int monto_actual;
     private int buy_price;
