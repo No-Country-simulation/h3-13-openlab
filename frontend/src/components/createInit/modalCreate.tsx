@@ -9,7 +9,6 @@ const ModalCreate = () => {
   const isOpen = useSelector((state: RootState) => state.create.isOpen);
   const { width } = useWindowSize();
 
-  // Definir el estado 'isMobile' antes del return
   const isMobile = width <= 768;
 
   if (!isOpen) return null;
@@ -21,10 +20,10 @@ const ModalCreate = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-      {/* Condicional según el tamaño de pantalla */}
+
       {isMobile ? (
         <>
-          {/* Aquí va el contenido para la versión móvil */}
+            {/* Mobile */}
           <div className={`bg-white rounded shadow-lg w-[320px] max-h-[90vh] mt-[100px] flex flex-col gap-4 overflow-hidden`}>
             <div className='flex flex-row justify-between items-center p-6'>
               <h1 className='text-3xl font-semibold mt-4 ml-5'>New Initiative</h1>
@@ -33,7 +32,7 @@ const ModalCreate = () => {
               </button>
             </div>
 
-            <div className='flex flex-col gap-4 items-center justify-around'>
+            <div className='flex flex-col gap-4 items-center justify-around overflow-auto max-h-[70vh] w-full'>
               <div className="flex flex-col gap-3 w-full px-5">
                 <h1 className='text-sm font-bold m-2'>Image</h1>
                 <div className="relative inline-block">
@@ -95,7 +94,7 @@ const ModalCreate = () => {
               <div className="flex items-center justify-center text-white text-base font-semibold mt-5 w-full px-5">
                 <button className="flex flex-row bg-[#3D7BFF] w-[260px] h-[45px] justify-center items-center rounded-lg" onClick={handleCreate}>
                   <img src={tickCircle} className="mr-2" />
-                  Create
+                  Create DAO
                 </button>
               </div>
             </div>
@@ -103,7 +102,7 @@ const ModalCreate = () => {
         </>
       ) : (
         <>
-
+    {/* WebApp */}
     <div className="bg-white rounded shadow-lg w-[964px] h-[678px] flex flex-col gap-4">
         <div className='flex flex-row justify-between items-center p-6'>
                 <h1 className='text-3xl font-semibold mt-4 ml-5'>New Inititive</h1>

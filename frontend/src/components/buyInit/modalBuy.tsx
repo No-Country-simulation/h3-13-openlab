@@ -57,18 +57,18 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
 
                 <div>
                     <h1 className='text-sm font-bold m-2'>Idea</h1>
-                    <h1>{initiative.idea}</h1>
+                    <h1 className="w-[90%] m-auto">{initiative.idea}</h1>
                 </div>
             </div>
 
             <div className='flex flex-col gap-3 mr-5 '>
                 <div>
                     <h1 className='text-sm font-bold m-2'>Problem</h1>
-                    <h1>{initiative.problem}</h1>
+                    <h1 className="w-[90%] m-auto">{initiative.problem}</h1>
                 </div>
                 <div>
                     <h1 className='text-sm font-bold m-2'>Solution</h1>
-                    <h1>{initiative.solution}</h1>
+                    <h1 className="w-[90%] m-auto">{initiative.solution}</h1>
                 </div>
             </div>
         </div>
@@ -80,6 +80,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
                     type="number" 
                     value={quantity} 
                     onChange={handleQuantity}
+                    min="1"
                     className="w-[70px] border shadow rounded-lg p-1"
                 />
             </div>
@@ -130,6 +131,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
                 <h1 className='text-sm font-bold m-2'>Token:</h1>
                 <input 
                     type="number" 
+                    min="1"
                     value={quantity} 
                     onChange={handleQuantity}
                     className="w-[70px] border shadow rounded-lg p-1"
