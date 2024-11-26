@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -35,9 +36,10 @@ public class AutenticacionController {
         String givenName = (String) claims.get(namespace + "given_name");
         String picture = (String) claims.get(namespace + "picture");
         String email = (String) claims.get(namespace + "email");
+        List<String> roles = (List<String>) claims.get(namespace + "roles"); // Extraer roles
 
         GoogleUserInfoCompleta googleUserInfoCompleta = new GoogleUserInfoCompleta(
-                userId, name, givenName, familyName, picture, email
+                userId, name, givenName, familyName, picture, email, roles
         );
 
         System.out.println(googleUserInfoCompleta);

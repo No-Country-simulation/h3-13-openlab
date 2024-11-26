@@ -20,6 +20,7 @@ public class Cliente {
     private Long id;
     private String nombre;
     private String apellido;
+    private String nombreCompleto;
     private String picture;
     @OneToOne
     @JoinColumn(name = "usuario_id", nullable = false)

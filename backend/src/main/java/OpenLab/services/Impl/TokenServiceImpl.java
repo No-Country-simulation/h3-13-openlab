@@ -31,7 +31,7 @@ public class TokenServiceImpl implements ITokenService {
                     .withIssuer("Open Lab")
                     .withSubject(user.getEmail())
                     .withClaim("id", user.getId())
-                    .withClaim("role", user.getRol().name())
+//                    .withClaim("role", user.getRol().name())
                     .withClaim("nombre", user.getEmail())
                     .withExpiresAt(Date.from(generateExpirationDate()))
                     .sign(algorithm);

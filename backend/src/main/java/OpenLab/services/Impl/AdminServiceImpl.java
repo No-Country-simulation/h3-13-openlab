@@ -41,7 +41,7 @@ public class AdminServiceImpl extends GenericServiceImpl<Admin, Long> implements
             }
 //            String encodedPassword = passwordEncoder.encode(admin.getUsuario().getPassword());
 //            admin.getUsuario().setPassword(encodedPassword);
-            admin.getUsuario().setRol(Roles.ADMIN);
+//            admin.getUsuario().setRol(Roles.ADMIN);
             User savedUser = userRepo.save(admin.getUsuario());
             admin.setUsuario(savedUser);
             return repo.save(admin);

@@ -40,14 +40,18 @@ public class AutenticacionServiceImpl implements IAutenticacionService {
         User user = new User();
         user.setEmail(googleUserInfoCompleta.email());
         user.setPassword("");
-        user.setRol(Roles.CLIENTE);
-
+        if(googleUserInfoCompleta.roles().contains("Cliente")) {
+            user.setRol(Roles.CLIENTE);
+        } else {
+            user.setRol(Roles.ADMIN);
+        }
         User savedUser = userRepository.save(user);
 
         Cliente cliente = new Cliente();
         cliente.setUsuario(savedUser);
         cliente.setNombre(googleUserInfoCompleta.given_name());
         cliente.setApellido(googleUserInfoCompleta.family_name());
+        cliente.setNombreCompleto(googleUserInfoCompleta.name());
         cliente.setPicture(googleUserInfoCompleta.picture());
         clienteRepository.save(cliente);
 

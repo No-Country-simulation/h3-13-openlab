@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 public class OpenAPI3Configuration {
 
-    Contact contact = new Contact().name("s16-02-ft-java-react") .url("https://github.com/No-Country-simulation/s16-02-ft-java-react");
+    Contact contact = new Contact().name("h3-13-openlab") .url("https://github.com/No-Country-simulation/h3-13-openlab/tree/main");
 
     License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 

@@ -7,6 +7,7 @@ public record ClienteResponseDTO(
         String nombre,
         String apellido,
         String picture,
+        String nombreCompleto,
         UserDTO usuario
 ) {
 }

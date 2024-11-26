@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                         //Autenticacion Controller
                         .requestMatchers(HttpMethod.POST, "/api/**","/api/login", "/api/login/signup","/api/admin/add", "/api/cliente/add").permitAll()
                         //Cliente Controller
-                        .requestMatchers(HttpMethod.GET, "/api/cliente/getAll", "/api/cliente/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/cliente/getAll", "/api/cliente/{id}").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/cliente/update").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/cliente/{id}").authenticated()
                         //Iniciativa Controller

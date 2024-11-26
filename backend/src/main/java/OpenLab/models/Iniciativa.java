@@ -29,7 +29,6 @@ public class Iniciativa {
     private int colaboradores;
     private int likes;
     private int shares;
-    private int joins;
     @ManyToOne
     @JoinColumn(name = "cliente_id",foreignKey = @ForeignKey(name = "FK_CLIENTE"))
     private Cliente cliente;
@@ -54,13 +53,13 @@ public class Iniciativa {
         }
     }
 
-    public void incrementJoins() {
-        this.joins++;
+    public void incrementColaboradores() {
+        this.colaboradores++;
     }
 
-    public void decrementJoins() {
-        if (this.joins > 0) {
-            this.joins--;
+    public void decrementColaboradores() {
+        if (this.colaboradores > 0) {
+            this.colaboradores--;
         }
     }
 }

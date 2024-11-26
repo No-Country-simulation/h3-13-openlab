@@ -41,46 +41,46 @@ public class ClienteController {
             throw new ApplicationException(" Ha ocurrido un error " + e.getMessage());
         }
     }
-
-    @GetMapping("/{id}")
-    @Operation(summary = "Obtiene un estudiante en particular")
-    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> findById(@PathVariable("id") Long id) {
-        Optional<Cliente> cliente = clienteService.findById(id);
-        if (cliente.isPresent()) {
-            ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(cliente.get());
-            String message = "Estudiante encontrado";
-            return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(new ApiResponseDTO<>(false, "Cliente no encontrado", null), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping("/add")
-    @Operation(summary = "Se agrega un cliente")
-    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> save(@RequestBody @Valid ClienteRequestDTO clienteRequestDTO) {
-        Cliente cliente = clienteMapper.toEntity(clienteRequestDTO);
-        clienteService.save(cliente);
-        ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(cliente);
-        String message = "Cliente Registrado";
-        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
-    }
-
-    @PutMapping("/update")
-    @Operation(summary = "Se actualiza un cliente en particular")
-    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> update(@RequestBody @Valid ClienteUpdateDTO clienteUpdateDTO) {
-        Cliente cliente = clienteMapper.toEntity(clienteUpdateDTO);
-        Cliente clienteActualizado = clienteService.update(cliente);
-        ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(clienteActualizado);
-        String message = "Estudiante Actualizado";
-        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Se elimina un cliente en particular")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        clienteService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+//
+//    @GetMapping("/{id}")
+//    @Operation(summary = "Obtiene un estudiante en particular")
+//    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> findById(@PathVariable("id") Long id) {
+//        Optional<Cliente> cliente = clienteService.findById(id);
+//        if (cliente.isPresent()) {
+//            ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(cliente.get());
+//            String message = "Estudiante encontrado";
+//            return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
+//        } else {
+//            return new ResponseEntity<>(new ApiResponseDTO<>(false, "Cliente no encontrado", null), HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//    @PostMapping("/add")
+//    @Operation(summary = "Se agrega un cliente")
+//    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> save(@RequestBody @Valid ClienteRequestDTO clienteRequestDTO) {
+//        Cliente cliente = clienteMapper.toEntity(clienteRequestDTO);
+//        clienteService.save(cliente);
+//        ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(cliente);
+//        String message = "Cliente Registrado";
+//        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping("/update")
+//    @Operation(summary = "Se actualiza un cliente en particular")
+//    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> update(@RequestBody @Valid ClienteUpdateDTO clienteUpdateDTO) {
+//        Cliente cliente = clienteMapper.toEntity(clienteUpdateDTO);
+//        Cliente clienteActualizado = clienteService.update(cliente);
+//        ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(clienteActualizado);
+//        String message = "Estudiante Actualizado";
+//        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    @Operation(summary = "Se elimina un cliente en particular")
+//    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+//        clienteService.delete(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
     @GetMapping("/email")
     @Operation(summary = "Obtiene el perfil del cliente")

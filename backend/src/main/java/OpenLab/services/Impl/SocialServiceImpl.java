@@ -50,9 +50,9 @@ public class SocialServiceImpl extends GenericServiceImpl<Socials, Long> impleme
         }
 
         if (socialsRequestDTO.join()) {
-            existingIniciativa.incrementJoins();
+            existingIniciativa.incrementColaboradores();
         } else {
-            existingIniciativa.decrementJoins();
+            existingIniciativa.decrementColaboradores();
         }
 
         Cliente existingCliente = clienteRepository.findById(socialsRequestDTO.idCliente())
