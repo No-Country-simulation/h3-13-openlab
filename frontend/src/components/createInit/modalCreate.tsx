@@ -1,15 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { closeModal } from '../../store/Initiatives/createIniSlice';
+import {  useSelector , useDispatch} from 'react-redux';
+import { closeModal, createInitiative } from '../../store/Initiatives/createIniSlice';
 import { RootState } from '../../store/store';
 import { addCircle, close, tickCircle } from '../../assets';
 import useWindowSize from '../hooks/Responsive';
 import { useState } from 'react';
+import { AppDispatch } from '../../store/store';
 import { toast } from 'react-toastify';
-import axios from 'axios';
-const URL_DEL_BACKEND = import.meta.env.URL_DEL_BACKEND
 
 const ModalCreate = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>()
   const isOpen = useSelector((state: RootState) => state.create.isOpen);
   const { width } = useWindowSize();
   const isMobile = width <= 768;
@@ -103,34 +102,29 @@ const ModalCreate = () => {
       }
 
       const requestData = {
-        name,
-        idea,
-        problem,
-        oportunity,
-        solution,
+        nombre:name,
+        idea: idea,
+        problema: problem,
+        oportunidad: oportunity,
+        solucion: solution,
+        monto_requerido:100,
         image: image ? image.name : 'https://blogs.iadb.org/conocimiento-abierto/wp-content/uploads/sites/10/2022/03/La-respuesta-a-la-pandemia-%C2%BFQue%CC%81-podemos-aprender-de-las-iniciativas-ciudadanas.jpg', 
       };
     
       try {
-        await axios.post(URL_DEL_BACKEND + "/initiatives", requestData, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-      
+        await dispatch(createInitiative(requestData)).unwrap(); 
+    
         toast.success('Initiative successfully created!', {
           style: { backgroundColor: '#1e8736', color: '#fff' },
         });
-      
+    
         dispatch(closeModal());
       } catch (error) {
-
         toast.error('There was an error creating the initiative. Please try again.', {
           style: { backgroundColor: '#991e2a', color: '#fff' },
         });
-        console.error(error);
+        console.error('Error:', error);
       }
-
     }
 
   return (

@@ -11,6 +11,7 @@ import "../../index.css"
 import 'simplebar/dist/simplebar.min.css';
 import useWindowSize from "../../components/hooks/Responsive";
 import ModalBuy from "../../components/buyInit/modalBuy";
+const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT
 
 interface Initiative {
   id: string;
@@ -19,17 +20,15 @@ interface Initiative {
   colaborator: number;
   tokens: string; 
   missions: string;
-  likes: string;
+  likes: number;
   shares: string;
   createdAt: string;
   img: string;
   idea: string;
   problem: string;
   solution: string;
-  price: {
-    buy: number;
-    sell: number;
-  };
+  buy_price: number;
+  sell_price:number;
 }
 
 const Initiativas = () => {
@@ -42,7 +41,6 @@ const Initiativas = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInitiative, setSelectedInitiative] = useState<Initiative | null>(null);
 
-
   const { width } = useWindowSize();
 
   const isMobile = width <= 768;
@@ -51,7 +49,6 @@ const Initiativas = () => {
       dispatch(openModal())
     }
 
-    
     const handleBuy = (initiative: Initiative) => {
       setSelectedInitiative(initiative);  
       setIsModalOpen(true);              
@@ -64,7 +61,7 @@ const Initiativas = () => {
     }
 
     const handleShare = (id: string) => {
-      const initiativeUrl = `https://miaplicacion.com/initiative/${id}`;
+      const initiativeUrl = `${URL_DEL_FRONT}/initiatives/${id}`;
       if (navigator.share) {
         navigator.share({
           title: 'Check this initiative!',
@@ -86,7 +83,7 @@ const Initiativas = () => {
   });
 };
 
-// Filtrar e incluir búsqueda y ordenación
+
 const filteredAndSortedInitiatives = (activeButton === 'newInitiatives' ? getRecentInitiatives() : initiatives)
   .filter((initiative) => {
     if (searchTerm && !initiative.name.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -102,12 +99,12 @@ const filteredAndSortedInitiatives = (activeButton === 'newInitiatives' ? getRec
     }
   });
 
-// Manejar cambio de orden
+
 const handleSortOrderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
   dispatch(setSortOrder(event.target.value as 'asc' | 'desc'));
 };
 
-// Manejar cambio en la búsqueda
+
 const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   setSearchTerm(event.target.value);
 };
@@ -194,7 +191,7 @@ const handleMenuToggle = (id:string) => {
          <div key={index} className="flex flex-col gap-4 border-b p-4">
 
            <div className="flex flex-row items-center gap-4">
-             <div className="flex items-center m-auto text-sm font-semibold">{item.name}</div>
+             <div className="flex items-center m-auto text-sm font-semibold text-center">{item.name}</div>
              <div className="flex items-center m-auto text-sm">
                <MiniGraph data={item.priceFluctuation} color="#3D7BFF" />
              </div>
@@ -218,7 +215,7 @@ const handleMenuToggle = (id:string) => {
                   <div className="flex flex-row items-center justify-between">
                     <div className="text-sm font-semibold">Buy/Sell Price</div>
                     <div className="text-[#00A065] font-semibold text-sm">
-                        {item.price.buy +"/"+ item.price.sell}
+                        {item.buy_price +"/"+ item.sell_price}
                     </div>
                   </div>
         
@@ -331,7 +328,7 @@ const handleMenuToggle = (id:string) => {
 
       <div className="m-1">
       <SimpleBar style={{ maxHeight: 500 }}>
-        <div className="grid grid-cols-9 grid-rows-1 gap-0 bg-[#6193FF]/10 h-[68px] p-1 mr-5 shadow">
+        <div className="grid grid-cols-9 grid-rows-1 gap-0 bg-[#6193FF]/10 h-[68px] p-1 mr-8 shadow">
             <div className="flex items-center m-auto text-sm font-semibold">Name
             </div>
             <div className="flex items-center m-auto text-sm font-semibold">Price Fluctuaction</div>
@@ -345,11 +342,11 @@ const handleMenuToggle = (id:string) => {
         </div>
 
         {filteredAndSortedInitiatives.map((item, index) => (
-          <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b  mr-5">
-            <div className="flex items-center m-auto text-sm">{item.name}</div>
+          <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b mr-8">
+            <div className="flex items-center m-auto text-sm text-center">{item.name}</div>
             <div className="flex items-center m-auto text-sm">   <MiniGraph data={item.priceFluctuation} color="#3D7BFF" /></div>
             <div className="flex items-center justify-center m-auto text-sm bg-[#00B2FF]/20 rounded-lg p-1 w-[73px]">{item.colaborator}</div>
-            <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm"> {item.price.buy +"/"+ item.price.sell}</div>
+            <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm"> {item.buy_price +"/"+ item.sell_price}</div>
             <div className="flex items-center m-auto text-sm">{item.tokens}</div>
             <div className="flex items-center m-auto text-sm">{item.missions}</div>
             <div className="flex items-center m-auto text-sm">{item.likes}</div>
