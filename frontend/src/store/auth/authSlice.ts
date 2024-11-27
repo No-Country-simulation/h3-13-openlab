@@ -16,7 +16,12 @@ interface AuthState {
 // Estado inicial del usuario
 const emptyUser: AuthState = {
   token: null,
-  user: null, 
+  user: {
+    id: 0,
+    name:"Fabio",
+    lastName:"A.",
+    role:"user"
+  }, 
 };
 
 // Slice de autenticación

@@ -62,7 +62,7 @@ export const fetchInitiatives = createAsyncThunk(
     try {
       const response = await axios.get(`${URL}/api/iniciativa/getAll`);
       
-      // Mapeo de los datos con el tipo adecuado
+      console.log(response)
       const mappedInitiatives = response.data.dataIterable.map((item: BackendInitiative) => ({
         id: item.id,
         name: item.nombre,

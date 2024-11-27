@@ -5,8 +5,8 @@ import { useAppKitAccount } from '@reown/appkit/react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/auth/authSlice';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 const NavbarApp: React.FC = () => {
 
@@ -16,8 +16,7 @@ const NavbarApp: React.FC = () => {
   const navigate =useNavigate();
   const dispatch=useDispatch();
 
-    // const {user } = useSelector((state: RootState) => state.auth);
-    const user = {name:"Fabio", lastName:"A."}
+    const {user} = useSelector((state: RootState) => state.auth);
 
     const handleButton = () => {
         return( alert("Aqui deberia ir el trabajo del Designer >:v/") )

@@ -12,6 +12,7 @@ import homeW from "./icons/homeW.svg"
 import initW from "./icons/InitW.svg"
 import createW from "./icons/CreateIniW.svg"
 import sumIcon from "./icons/sumIcon.svg"
+import dislikeIcon from "./icons/dislikeIcon.svg"
 import likeIcon from "./icons/likeIcon.svg"
 import shareIcon from "./icons/share.svg"
 import close from "./icons/close-square.svg"
@@ -36,6 +37,7 @@ export{
     createW,
     sumIcon,
     likeIcon,
+    dislikeIcon,
     shareIcon,
     close,
     addCircle,
