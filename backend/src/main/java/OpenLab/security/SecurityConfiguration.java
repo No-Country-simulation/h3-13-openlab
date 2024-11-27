@@ -35,7 +35,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/api/cliente/{id}").authenticated()
                         //Iniciativa Controller
                         .requestMatchers(HttpMethod.POST, "/api/iniciativa/add").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/iniciativa/getAll").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/iniciativa/getAllIniciativas").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/iniciativa/getUserIniciativas/{id}").permitAll()
                         //Admin Controller
                         .requestMatchers(HttpMethod.GET, "/api/admin/getAll", "/api/cliente/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/admin/update").authenticated()

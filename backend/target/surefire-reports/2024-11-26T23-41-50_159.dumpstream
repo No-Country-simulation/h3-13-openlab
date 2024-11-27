@@ -1,0 +1,5 @@
+# Created at 2024-11-26T23:41:50.314
+Boot Manifest-JAR contains absolute paths in classpath 'F:\Cosas\Programas\Java\h3-13-openlab\backend\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
