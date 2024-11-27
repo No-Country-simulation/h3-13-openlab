@@ -1,5 +1,5 @@
 import { useDispatch , useSelector } from "react-redux";
-import { sumIcon , likeIcon, shareIcon , flecha1 , flecha2} from "../../assets";
+import { sumIcon , likeIcon, shareIcon , flecha1 , flecha2, dislikeIcon} from "../../assets";
 import MiniGraph from "../../components/graf/Mini";
 import { openModal } from "../../store/Initiatives/createIniSlice";
 import { useEffect , useState } from "react";
@@ -11,7 +11,9 @@ import "../../index.css"
 import 'simplebar/dist/simplebar.min.css';
 import useWindowSize from "../../components/hooks/Responsive";
 import ModalBuy from "../../components/buyInit/modalBuy";
+import { sendJoinLeave, sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
 const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT
+import { RootState } from "../../store/store";
 
 interface Initiative {
   id: string;
@@ -40,6 +42,8 @@ const Initiativas = () => {
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInitiative, setSelectedInitiative] = useState<Initiative | null>(null);
+  const joinedInitiatives = useSelector((state: RootState) => state.joinInitiatives.joinedInitiatives);
+  const likedInitiatives = useSelector((state: RootState) => state.likeInitiatives.likedInitiatives);
 
   const { width } = useWindowSize();
 
@@ -54,11 +58,30 @@ const Initiativas = () => {
       setIsModalOpen(true);              
     };
     
-    function handleJoin (){
+    function handleJoin(id: string) {
+      const { isJoined } = checkIfLikeOrJoined(id); 
+      if (isJoined) {
+        dispatch(sendJoinLeave({ initiativeId: id, isJoined: false }));
+      } else {
+        dispatch(sendJoinLeave({ initiativeId: id, isJoined: true }));
+      }
     }
-
-    function handleLike(){
+    
+    function handleLike(id: string) {
+      const { isLiked } = checkIfLikeOrJoined(id); 
+      if (isLiked) {
+        dispatch(sendLikeDislike({ initiativeId: id, isLiked: false }));
+      } else {
+        dispatch(sendLikeDislike({ initiativeId: id, isLiked: true }));
+      }
     }
+    
+    
+    const checkIfLikeOrJoined = (id: string): { isLiked: boolean, isJoined: boolean } => {
+      const isLiked = likedInitiatives.includes(id);
+      const isJoined = joinedInitiatives.includes(id);
+      return { isLiked, isJoined };
+    };
 
     const handleShare = (id: string) => {
       const initiativeUrl = `${URL_DEL_FRONT}/initiatives/${id}`;
@@ -67,6 +90,8 @@ const Initiativas = () => {
           title: 'Check this initiative!',
           url: initiativeUrl,
         });
+        dispatch(sendShare({isShare:true, initiativeId:id}))
+
       } else {
         alert('Share API is not supported on this device.');
       }
@@ -97,8 +122,11 @@ const filteredAndSortedInitiatives = (activeButton === 'newInitiatives' ? getRec
     } else {
       return b.name.localeCompare(a.name);
     }
+  })
+  .map((item) => {
+    const { isLiked, isJoined } = checkIfLikeOrJoined(item.id); 
+    return { ...item, isLiked, isJoined };
   });
-
 
 const handleSortOrderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
   dispatch(setSortOrder(event.target.value as 'asc' | 'desc'));
@@ -241,17 +269,26 @@ const handleMenuToggle = (id:string) => {
 
                   <div className="flex flex-row items-center justify-between w-[262px] m-auto">
                     <button 
-                    className="bg-[#00B2FF] text-white p-2 font-semibold rounded-full justify-center w-[83px] h-[34px] flex items-center"
+                    className="bg-[#00B2FF] text-white p-2 font-semibold rounded-full justify-center w-[83px] h-[34px] flex items-center shadow"
                     onClick={() => handleBuy(item)} 
                     >Buy</button>
-                    <button 
-                    className="bg-color-1 text-white p-2  font-semibold rounded-full  justify-center w-[83px] h-[34px] flex items-center"
-                    onClick={handleJoin}
-                    >Join</button>
+                    {
+                      item.isJoined
+                      ?<button 
+                      className="bg-[#E0E0E0] text-black p-2 font-semibold rounded-full  justify-center w-[83px] h-[34px] flex items-center shadow"
+                      onClick={()=>handleJoin(item.id)}
+                      >Disjoin</button> 
+                      :<button 
+                      className="bg-color-1 text-white p-2  font-semibold rounded-full  justify-center w-[83px] h-[34px] flex items-center shadow"
+                      onClick={()=>handleJoin(item.id)}
+                      >Join</button>
+                    }
                     <button 
                     className=""
-                    onClick={handleLike}
-                      ><img src={likeIcon} className="h-[20px]"/></button>
+                    onClick={()=>handleLike(item.id)}
+                    >
+                     <img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]"/>
+                    </button>
                     <button className=""
                       onClick={()=>handleShare(item.id)}
                       ><img src={shareIcon} className="h-[20px]"/>
@@ -353,17 +390,25 @@ const handleMenuToggle = (id:string) => {
             <div className="flex items-center m-auto text-sm">{item.shares}</div>
             <div className="flex items-center m-auto text-sm flex-row gap-2">
               <button 
-              className="bg-[#00B2FF] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center"
+              className="bg-[#00B2FF] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
               onClick={() => handleBuy(item)} 
               >Buy</button>
-              <button 
-              className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px] flex items-center"
-              onClick={handleJoin}
-              >Join</button>
+              {
+                item.isJoined
+                ?<button 
+                className="bg-[#E0E0E0] text-black p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+                onClick={()=>handleJoin(item.id)}
+                >Disjoin</button> 
+                :<button 
+                className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+                onClick={()=>handleJoin(item.id)}
+                >Join</button>
+              }
               <button 
               className="m-1"
-              onClick={handleLike}
-              ><img src={likeIcon} className="h-[20px]"/></button>
+              onClick={()=>handleLike(item.id)}
+              ><img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]"/>
+              </button>
               <button className="m-1"
               onClick={()=>handleShare(item.id)}
               ><img src={shareIcon} className="h-[20px]"/>
