@@ -3,10 +3,8 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import AppLayout from "../layout/AppLayout.tsx";
 import Error404 from "../layout/Error404.tsx";
 import Home from "../pages/home/Home.tsx";
-import HomeUser from "../pages/User/Home.tsx";
 import Initiativas from "../pages/User/Initiativas.tsx";
 import Profile from "../pages/User/Profile.tsx";
 import AppLayout from "../layout/AppLayout.tsx";
