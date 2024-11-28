@@ -1,4 +1,3 @@
-// store.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -61,8 +60,6 @@ export const fetchInitiatives = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${URL}/api/iniciativa/getAll`);
-      
-      console.log(response)
       const mappedInitiatives = response.data.dataIterable.map((item: BackendInitiative) => ({
         id: item.id,
         name: item.nombre,

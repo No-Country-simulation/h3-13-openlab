@@ -4,6 +4,7 @@ import { authSlice } from "./auth/authSlice";
 import {createMSlice} from "./Initiatives/createIniSlice";
 import { showInitiativesSlice } from "./Initiatives/showInitiativesSlice";
 import { joinInitiativesSlice, likedInitiativesSlice } from "./Initiatives/joinLikesIniSlice";
+import { myInitiativesSlice } from "./Initiatives/myIniSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     initiatives: showInitiativesSlice.reducer,
     joinInitiatives: joinInitiativesSlice.reducer,
     likeInitiatives: likedInitiativesSlice.reducer,
+    myInitiatives: myInitiativesSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

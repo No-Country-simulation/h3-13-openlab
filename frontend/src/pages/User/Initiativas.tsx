@@ -4,7 +4,7 @@ import MiniGraph from "../../components/graf/Mini";
 import { openModal } from "../../store/Initiatives/createIniSlice";
 import { useEffect , useState } from "react";
 import { fetchInitiatives, setSortOrder } from "../../store/Initiatives/showInitiativesSlice";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState} from "../../store/store";
 import { selectInitiatives } from "../../store/Initiatives/showInitiativesSlice";
 import SimpleBar from 'simplebar-react';
 import "../../index.css"
@@ -13,7 +13,6 @@ import useWindowSize from "../../components/hooks/Responsive";
 import ModalBuy from "../../components/buyInit/modalBuy";
 import { sendJoinLeave, sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
 const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT
-import { RootState } from "../../store/store";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { toast } from "react-toastify";
 
@@ -96,7 +95,7 @@ const Initiativas = () => {
         dispatch(sendShare({isShare:true, initiativeId:id}))
 
       } else {
-        alert('Share API is not supported on this device.');
+        toast.warning('Share API is not supported on this device.');
       }
     };
 
@@ -355,8 +354,8 @@ const handleMenuToggle = (id:string) => {
             onChange={handleSortOrderChange}
             className="border  rounded-lg p-2 shadow"
           >
-            <option value="asc"> Order A-Z</option>
-            <option value="desc"> Order Z-A</option>
+            <option value="asc"> Name A-Z</option>
+            <option value="desc"> Name Z-A</option>
           </select>
 
           </div>
