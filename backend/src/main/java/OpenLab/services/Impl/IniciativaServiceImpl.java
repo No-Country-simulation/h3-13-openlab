@@ -48,4 +48,5 @@ public class IniciativaServiceImpl extends GenericServiceImpl<Iniciativa, Long> 
         List<IniciativaResponseDTO> iniciativaResponseDTO = iniciativaMapper.toListResponseDTO(iniciativa);
         return iniciativaResponseDTO;
     }
+
 }

@@ -46,6 +46,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/orderbook/**").permitAll()
                         // Socials Controller
                         .requestMatchers(HttpMethod.POST, "/api/social/socials").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/social/getUserLikes/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/social/getUserJoins/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/social/getUserShares/{id}").permitAll()
                         //Swagger
                         .requestMatchers(HttpMethod.GET,"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())

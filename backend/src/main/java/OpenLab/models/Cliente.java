@@ -28,4 +28,7 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente",cascade = {CascadeType.ALL},orphanRemoval = true,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Iniciativa> iniciativa;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Socials> socials;
 }

@@ -3,6 +3,7 @@ package OpenLab.dtos.IiniciativaDTO;
 import java.time.LocalDate;
 
 public record IniciativaResponseDTO(
+        Long id,
         String imagen,
         String billetera,
         String nombre,

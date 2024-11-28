@@ -10,4 +10,5 @@ public interface IniciativaService extends IGenericService<Iniciativa, Long>{
     IniciativaResponseDTO saveIniciativa(IniciativaRequestDTO iniciativa);
 
     List<IniciativaResponseDTO> getUserIniciativas(Long id);
+
 }

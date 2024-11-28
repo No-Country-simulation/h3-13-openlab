@@ -21,7 +21,7 @@ public class Socials {
     @OneToOne
     @JoinColumn(name = "iniciativa_id", nullable = false)
     private Iniciativa iniciativa;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 }
