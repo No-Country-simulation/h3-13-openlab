@@ -1,7 +1,6 @@
 import { useState } from "react";
-
 import { newini, home, init, log_out, newiniW, homeW, initW } from "../../assets";
-import Logo from "../../assets/Group.svg";
+import Logo from "../../assets/Openlab_logo2.svg";
 import { Link, useNavigate } from "react-router-dom"; 
 
 import { logout } from "../../store/auth/authSlice";
