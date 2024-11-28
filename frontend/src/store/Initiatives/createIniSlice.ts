@@ -2,6 +2,7 @@ import { createSlice , createAsyncThunk} from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import axios from 'axios';
+import { useAppKitAccount } from '@reown/appkit/react';
 const URL = import.meta.env.VITE_URL_DEL_BACKEND; 
 
 interface ModalState {
@@ -38,11 +39,13 @@ export const createInitiative = createAsyncThunk<CreateInitiativeResponse, Creat
   async (requestData, { rejectWithValue }) => {
     
     const { user , token } = useSelector((state: RootState) => state.auth);
+    const { address } = useAppKitAccount();
 
     const dataToSend = {
       ...requestData,
       clienteId: user?.id,
       token, 
+      billetera: address,
     };
 
     try {

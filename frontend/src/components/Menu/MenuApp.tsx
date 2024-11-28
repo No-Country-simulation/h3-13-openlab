@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { newini, home, init, create, log_out, newiniW, homeW, initW, createW } from "../../assets";
+import { newini, home, init, log_out, newiniW, homeW, initW } from "../../assets";
 import Logo from "../../assets/Group.svg";
 import { Link, useNavigate } from "react-router-dom"; 
 import { logout } from "../../store/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const MenuApp = () => {
   const [activeLink, setActiveLink] = useState("home"); 
@@ -11,15 +12,15 @@ const MenuApp = () => {
   const navigate =useNavigate()
 
   const links = [
-    { id: "home", name: "Home", img: home, imgActive: homeW, path: "/test" },
-    { id: "create", name: "Create New", img: create, imgActive: createW, path: "/create" },
-    { id: "newini", name: "New Initiatives", img: newini, imgActive: newiniW, path: "" },
+    { id: "Home", name: "Home", img: home, imgActive: homeW, path: "/test" },
+    { id: "My Initiatives", name: "My Initiatives", img: newini, imgActive: newiniW, path: "/MyInitiatives" },
+    // { id: "newini", name: "New Initiatives", img: newini, imgActive: newiniW, path: "" },
     { id: "init", name: "Initiatives", img: init, imgActive: initW, path: "/initiatives" },
   ];
 
   function handleOut(){
     dispatch(logout())
-    alert("Deslogueo exitoso")
+    toast.success("Logout successful")
     navigate("/")
   }
 

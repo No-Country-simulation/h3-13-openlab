@@ -24,7 +24,7 @@ const NavbarApp: React.FC = () => {
 
   const handleOut = () => {
     dispatch(logout());
-    toast.success('Deslogueo exitoso')
+    toast.success('Logout successful')
     navigate("/");
   }
 
@@ -109,7 +109,7 @@ const NavbarApp: React.FC = () => {
           <div id="profile-menu" className="absolute right-0 top-14 w-48 bg-white shadow-lg rounded-md w-[145px]">
             <ul className="space-y-2 p-2 text-sm">
               <li>
-                <a href="/profile" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">My perfil</a>
+                <a href="/profile" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">My profile</a>
               </li>
               <li>
                 <a href="/settings" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Configuration</a>

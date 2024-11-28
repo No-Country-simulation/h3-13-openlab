@@ -14,6 +14,8 @@ import ModalBuy from "../../components/buyInit/modalBuy";
 import { sendJoinLeave, sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
 const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT
 import { RootState } from "../../store/store";
+import { useAppKitAccount } from "@reown/appkit/react";
+import { toast } from "react-toastify";
 
 interface Initiative {
   id: string;
@@ -44,6 +46,7 @@ const Initiativas = () => {
   const [selectedInitiative, setSelectedInitiative] = useState<Initiative | null>(null);
   const joinedInitiatives = useSelector((state: RootState) => state.joinInitiatives.joinedInitiatives);
   const likedInitiatives = useSelector((state: RootState) => state.likeInitiatives.likedInitiatives);
+  const { isConnected } = useAppKitAccount();
 
   const { width } = useWindowSize();
 
@@ -160,12 +163,18 @@ const handleMenuToggle = (id:string) => {
 
           <h1 className="text-3xl p-4 sm:w-full font-semibold">Initiatives</h1>
         <div>
+          {isConnected?
           <button 
           className="flex items-center justify-center bg-color-5 text-white mr-5 text-sm font-semibold p-3  gap-6 rounded-lg"
-          onClick={handleCreate}
-          >
+          onClick={handleCreate}>
             <img src={sumIcon}/>Create
             </button>
+          : <button 
+          className="flex items-center justify-center bg-[#E0E0E0] text-black mr-5 text-sm font-semibold p-3  gap-6 rounded-lg"
+          onClick={()=>{toast.info('Please connect the wallet first')}}>
+            <img src={sumIcon}/>Create
+            </button>
+            }
         </div>
 
         </div>
@@ -354,12 +363,18 @@ const handleMenuToggle = (id:string) => {
           
           <div>
 
+          {isConnected?
           <button 
           className="flex items-center justify-center bg-color-5 text-white shadow mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
-          onClick={handleCreate}
-          >
+          onClick={handleCreate}>
+            <img src={sumIcon}/>Create 
+            </button>
+          : <button 
+          className="flex items-center justify-center bg-[#E0E0E0] text-black shadow mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
+           onClick={()=>{toast.info('Please connect the wallet first')}}>
             <img src={sumIcon}/>Create
             </button>
+            }
           </div>
         </div>
 
