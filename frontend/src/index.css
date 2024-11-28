@@ -8,6 +8,7 @@
   box-sizing: border-box;
 }
 
+
 .simplebar-scrollbar {
   background-color: #6193FF;
   border-radius: 10px; 
@@ -18,3 +19,11 @@
   background-color: #E0E0E0; 
   border-radius: 10px;
 }
+
+#hero_bg {
+  mask-image: url("assets/landing/hero_bg.svg");
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-position: bottom;
+}
+

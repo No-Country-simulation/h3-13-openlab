@@ -5,12 +5,20 @@ const ConnectButton = () => {
   const { open } = useAppKit();
 
   return (
-    <>
-      <button onClick={() => open()}>Open Connect Modal</button>
-      <button onClick={() => open({ view: "Networks" })}>
+    <div className="flex flex-col items-center gap-4">
+      <button
+        className="p-2 bg-white rounded-lg text-color-3"
+        onClick={() => open()}
+      >
+        Open Connect Modal
+      </button>
+      <button
+        className="p-2 bg-white rounded-lg text-color-3"
+        onClick={() => open({ view: "Networks" })}
+      >
         Open Network Modal
       </button>
-    </>
+    </div>
   );
 };
 

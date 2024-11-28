@@ -1,13 +1,38 @@
-import { Auth0Provider } from "@auth0/auth0-react"; 
+import { Auth0Provider } from "@auth0/auth0-react";
 import { Ethers5Adapter } from "@reown/appkit-adapter-ethers5";
-import { sepolia } from "@reown/appkit/networks";
+import { defineChain, sepolia } from "@reown/appkit/networks";
 import { createAppKit } from "@reown/appkit/react";
 import { RouterProvider } from "react-router-dom";
 import { AppRouter } from "./router/AppRouter";
 import { Provider } from "react-redux";
-import { store } from "./store/store"; 
+import { store } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+
+// 1. Define custom Ganache network
+const ganacheNetwork = defineChain({
+  id: 1337,
+  caipNetworkId: "eip155:1337",
+  chainNamespace: "eip155",
+  name: "Ganache",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: ["http://127.0.0.1:8545"],
+      webSocket: ["ws://127.0.0.1:8545"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Ganache Explorer",
+      url: "http://127.0.0.1:8545",
+    },
+  },
+});
 
 // 1. Get projectId
 const projectId = import.meta.env.VITE_PROJECT_ID;
@@ -24,7 +49,7 @@ const metadata = {
 createAppKit({
   adapters: [new Ethers5Adapter()],
   metadata: metadata,
-  networks: [sepolia],
+  networks: [sepolia, ganacheNetwork],
   projectId,
   features: {
     analytics: true, // Optional -
