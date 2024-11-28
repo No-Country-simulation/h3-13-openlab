@@ -9,6 +9,9 @@ import Home from "../pages/home/Home.tsx";
 import HomeUser from "../pages/User/Home.tsx";
 import Initiativas from "../pages/User/Initiativas.tsx";
 import Profile from "../pages/User/Profile.tsx";
+import AppLayout from "../layout/AppLayout.tsx";
+import HomeUser from "../pages/User/Home.tsx";
+import MyInitiatives from "../pages/User/MyInitiatives.tsx";
 // import ProtectedRoute from "./ProtectRoutes.tsx";
 
 export const AppRouter = createBrowserRouter(
@@ -18,13 +21,16 @@ export const AppRouter = createBrowserRouter(
       <Route path="/" errorElement={<Error404 />}>
         <Route index element={<Home />} />
         <Route path="*" element={<Error404 />} />
-        {/* Rutas User */}
-        {/* <Route element={<ProtectedRoute allowedRoles={["user"]}/>}> */}
-        <Route path="/" element={<AppLayout />}>
-          <Route path="test" element={<HomeUser />} />
-          <Route path="initiatives" element={<Initiativas />} />
-          <Route path="profile" element={<Profile />} />
-        </Route>
+
+      </Route>
+    {/* Rutas User */}
+      {/* <Route element={<ProtectedRoute allowedRoles={["user"]}/>}> */}
+      <Route path="/" element={<AppLayout/>}>
+        <Route path="test" element={<HomeUser />} />
+        <Route path="initiatives" element={<Initiativas />} />
+        <Route path="Myinitiatives" element={<MyInitiatives/>} />
+        <Route path="profile" element={<Profile />} />
+
       </Route>
     </>
   )

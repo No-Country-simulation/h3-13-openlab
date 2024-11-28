@@ -6,6 +6,8 @@ import { RouterProvider } from "react-router-dom";
 import { AppRouter } from "./router/AppRouter";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 // 1. Define custom Ganache network
 const ganacheNetwork = defineChain({
@@ -65,6 +67,7 @@ export const App = () => {
     >
       <Provider store={store}>
         <RouterProvider router={AppRouter} />
+        <ToastContainer position="top-center"/>
       </Provider>
     </Auth0Provider>
   );

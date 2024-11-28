@@ -11,6 +11,15 @@ import newiniW from "./icons/NewIniW.svg"
 import homeW from "./icons/homeW.svg"
 import initW from "./icons/InitW.svg"
 import createW from "./icons/CreateIniW.svg"
+import sumIcon from "./icons/sumIcon.svg"
+import dislikeIcon from "./icons/dislikeIcon.svg"
+import likeIcon from "./icons/likeIcon.svg"
+import shareIcon from "./icons/share.svg"
+import close from "./icons/close-square.svg"
+import addCircle from "./icons/add-circle.svg"
+import tickCircle from "./icons/tick-circle.svg"
+import flecha1 from "./icons/Flecha1.svg"
+import flecha2 from "./icons/Flecha2.svg"
 
 export{
     profile,
@@ -26,4 +35,13 @@ export{
     homeW ,
     initW ,
     createW,
+    sumIcon,
+    likeIcon,
+    dislikeIcon,
+    shareIcon,
+    close,
+    addCircle,
+    tickCircle,
+    flecha1,
+    flecha2
 };
