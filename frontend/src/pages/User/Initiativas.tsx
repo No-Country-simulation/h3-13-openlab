@@ -1,11 +1,10 @@
 import { useDispatch , useSelector } from "react-redux";
-import { sumIcon , likeIcon, shareIcon , flecha1 , flecha2, dislikeIcon} from "../../assets";
+import { sumIcon , likeIcon, shareIcon , flecha1 , flecha2, dislikeIcon, flechaAsc, flechaDsc} from "../../assets";
 import MiniGraph from "../../components/graf/Mini";
 import { openModal } from "../../store/Initiatives/createIniSlice";
 import { useEffect , useState } from "react";
-import { fetchInitiatives, setSortOrder } from "../../store/Initiatives/showInitiativesSlice";
+import { fetchInitiatives } from "../../store/Initiatives/showInitiativesSlice";
 import { AppDispatch, RootState} from "../../store/store";
-import { selectInitiatives } from "../../store/Initiatives/showInitiativesSlice";
 import SimpleBar from 'simplebar-react';
 import "../../index.css"
 import 'simplebar/dist/simplebar.min.css';
@@ -15,7 +14,6 @@ import { sendJoinLeave, sendLikeDislike, sendShare } from "../../store/Initiativ
 const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT
 import { useAppKitAccount } from "@reown/appkit/react";
 import { toast } from "react-toastify";
-
 interface Initiative {
   id: string;
   name: string;
@@ -35,7 +33,7 @@ interface Initiative {
 }
 
 const Initiativas = () => {
-  const { initiatives, sortOrder } = useSelector(selectInitiatives);
+  const { initiatives } = useSelector((state: RootState) => state.initiatives);
   const dispatch = useDispatch<AppDispatch>()
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,7 +44,10 @@ const Initiativas = () => {
   const joinedInitiatives = useSelector((state: RootState) => state.joinInitiatives.joinedInitiatives);
   const likedInitiatives = useSelector((state: RootState) => state.likeInitiatives.likedInitiatives);
   const { isConnected } = useAppKitAccount();
-
+  const [sortState, setSortState] = useState({
+    criteria: "name",
+    order: "asc",
+  });
   const { width } = useWindowSize();
 
   const isMobile = width <= 768;
@@ -112,28 +113,44 @@ const Initiativas = () => {
 
 
 const filteredAndSortedInitiatives = (activeButton === 'newInitiatives' ? getRecentInitiatives() : initiatives)
-  .filter((initiative) => {
-    if (searchTerm && !initiative.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return false;
-    }
-    return true;
-  })
-  .sort((a, b) => {
-    if (sortOrder === 'asc') {
-      return a.name.localeCompare(b.name);
-    } else {
-      return b.name.localeCompare(a.name);
-    }
-  })
+.filter((initiative) => {
+  if (searchTerm && !initiative.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+    return false;
+  }
+  return true;
+})
+.sort((a, b) => {
+  let comparison = 0;
+
+  switch (sortState.criteria) {
+    case "name":
+      comparison = a.name.localeCompare(b.name); 
+      break;
+    case "collaborator":
+      comparison = a.colaborator - b.colaborator; 
+      break;
+    case "buy_price":
+      comparison = a.buy_price - b.buy_price; 
+      break;
+    case "sell_price":
+      comparison = a.sell_price - b.sell_price; 
+      break;
+    case "likes":
+      comparison = a.likes - b.likes; 
+      break;
+    case "shares":
+      comparison = a.shares.localeCompare(b.shares);
+      break;
+    default:
+      break;
+  }
+
+  return sortState.order === "asc" ? comparison : -comparison;
+})
   .map((item) => {
     const { isLiked, isJoined } = checkIfLikeOrJoined(item.id); 
     return { ...item, isLiked, isJoined };
   });
-
-const handleSortOrderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-  dispatch(setSortOrder(event.target.value as 'asc' | 'desc'));
-};
-
 
 const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   setSearchTerm(event.target.value);
@@ -146,6 +163,21 @@ const handleButtonClick = (button: 'initiatives' | 'newInitiatives') => {
 
 const handleMenuToggle = (id:string) => {
   setMenuOpenId(menuOpenId === id ? null : id); 
+};
+
+const handleSortClick = (criteria: string) => {
+
+  if (sortState.criteria === criteria) {
+    setSortState({
+      ...sortState,
+      order: sortState.order === "asc" ? "desc" : "asc",
+    });
+  } else {
+    setSortState({
+      criteria,
+      order: "asc",
+    });
+  }
 };
 
     useEffect(() => {
@@ -207,16 +239,6 @@ const handleMenuToggle = (id:string) => {
               className="border shadow w-[8em] p-1 rounded-lg"
               onChange={handleSearchChange} 
               />
-
-            <select
-              value={sortOrder}
-              onChange={handleSortOrderChange}
-              className="border shadow rounded-lg p-1 ml-3"
-            >
-              <option value="asc">A-Z</option>
-              <option value="desc">Z-A</option>
-            </select>
-
           </div>
           
         </div>
@@ -343,20 +365,11 @@ const handleMenuToggle = (id:string) => {
           <div className="flex flex-row justify">
           <input
             type="text"
-            placeholder="Search for initiatives"
+            placeholder="Search initiatives ..."
             value={searchTerm}  
             className="border p-1 rounded-lg mr-4 shadow"
             onChange={handleSearchChange} 
             />
-
-          <select
-            value={sortOrder}
-            onChange={handleSortOrderChange}
-            className="border  rounded-lg p-2 shadow"
-          >
-            <option value="asc"> Name A-Z</option>
-            <option value="desc"> Name Z-A</option>
-          </select>
 
           </div>
           
@@ -380,15 +393,77 @@ const handleMenuToggle = (id:string) => {
       <div className="m-1">
       <SimpleBar style={{ maxHeight: 500 }}>
         <div className="grid grid-cols-9 grid-rows-1 gap-0 bg-[#6193FF]/10 h-[68px] p-1 mr-8 shadow">
-            <div className="flex items-center m-auto text-sm font-semibold">Name
+            <div 
+            className="flex items-center m-auto text-sm font-semibold cursor-pointer"
+            onClick={() => handleSortClick("name")}
+            > Name {sortState.criteria === "name" && (<img
+              src={sortState.order === "asc" ? flechaAsc : flechaDsc}
+              alt="Sort Order"
+              className="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out transform"
+              style={{
+                  transform: sortState.order === 'asc' ? 'rotate(0deg)' : 'rotate(360deg)',
+                   }}
+              />)}
             </div>
             <div className="flex items-center m-auto text-sm font-semibold">Price Fluctuaction</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Colaborators</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Buy/Sell Price</div>
+            <div 
+              className="flex items-center m-auto text-sm font-semibold cursor-pointer"
+              onClick={() => handleSortClick("collaborator")}
+            >
+              Colaborators {sortState.criteria === "collaborator" && (<img
+              src={sortState.order === "asc" ? flechaAsc : flechaDsc}
+              alt="Sort Order"
+              className="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out transform"
+              style={{
+                  transform: sortState.order === 'asc' ? 'rotate(0deg)' : 'rotate(360deg)',
+                  }}
+              />)}
+            </div>
+            <div className="flex items-center m-auto text-sm font-semibold gap-1">
+                 <div  onClick={() => handleSortClick("buy_price")} className="flex flex-row cursor-pointer">
+                     Buy  {sortState.criteria === "buy_price" && (<img
+                        src={sortState.order === "asc" ? flechaAsc : flechaDsc}
+                        alt="Sort Order"
+                        className="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out transform"
+                        style={{
+                                transform: sortState.order === 'asc' ? 'rotate(0deg)' : 'rotate(360deg)',
+                                    }}
+                                />)} 
+                        </div>
+                        /
+                        <div  onClick={() => handleSortClick("sell_price")}  className="flex flex-row cursor-pointer">
+                            Sell  {sortState.criteria === "sell_price" && (<img
+                              src={sortState.order === "asc" ? flechaAsc : flechaDsc}
+                              alt="Sort Order"
+                              className="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out transform"
+                              style={{
+                                      transform: sortState.order === 'asc' ? 'rotate(0deg)' : 'rotate(360deg)',
+                                      }}
+                                    />)}
+                            </div>
+                  </div>
             <div className="flex items-center m-auto text-sm font-semibold">Tokens</div>
             <div className="flex items-center m-auto text-sm font-semibold">Missions</div>
-            <div className="flex items-center m-auto text-sm font-semibold">Likes </div>
-            <div className="flex items-center m-auto text-sm font-semibold">Shares</div>
+            <div 
+            className="flex items-center m-auto text-sm font-semibold cursor-pointer"
+            onClick={() => handleSortClick("likes")}>Likes {sortState.criteria === "likes" && (<img
+              src={sortState.order === "asc" ? flechaAsc : flechaDsc}
+              alt="Sort Order"
+              className="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out transform"
+              style={{
+                  transform: sortState.order === 'asc' ? 'rotate(0deg)' : 'rotate(360deg)',
+                  }}
+              />)}</div>
+            <div 
+            className="flex items-center m-auto text-sm font-semibold cursor-pointer cursor-pointer"
+                onClick={() => handleSortClick("shares")}>Shares {sortState.criteria === "shares" && (<img
+                    src={sortState.order === "asc" ? flechaAsc : flechaDsc}
+                    alt="Sort Order"
+                    className="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out transform"
+                    style={{
+                            transform: sortState.order === 'asc' ? 'rotate(0deg)' : 'rotate(360deg)',
+                            }}
+                      />)}</div>
             <div className="flex items-center m-auto text-sm font-semibold">       </div>
         </div>
 
