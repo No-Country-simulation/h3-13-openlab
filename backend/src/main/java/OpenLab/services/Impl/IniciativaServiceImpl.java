@@ -49,4 +49,10 @@ public class IniciativaServiceImpl extends GenericServiceImpl<Iniciativa, Long> 
         return iniciativaResponseDTO;
     }
 
+    @Override
+    public List<IniciativaResponseDTO> searchIniciativasByNombre(String prefix) {
+        List<Iniciativa> iniciativas = iniciativaRepository.findByNombreStartingWithIgnoreCase(prefix);
+        return iniciativaMapper.toListResponseDTO(iniciativas);
+    }
+
 }

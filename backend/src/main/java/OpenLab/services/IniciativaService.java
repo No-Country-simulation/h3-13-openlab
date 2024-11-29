@@ -11,4 +11,5 @@ public interface IniciativaService extends IGenericService<Iniciativa, Long>{
 
     List<IniciativaResponseDTO> getUserIniciativas(Long id);
 
+    List<IniciativaResponseDTO> searchIniciativasByNombre(String prefix);
 }

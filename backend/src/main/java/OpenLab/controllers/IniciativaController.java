@@ -51,4 +51,12 @@ public class IniciativaController {
         return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativas), HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    @Operation(summary = "Busca iniciativas dinámicamente por nombre")
+    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> searchIniciativas(@RequestParam String query) {
+        List<IniciativaResponseDTO> iniciativas = iniciativaService.searchIniciativasByNombre(query);
+        String message = iniciativas.isEmpty() ? "No se encontraron iniciativas" : "Iniciativas encontradas";
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativas), HttpStatus.OK);
+    }
+
 }

@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface IniciativaRepository extends IGenericRepository<Iniciativa, Long>{
     List<Iniciativa> findByClienteId(Long id);
+
+    List<Iniciativa> findByNombreStartingWithIgnoreCase(String prefix);
 }
