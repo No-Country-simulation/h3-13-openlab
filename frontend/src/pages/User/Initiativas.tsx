@@ -72,10 +72,12 @@ const Initiativas = () => {
     
     function handleLike(id: string) {
       const { isLiked } = checkIfLikeOrJoined(id); 
+
       if (isLiked) {
         dispatch(sendLikeDislike({ initiativeId: id, isLiked: false }));
       } else {
         dispatch(sendLikeDislike({ initiativeId: id, isLiked: true }));
+
       }
     }
     
@@ -318,7 +320,7 @@ const handleSortClick = (criteria: string) => {
                       ?<button 
                       className="bg-[#E0E0E0] text-black p-2 font-semibold rounded-full  justify-center w-[83px] h-[34px] flex items-center shadow"
                       onClick={()=>handleJoin(item.id)}
-                      >Disjoin</button> 
+                      >Join</button> 
                       :<button 
                       className="bg-color-1 text-white p-2  font-semibold rounded-full  justify-center w-[83px] h-[34px] flex items-center shadow"
                       onClick={()=>handleJoin(item.id)}
@@ -328,7 +330,7 @@ const handleSortClick = (criteria: string) => {
                     className=""
                     onClick={()=>handleLike(item.id)}
                     >
-                     <img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]"/>
+                     <img src={item.isLiked ? likeIcon: dislikeIcon} className="h-[20px]"/>
                     </button>
                     <button className=""
                       onClick={()=>handleShare(item.id)}
@@ -504,9 +506,9 @@ const handleSortClick = (criteria: string) => {
               {
                 item.isJoined
                 ?<button 
-                className="bg-[#E0E0E0] text-black p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+                className="bg-[#E0E0E0] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
                 onClick={()=>handleJoin(item.id)}
-                >Disjoin</button> 
+                >Join</button> 
                 :<button 
                 className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
                 onClick={()=>handleJoin(item.id)}
@@ -515,7 +517,7 @@ const handleSortClick = (criteria: string) => {
               <button 
               className="m-1"
               onClick={()=>handleLike(item.id)}
-              ><img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]"/>
+              ><img src={item.isLiked ? likeIcon: dislikeIcon} className="h-[20px]"/>
               </button>
               <button className="m-1"
               onClick={()=>handleShare(item.id)}

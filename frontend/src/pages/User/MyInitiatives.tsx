@@ -253,7 +253,7 @@ const MyInitiatives = () => {
                     className=""
                     onClick={()=>handleLike(item.id)}
                     >
-                     <img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]"/>
+                     <img src={item.isLiked ? likeIcon: dislikeIcon} className="h-[20px]"/>
                     </button>
                     <button className=""
                       onClick={()=>handleShare(item.id)}
@@ -422,7 +422,7 @@ const MyInitiatives = () => {
                           className="m-1"
                           onClick={() => handleLike(item.id)}
                         >
-                          <img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]" />
+                          <img src={item.isLiked ?  likeIcon: dislikeIcon} className="h-[20px]" />
                         </button>
                         <button
                           className="m-1"
