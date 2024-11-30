@@ -103,14 +103,15 @@ const Initiativas = () => {
  // Función para obtener las iniciativas recientes (últimos 7 días)
  const getRecentInitiatives = () => {
   const currentDate = new Date();
-  const oneWeekAgo = new Date(currentDate.setDate(currentDate.getDate() - 7));
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(currentDate.getDate() - 7);
 
   return initiatives.filter((initiative) => {
+    if (!initiative.createdAt) return false;
     const initiativeDate = new Date(initiative.createdAt);
     return initiativeDate >= oneWeekAgo;
   });
 };
-
 
 const filteredAndSortedInitiatives = (activeButton === 'newInitiatives' ? getRecentInitiatives() : initiatives)
 .filter((initiative) => {
@@ -182,6 +183,8 @@ const handleSortClick = (criteria: string) => {
 
     useEffect(() => {
       dispatch(fetchInitiatives());
+      // const filtered = filterNewInitiatives(initiatives); 
+      // setNewInitiatives(filtered);
     }, [dispatch]);
     
         return (
@@ -298,10 +301,18 @@ const handleSortClick = (criteria: string) => {
                   </div>
 
                   <div className="flex flex-row items-center justify-between w-[262px] m-auto">
+                    {isConnected?
                     <button 
                     className="bg-[#00B2FF] text-white p-2 font-semibold rounded-full justify-center w-[83px] h-[34px] flex items-center shadow"
                     onClick={() => handleBuy(item)} 
                     >Buy</button>
+                    : 
+                    <button 
+                    className="bg-[#E0E0E0] text-black p-2 font-semibold rounded-full justify-center w-[83px] h-[34px] flex items-center shadow" 
+                    onClick={()=>{toast.info('Please connect the wallet first')}}
+                    >Buy</button>
+                    }
+
                     {
                       item.isJoined
                       ?<button 
@@ -478,10 +489,18 @@ const handleSortClick = (criteria: string) => {
             <div className="flex items-center m-auto text-sm">{item.likes}</div>
             <div className="flex items-center m-auto text-sm">{item.shares}</div>
             <div className="flex items-center m-auto text-sm flex-row gap-2">
-              <button 
+              {isConnected
+              ? <button 
               className="bg-[#00B2FF] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
               onClick={() => handleBuy(item)} 
               >Buy</button>
+      
+              :<button 
+              className="bg-[#E0E0E0] text-black p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+              onClick={()=>{toast.info('Please connect the wallet first')}}
+              >Buy</button>
+              }
+
               {
                 item.isJoined
                 ?<button 
