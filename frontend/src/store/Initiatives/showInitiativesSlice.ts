@@ -1,6 +1,6 @@
-// store.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { RootState } from '../store';
 
 const URL = import.meta.env.VITE_URL_DEL_BACKEND;
 
@@ -27,6 +27,7 @@ interface InitiativesState {
   loading: boolean;
   error: string | null;
   filter: string;
+  sortCriteria: 'name' | 'collaborator' | 'buy_price' | 'sell_price' | 'likes' | 'shares';
   sortOrder: 'asc' | 'desc';
 }
 
@@ -172,6 +173,7 @@ const initialState: InitiativesState = {
   loading: false,
   error: null,
   filter: '',
+  sortCriteria: 'name', 
   sortOrder: 'asc',
 };
 
@@ -198,8 +200,6 @@ export const fetchInitiatives = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${URL}/api/iniciativa/getAll`);
-      
-      console.log(response)
       const mappedInitiatives = response.data.dataIterable.map((item: BackendInitiative) => ({
         id: item.id,
         name: item.nombre,
@@ -233,6 +233,9 @@ export const showInitiativesSlice = createSlice({
     setFilter: (state, action) => {
       state.filter = action.payload;
     },
+    setSortCriteria: (state, action) => {
+      state.sortCriteria = action.payload; 
+    },
     setSortOrder: (state, action) => {
       state.sortOrder = action.payload;
     },
@@ -253,6 +256,47 @@ export const showInitiativesSlice = createSlice({
   },
 });
 
-export const { setFilter, setSortOrder } = showInitiativesSlice.actions;
-export const selectInitiatives = (state: { initiatives: InitiativesState }) => state.initiatives;
+export const { setFilter, setSortOrder , setSortCriteria} = showInitiativesSlice.actions;
+
+export const selectFilteredAndSortedInitiatives = (state: RootState) => {
+  const { initiatives, filter, sortCriteria, sortOrder } = state.initiatives;
+
+
+  const filteredInitiatives = initiatives.filter((initiative: Initiative) =>
+    initiative.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+
+  const sortedInitiatives = filteredInitiatives.sort((a: Initiative, b: Initiative) => {
+    let comparison = 0;
+
+    switch (sortCriteria) {
+      case 'name':
+        comparison = a.name.localeCompare(b.name); 
+        break;
+      case 'collaborator':
+        comparison = a.colaborator - b.colaborator;
+        break;
+      case 'buy_price':
+        comparison = a.buy_price - b.buy_price;  
+        break;
+      case 'sell_price':
+        comparison = a.sell_price - b.sell_price; 
+        break; 
+      case 'likes':
+        comparison = a.likes - b.likes; 
+        break;
+      case 'shares':
+        comparison = a.shares.localeCompare(b.shares);  
+        break;
+      default:
+        break;
+    }
+
+    return sortOrder === 'asc' ? comparison : -comparison;
+  });
+
+  return sortedInitiatives;
+};
+
 export default showInitiativesSlice.reducer;

@@ -20,6 +20,8 @@ import addCircle from "./icons/add-circle.svg"
 import tickCircle from "./icons/tick-circle.svg"
 import flecha1 from "./icons/Flecha1.svg"
 import flecha2 from "./icons/Flecha2.svg"
+import flechaAsc from "./icons/FlechaAsc.svg"
+import flechaDsc from "./icons/FlechaDsc.svg"
 
 export{
     profile,
@@ -43,5 +45,7 @@ export{
     addCircle,
     tickCircle,
     flecha1,
-    flecha2
+    flecha2,
+    flechaAsc,
+    flechaDsc
 };
