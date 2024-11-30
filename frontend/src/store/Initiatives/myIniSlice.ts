@@ -23,7 +23,7 @@ interface Initiative {
 }
 
 interface InitiativesState {
-  initiatives: Initiative[];
+  myInitiatives: Initiative[];
   loading: boolean;
   error: string | null;
   filter: string;
@@ -31,65 +31,31 @@ interface InitiativesState {
   sortOrder: 'asc' | 'desc';
 }
 
+// Estado inicial
 const initialState: InitiativesState = {
-  initiatives: [],
+  myInitiatives: [],
   loading: false,
   error: null,
   filter: '',
   sortCriteria: 'name', 
-  sortOrder: 'asc',
+  sortOrder: 'asc', 
 };
-
-interface BackendInitiative {
-  id: string;
-  nombre: string;
-  idea: string;
-  problema: string;
-  oportunidad: string;
-  solucion: string;
-  monto_requerido: number;
-  buy_price: number;
-  sell_price: number;
-  misiones_actuales: number;
-  misiones_objetivo: number;
-  colaboradores: number;
-  likes: number;
-  shares: number;
-}
-
 
 export const fetchInitiatives = createAsyncThunk(
   'initiatives/fetchInitiatives',
-  async () => {
-    try {
-      const response = await axios.get(`${URL}/api/iniciativa/getAll`);
-      const mappedInitiatives = response.data.dataIterable.map((item: BackendInitiative) => ({
-        id: item.id,
-        name: item.nombre,
-        priceFluctuation: [100,300,200,400,500],
-        colaborator: item.colaboradores,
-        tokens: 400,
-        missions: `${item.misiones_actuales}/${item.misiones_objetivo}`,
-        likes: item.likes,
-        shares: item.shares,
-        createdAt: "2024-11-20T10:00:00Z",
-        img: "https://www.shutterstock.com/image-photo/help-friend-through-tough-time-600nw-1899282823.jpg",
-        idea: item.idea,
-        problem: item.problema,
-        solution: item.solucion,
-        buy_price: item.monto_requerido,
-        sell_price: item.buy_price,
-      }));
+  async (_, { getState }) => {
+    const { user } = (getState() as RootState).auth;
 
-      return mappedInitiatives;  
+    try {
+      const response = await axios.get(`${URL}/api/iniciativa/getUserIniciativas/${user?.id}`);
+      return response.data;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw new Error(error instanceof Error ? error.message : 'Error al obtener las iniciativas');
     }
   }
 );
 
-export const showInitiativesSlice = createSlice({
+export const myInitiativesSlice = createSlice({
   name: 'initiatives',
   initialState,
   reducers: {
@@ -100,7 +66,7 @@ export const showInitiativesSlice = createSlice({
       state.sortCriteria = action.payload; 
     },
     setSortOrder: (state, action) => {
-      state.sortOrder = action.payload;
+      state.sortOrder = action.payload; 
     },
   },
   extraReducers: (builder) => {
@@ -110,22 +76,23 @@ export const showInitiativesSlice = createSlice({
       })
       .addCase(fetchInitiatives.fulfilled, (state, action) => {
         state.loading = false;
-        state.initiatives = action.payload;
+        state.myInitiatives = action.payload;
       })
       .addCase(fetchInitiatives.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Error desconocido';
+        state.error = action.error.message || 'Algo salió mal';
       });
   },
 });
 
-export const { setFilter, setSortOrder , setSortCriteria} = showInitiativesSlice.actions;
+export const { setFilter, setSortCriteria, setSortOrder } = myInitiativesSlice.actions;
+
 
 export const selectFilteredAndSortedInitiatives = (state: RootState) => {
-  const { initiatives, filter, sortCriteria, sortOrder } = state.initiatives;
+  const { myInitiatives, filter, sortCriteria, sortOrder } = state.myInitiatives;
 
 
-  const filteredInitiatives = initiatives.filter((initiative: Initiative) =>
+  const filteredInitiatives = myInitiatives.filter((initiative: Initiative) =>
     initiative.name.toLowerCase().includes(filter.toLowerCase())
   );
 
@@ -162,4 +129,4 @@ export const selectFilteredAndSortedInitiatives = (state: RootState) => {
   return sortedInitiatives;
 };
 
-export default showInitiativesSlice.reducer;
+export default myInitiativesSlice.reducer;

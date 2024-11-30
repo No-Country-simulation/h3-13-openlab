@@ -112,10 +112,10 @@ const NavbarApp: React.FC = () => {
                 <a href="/profile" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">My profile</a>
               </li>
               <li>
-                <a href="/settings" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Configuration</a>
+                <a href="/settings" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Setting</a>
               </li>
-              <li className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Dicc</li>
-              <li className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">DarkMode</li>
+              {/* <li className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Dicc</li>
+              <li className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">DarkMode</li> */}
               <li>
                 <button onClick={handleOut} className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md font-bold">Log out</button>
               </li>
