@@ -4,7 +4,7 @@ import { RootState } from '../store';
 
 const URL = import.meta.env.VITE_URL_DEL_BACKEND;
 
-interface Initiative {
+export interface Initiative {
   id: string;
   name: string;
   priceFluctuation: number[];
@@ -16,6 +16,7 @@ interface Initiative {
   createdAt: string;
   img: string;
   idea: string;
+  opportunity: string;
   problem: string;
   solution: string;
   buy_price: number;
@@ -32,7 +33,98 @@ interface InitiativesState {
 }
 
 const initialState: InitiativesState = {
-  initiatives: [],
+  initiatives:[
+      {
+        "id": "1",
+        "name": "Iniciativa Educativa",
+        "priceFluctuation": [10, 15, 20, 25],
+        "colaborator": 3,
+        "tokens": "ABC123",
+        "missions": "110/200",
+        "likes": 150,
+        "shares": "35",
+        "createdAt": "2024-01-15T10:00:00Z",
+        "img": "https://example.com/images/initiative1.jpg",
+        "opportunity": "opportunity.",
+        "idea": "Crear un programa de educación en línea para niños en comunidades rurales.",
+        "problem": "Falta de acceso a educación de calidad en ciertas zonas de Argentina.",
+        "solution": "Implementar aulas virtuales y materiales educativos digitales.",
+        "buy_price": 100,
+        "sell_price": 200
+      },
+      {
+        "id": "2",
+        "name": "Reciclaje Sostenible",
+        "priceFluctuation": [5, 10, 15, 20],
+        "colaborator": 5,
+        "tokens": "DEF456",
+        "missions": "Promover el reciclaje entre la comunidad.",
+        "likes": 200,
+        "shares": "40",
+        "createdAt": "2024-02-20T10:00:00Z",
+        "img": "https://example.com/images/initiative2.jpg",
+        "idea": "Fomentar hábitos de reciclaje mediante campañas educativas.",
+        "opportunity": "opportunity.",
+        "problem": "El bajo nivel de conciencia sobre la importancia del reciclaje.",
+        "solution": "Organizar eventos de reciclaje y educar sobre la separación de residuos.",
+        "buy_price": 50,
+        "sell_price": 100
+      },
+      {
+        "id": "3",
+        "name": "Ayuda Alimentaria",
+        "priceFluctuation": [3, 5, 8, 10],
+        "colaborator": 10,
+        "tokens": "GHI789",
+        "missions": "Distribuir alimentos a las familias más necesitadas.",
+        "likes": 300,
+        "shares": "50",
+        "createdAt": "2024-03-05T10:00:00Z",
+        "img": "https://example.com/images/initiative3.jpg",
+        "idea": "Crear un sistema de distribución de alimentos de forma eficiente y equitativa.",
+        "problem": "La inseguridad alimentaria en diversas comunidades.",
+        "opportunity": "opportunity.",
+        "solution": "Organizar donaciones y crear centros de acopio de alimentos.",
+        "buy_price": 30,
+        "sell_price": 70
+      },
+      {
+        "id": "4",
+        "name": "Voluntariado en Salud",
+        "priceFluctuation": [8, 12, 16, 20],
+        "colaborator": 7,
+        "tokens": "JKL101",
+        "missions": "Brindar asistencia médica gratuita en zonas marginadas.",
+        "likes": 120,
+        "shares": "30",
+        "createdAt": "2024-04-01T10:00:00Z",
+        "img": "https://example.com/images/initiative4.jpg",
+        "idea": "Proveer atención médica a las personas sin acceso a servicios de salud.",
+        "problem": "La falta de infraestructura médica en ciertas áreas.",
+        "opportunity": "opportunity.",
+        "solution": "Organizar clínicas móviles y jornadas de salud gratuitas.",
+        "buy_price": 70,
+        "sell_price": 150
+      },
+      {
+        "id": "5",
+        "name": "Recuperación de Espacios Verdes",
+        "priceFluctuation": [5, 7, 10, 12],
+        "colaborator": 4,
+        "tokens": "MNO112",
+        "missions": "Recuperar parques y espacios verdes urbanos.",
+        "opportunity": "opportunity.",
+        "likes": 90,
+        "shares": "10",
+        "createdAt": "2024-05-10T10:00:00Z",
+        "img": "https://example.com/images/initiative5.jpg",
+        "idea": "Recuperar espacios verdes para mejorar la calidad de vida en las ciudades.",
+        "problem": "La contaminación y el deterioro de los espacios públicos.",
+        "solution": "Reforestar y restaurar parques y áreas recreativas.",
+        "buy_price": 40,
+        "sell_price": 80
+      }
+    ],
   loading: false,
   error: null,
   filter: '',
@@ -77,6 +169,7 @@ export const fetchInitiatives = createAsyncThunk(
         idea: item.idea,
         problem: item.problema,
         solution: item.solucion,
+        opportunity: item.oportunidad,
         buy_price: item.monto_requerido,
         sell_price: item.buy_price,
       }));
