@@ -6,7 +6,7 @@ import Hero from "../../components/hero/Hero";
 import Navbar from "../../components/navbar/Navbar";
 import StartSection from "../../components/startSection/StartSection";
 
-const Home = () => {
+const Landing = () => {
   return (
     <div className="bg-secondary">
       <header className="flex flex-col h-dvh">
@@ -24,4 +24,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landing;

@@ -8,15 +8,19 @@
   box-sizing: border-box;
 }
 
+/* Configuramos anclas suaves */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
 
 .simplebar-scrollbar {
-  background-color: #6193FF;
-  border-radius: 10px; 
-
+  background-color: #6193ff;
+  border-radius: 10px;
 }
 
 .simplebar-track {
-  background-color: #E0E0E0; 
+  background-color: #e0e0e0;
   border-radius: 10px;
 }
 
@@ -26,4 +30,3 @@
   mask-repeat: no-repeat;
   mask-position: bottom;
 }
-

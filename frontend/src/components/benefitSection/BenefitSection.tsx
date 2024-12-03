@@ -4,15 +4,15 @@ import { benefitData } from "../../utils/benefitSectionData";
 
 const BenefitSection = () => {
   return (
-    <section className="h-[990px] relative flex items-center justify-center">
+    <section className="min-h-[990px] relative flex items-center justify-center overflow-hidden pt-20">
       <img
         src={benefit_bg}
         alt="benefit_bg"
-        className="w-full blur-[1px] absolute left-0 top-0 -z-10"
+        className="blur-[1px] absolute top-0 -z-10 max-w-fit"
       />
-      <div className="flex items-center justify-around w-[1400px]">
-        <div className="w-[500px] h-[700px] flex flex-col items-start justify-between">
-          <p className="text-4xl font-medium">Beneficios</p>
+      <div className="container flex flex-col items-center justify-around gap-5 md:flex-row">
+        <div className="md:w-[500px] md:h-[700px] flex flex-col items-start justify-between gap-5">
+          <p className="text-3xl font-medium md:text-4xl">Beneficios</p>
           {benefitData.map((data, index) => (
             <div key={index} className="flex items-start gap-10">
               <img src={data.icon} alt="icons" />
@@ -23,7 +23,11 @@ const BenefitSection = () => {
             </div>
           ))}
         </div>
-        <img src={phone} alt="phone" />
+        <img
+          src={phone}
+          alt="phone"
+          className="max-h-[500px] md:max-h-[830px]"
+        />
       </div>
     </section>
   );

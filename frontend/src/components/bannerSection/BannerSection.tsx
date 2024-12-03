@@ -3,14 +3,14 @@ import vector from "../../assets/landing/Vector3.svg";
 
 const BannerSection = () => {
   return (
-    <section className="relative h-[750px] flex items-center justify-center">
+    <section className="relative min-h-[750px] flex items-center justify-center overflow-hidden">
       <img
         src={vector}
         alt="vector"
-        className="absolute top-0 left-0 w-full -z-10"
+        className="absolute top-0 -z-10 max-w-fit"
       />
-      <div className="flex flex-col gap-20 text-center items-center text-white max-w-[800px]">
-        <p className="text-4xl font-medium">
+      <div className="flex flex-col gap-20 text-center items-center px-5 text-white md:max-w-[800px]">
+        <p className="text-3xl font-medium md:text-4xl">
           No es tiempo de aprender a jugar el juego, sino de cambiar sus reglas
         </p>
         <p className="text-lg font-light">

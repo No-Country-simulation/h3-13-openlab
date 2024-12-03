@@ -4,7 +4,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Error404 from "../layout/Error404.tsx";
-import Home from "../pages/home/Home.tsx";
+import Landing from "../pages/home/Landing.tsx";
 import Initiativas from "../pages/User/Initiativas.tsx";
 import Profile from "../pages/User/Profile.tsx";
 import AppLayout from "../layout/AppLayout.tsx";
@@ -18,19 +18,18 @@ export const AppRouter = createBrowserRouter(
     <>
       {/* Rutas publicas */}
       <Route path="/" errorElement={<Error404 />}>
-        <Route index element={<Home />} />
+        <Route index element={<Landing />} />
         <Route path="*" element={<Error404 />} />
-
       </Route>
-    {/* Rutas User */}
+      {/* Rutas User */}
       {/* <Route element={<ProtectedRoute allowedRoles={["user"]}/>}> */}
-      <Route path="/" element={<AppLayout/>}>
+      <Route path="/" element={<AppLayout />}>
         <Route path="test" element={<HomeUser />} />
         <Route path="initiatives" element={<Initiativas />} />
         <Route path="Myinitiatives" element={<MyInitiatives/>} />
         <Route path="initiative/:id" element={<Detail/>}/>
-        <Route path="profile" element={<Profile />} />
 
+        <Route path="profile" element={<Profile />} />
       </Route>
     </>
   )

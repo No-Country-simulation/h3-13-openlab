@@ -7,12 +7,12 @@ const Hero = () => {
       className="relative flex w-full h-[816] place-content-center bg-primary"
       id="hero_bg"
     >
-      <div className="flex items-center justify-between w-[1400px] h-fit">
-        <div className="text-white max-w-[600px] flex flex-col gap-10 items-center z-10">
-          <p className="text-6xl font-medium">
+      <div className="container flex flex-col items-center justify-between pt-8 md:pt-0 md:flex-row h-fit">
+        <div className="text-white md:max-w-[600px] max-w-[300px] flex flex-col gap-10 items-center z-10">
+          <p className="text-3xl font-medium md:text-6xl">
             Bienvenido al futuro de la innovación
           </p>
-          <p className="text-xl">
+          <p className="text-lg md:text-xl">
             Ayuda a crear startups de manera colaborativa y conviértete en
             co-propietario de los proyectos a través de tokens enlazados a la
             propiedad intelectual.
