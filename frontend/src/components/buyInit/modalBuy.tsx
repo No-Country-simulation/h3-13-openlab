@@ -1,16 +1,8 @@
 import { useState } from "react";
 import { close } from "../../assets";
 import useWindowSize from "../hooks/Responsive";
+import { Initiative } from "../../store/Initiatives/showInitiativesSlice";
 // import { useDispatch } from "react-redux";
-
-interface Initiative {
-    name: string;
-    img: string;
-    idea: string;
-    problem: string;
-    solution: string;
-    buy_price:number;
-  }
 
 const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: () => void }) => {
     // const dispatch = useDispatch();
@@ -50,7 +42,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
         <div className='flex flex-row gap-4 items-center justify-around'>
             <div className='flex flex-col gap-3 ml-5 '>
                 <div className="flex items-center justify-center">
-                    <img src={initiative.img} className="w-[200px]" alt={initiative.name} />
+                    <img src={initiative.logo} className="w-[200px]" alt={initiative.name} />
                 </div>
 
                 <div>
@@ -115,7 +107,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
         </div>
 
         <div className="flex flex-col items-center justify-center mt-4">
-            <img src={initiative.img} className="w-[150px]" alt={initiative.name} />
+            <img src={initiative.logo} className="w-[150px]" alt={initiative.name} />
             <h1 className="text-sm font-bold mt-4">Idea</h1>
             <p className="w-[80%]">{initiative.idea}</p>
             <h1 className="text-sm font-bold mt-4">Problem</h1>

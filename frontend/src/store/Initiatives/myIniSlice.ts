@@ -1,26 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
+import { Initiative } from './showInitiativesSlice';
 
 const URL = import.meta.env.VITE_URL_DEL_BACKEND;
-
-interface Initiative {
-  id: string;
-  name: string;
-  priceFluctuation: number[];
-  colaborator: number;
-  tokens: string;
-  missions: string;
-  likes: number;
-  shares: string;
-  createdAt: string;
-  img: string;
-  idea: string;
-  problem: string;
-  solution: string;
-  buy_price: number;
-  sell_price: number;
-}
 
 interface InitiativesState {
   myInitiatives: Initiative[];

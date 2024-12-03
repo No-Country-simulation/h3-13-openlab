@@ -4,17 +4,21 @@ import { RootState } from '../store';
 
 const URL = import.meta.env.VITE_URL_DEL_BACKEND;
 
+export interface PriceFluctuation {
+  date: string;
+  value: number;
+}
 export interface Initiative {
   id: string;
   name: string;
-  priceFluctuation: number[];
+  priceFluctuation: PriceFluctuation[]
   colaborator: number;
   tokens: string;
   missions: string;
   likes: number;
   shares: string;
   createdAt: string;
-  img: string;
+  logo: string;
   idea: string;
   opportunity: string;
   problem: string;
@@ -37,14 +41,25 @@ const initialState: InitiativesState = {
       {
         "id": "1",
         "name": "Iniciativa Educativa",
-        "priceFluctuation": [10, 15, 20, 25],
+        "priceFluctuation":  [
+  { "date": "2024-01-01", "value": 10 },
+  { "date": "2024-01-02", "value": 12 },
+  { "date": "2024-01-03", "value": 15 },
+  { "date": "2024-01-04", "value": 18 },
+  { "date": "2024-01-05", "value": 20 },
+  { "date": "2024-01-06", "value": 25 },
+  { "date": "2024-01-07", "value": 30 },
+  { "date": "2024-01-08", "value": 28 },
+  { "date": "2024-01-09", "value": 26 },
+  { "date": "2024-01-10", "value": 22 }
+],
         "colaborator": 3,
         "tokens": "ABC123",
         "missions": "110/200",
         "likes": 150,
         "shares": "35",
         "createdAt": "2024-01-15T10:00:00Z",
-        "img": "https://example.com/images/initiative1.jpg",
+        "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROJ9Vsvk_QnBTJlrLSLoTIfsPeLdyTC7HS1Xe7KVX2eXoS-MTTkm4qmng0MfjUOKY9Ih8&usqp=CAU",
         "opportunity": "opportunity.",
         "idea": "Crear un programa de educación en línea para niños en comunidades rurales.",
         "problem": "Falta de acceso a educación de calidad en ciertas zonas de Argentina.",
@@ -55,14 +70,25 @@ const initialState: InitiativesState = {
       {
         "id": "2",
         "name": "Reciclaje Sostenible",
-        "priceFluctuation": [5, 10, 15, 20],
+        "priceFluctuation":  [
+          { "date": "2024-01-04", "value": 20 },
+          { "date": "2024-01-05", "value": 22 },
+          { "date": "2024-01-06", "value": 25 },
+          { "date": "2024-01-07", "value": 28 },
+          { "date": "2024-01-08", "value": 20 },
+          { "date": "2024-01-09", "value": 25 },
+          { "date": "2024-01-10", "value": 20 },
+          { "date": "2024-01-11", "value": 38 },
+          { "date": "2024-01-12", "value": 36 },
+          { "date": "2024-01-13", "value": 32 }
+        ],
         "colaborator": 5,
         "tokens": "DEF456",
-        "missions": "Promover el reciclaje entre la comunidad.",
+        "missions": "110/120",
         "likes": 200,
         "shares": "40",
         "createdAt": "2024-02-20T10:00:00Z",
-        "img": "https://example.com/images/initiative2.jpg",
+        "logo": "https://img.freepik.com/vector-premium/ilustracion-icono-vectorial-dinero-digital-conjunto-iconos-criptomonedas_904970-140485.jpg",
         "idea": "Fomentar hábitos de reciclaje mediante campañas educativas.",
         "opportunity": "opportunity.",
         "problem": "El bajo nivel de conciencia sobre la importancia del reciclaje.",
@@ -73,14 +99,25 @@ const initialState: InitiativesState = {
       {
         "id": "3",
         "name": "Ayuda Alimentaria",
-        "priceFluctuation": [3, 5, 8, 10],
+        "priceFluctuation":  [
+          { "date": "2024-01-01", "value": 15 },
+          { "date": "2024-01-02", "value": 25 },
+          { "date": "2024-01-03", "value": 15 },
+          { "date": "2024-01-04", "value": 88 },
+          { "date": "2024-01-05", "value": 90 },
+          { "date": "2024-01-06", "value": 25 },
+          { "date": "2024-01-07", "value": 60 },
+          { "date": "2024-01-08", "value": 18 },
+          { "date": "2024-01-09", "value": 26 },
+          { "date": "2024-01-10", "value": 22 }
+        ],
         "colaborator": 10,
         "tokens": "GHI789",
-        "missions": "Distribuir alimentos a las familias más necesitadas.",
+        "missions": "110/120",
         "likes": 300,
         "shares": "50",
         "createdAt": "2024-03-05T10:00:00Z",
-        "img": "https://example.com/images/initiative3.jpg",
+        "logo": "https://img.freepik.com/vector-premium/icono-vectorial-bitcoin-puede-usar-conjunto-iconos-banca-finanzas_717774-49184.jpg",
         "idea": "Crear un sistema de distribución de alimentos de forma eficiente y equitativa.",
         "problem": "La inseguridad alimentaria en diversas comunidades.",
         "opportunity": "opportunity.",
@@ -91,14 +128,25 @@ const initialState: InitiativesState = {
       {
         "id": "4",
         "name": "Voluntariado en Salud",
-        "priceFluctuation": [8, 12, 16, 20],
+        "priceFluctuation":  [
+          { "date": "2024-01-01", "value": 30 },
+          { "date": "2024-01-02", "value": 32 },
+          { "date": "2024-01-03", "value": 35 },
+          { "date": "2024-01-04", "value": 38 },
+          { "date": "2024-01-05", "value": 50 },
+          { "date": "2024-01-06", "value": 55 },
+          { "date": "2024-01-07", "value": 80 },
+          { "date": "2024-01-08", "value": 68 },
+          { "date": "2024-01-09", "value": 66 },
+          { "date": "2024-01-10", "value": 42 }
+        ],
         "colaborator": 7,
         "tokens": "JKL101",
-        "missions": "Brindar asistencia médica gratuita en zonas marginadas.",
+        "missions": "110/120",
         "likes": 120,
         "shares": "30",
         "createdAt": "2024-04-01T10:00:00Z",
-        "img": "https://example.com/images/initiative4.jpg",
+        "logo": "https://img.freepik.com/vector-premium/imagen-vectorial-icono-bitcoin-puede-utilizar-banca-finanzas_120816-261887.jpg",
         "idea": "Proveer atención médica a las personas sin acceso a servicios de salud.",
         "problem": "La falta de infraestructura médica en ciertas áreas.",
         "opportunity": "opportunity.",
@@ -109,7 +157,18 @@ const initialState: InitiativesState = {
       {
         "id": "5",
         "name": "Recuperación de Espacios Verdes",
-        "priceFluctuation": [5, 7, 10, 12],
+        "priceFluctuation":  [
+          { "date": "2024-01-01", "value": 10 },
+          { "date": "2024-01-02", "value": 12 },
+          { "date": "2024-01-03", "value": 15 },
+          { "date": "2024-01-04", "value": 18 },
+          { "date": "2024-01-05", "value": 20 },
+          { "date": "2024-01-06", "value": 25 },
+          { "date": "2024-01-07", "value": 30 },
+          { "date": "2024-01-08", "value": 28 },
+          { "date": "2024-01-09", "value": 26 },
+          { "date": "2024-01-10", "value": 22 }
+        ],
         "colaborator": 4,
         "tokens": "MNO112",
         "missions": "Recuperar parques y espacios verdes urbanos.",
@@ -117,7 +176,7 @@ const initialState: InitiativesState = {
         "likes": 90,
         "shares": "10",
         "createdAt": "2024-05-10T10:00:00Z",
-        "img": "https://example.com/images/initiative5.jpg",
+        "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFGL79xEAa-r2EEw7nJg9I5IQIHu6KRaOlZTaSFldakpozM3svoNxHLpnWEXm1xvCaDR8&usqp=CAU",
         "idea": "Recuperar espacios verdes para mejorar la calidad de vida en las ciudades.",
         "problem": "La contaminación y el deterioro de los espacios públicos.",
         "solution": "Reforestar y restaurar parques y áreas recreativas.",
@@ -165,7 +224,7 @@ export const fetchInitiatives = createAsyncThunk(
         likes: item.likes,
         shares: item.shares,
         createdAt: "2024-11-20T10:00:00Z",
-        img: "https://www.shutterstock.com/image-photo/help-friend-through-tough-time-600nw-1899282823.jpg",
+        logo: "https://www.shutterstock.com/image-photo/help-friend-through-tough-time-600nw-1899282823.jpg",
         idea: item.idea,
         problem: item.problema,
         solution: item.solucion,
