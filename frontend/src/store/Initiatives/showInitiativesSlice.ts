@@ -4,18 +4,23 @@ import { RootState } from '../store';
 
 const URL = import.meta.env.VITE_URL_DEL_BACKEND;
 
-interface Initiative {
+export interface PriceFluctuation {
+  date: string;
+  value: number;
+}
+export interface Initiative {
   id: string;
   name: string;
-  priceFluctuation: number[];
+  priceFluctuation: PriceFluctuation[]
   colaborator: number;
   tokens: string;
   missions: string;
   likes: number;
   shares: string;
   createdAt: string;
-  img: string;
+  logo: string;
   idea: string;
+  opportunity: string;
   problem: string;
   solution: string;
   buy_price: number;
@@ -32,7 +37,7 @@ interface InitiativesState {
 }
 
 const initialState: InitiativesState = {
-  initiatives: [],
+  initiatives:[],
   loading: false,
   error: null,
   filter: '',
@@ -73,10 +78,11 @@ export const fetchInitiatives = createAsyncThunk(
         likes: item.likes,
         shares: item.shares,
         createdAt: "2024-11-20T10:00:00Z",
-        img: "https://www.shutterstock.com/image-photo/help-friend-through-tough-time-600nw-1899282823.jpg",
+        logo: "https://www.shutterstock.com/image-photo/help-friend-through-tough-time-600nw-1899282823.jpg",
         idea: item.idea,
         problem: item.problema,
         solution: item.solucion,
+        opportunity: item.oportunidad,
         buy_price: item.monto_requerido,
         sell_price: item.buy_price,
       }));

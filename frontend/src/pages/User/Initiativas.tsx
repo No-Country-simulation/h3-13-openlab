@@ -14,23 +14,8 @@ import { sendJoinLeave, sendLikeDislike, sendShare } from "../../store/Initiativ
 const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT
 import { useAppKitAccount } from "@reown/appkit/react";
 import { toast } from "react-toastify";
-interface Initiative {
-  id: string;
-  name: string;
-  priceFluctuation: number[]; 
-  colaborator: number;
-  tokens: string; 
-  missions: string;
-  likes: number;
-  shares: string;
-  createdAt: string;
-  img: string;
-  idea: string;
-  problem: string;
-  solution: string;
-  buy_price: number;
-  sell_price:number;
-}
+import { Initiative } from "../../store/Initiatives/showInitiativesSlice";
+import { Link } from "react-router-dom";
 
 const Initiativas = () => {
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
@@ -254,7 +239,8 @@ const handleSortClick = (criteria: string) => {
          <div key={index} className="flex flex-col gap-4 border-b p-4">
 
            <div className="flex flex-row items-center gap-4">
-             <div className="flex items-center m-auto text-sm font-semibold text-center">{item.name}</div>
+             <div className="flex items-center m-auto text-sm font-semibold text-center">
+              <Link to={`/initiative/${item.id}`}>{item.name}</Link></div>
              <div className="flex items-center m-auto text-sm">
                <MiniGraph data={item.priceFluctuation} color="#3D7BFF" />
              </div>
@@ -482,7 +468,8 @@ const handleSortClick = (criteria: string) => {
 
         {filteredAndSortedInitiatives.map((item, index) => (
           <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b mr-8">
-            <div className="flex items-center m-auto text-sm text-center">{item.name}</div>
+            <div className="flex items-center m-auto text-sm text-center">
+            <Link to={`/initiative/${item.id}`}>{item.name}</Link></div>
             <div className="flex items-center m-auto text-sm">   <MiniGraph data={item.priceFluctuation} color="#3D7BFF" /></div>
             <div className="flex items-center justify-center m-auto text-sm bg-[#00B2FF]/20 rounded-lg p-1 w-[73px]">{item.colaborator}</div>
             <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm"> {item.buy_price +"/"+ item.sell_price}</div>
