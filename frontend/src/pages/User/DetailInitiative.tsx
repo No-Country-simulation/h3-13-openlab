@@ -98,11 +98,104 @@ useEffect(() => {
 
 
   return (
-    <div className="flex flex-col bg-[#afafaf1a] gap-2 p-1">
+  <div className="flex flex-col bg-[#afafaf1a]">
         {isModalOpen && selectedInitiative && <ModalBuy initiative={selectedInitiative} onClose={() => setIsModalOpen(false)} />}
         {isMobile 
         // **-*-*-*-*-*-*-*-*-*-*-*-*-*-*- Mobil*-*-*-*-*-*-*-**-*-*-*-*-
         ? <>
+        <div className="flex flex-col items-center w-[screen]">
+          <div className="flex flex-col p-2 gap-3">
+          <button 
+                    className="text-xl font-semibold mb-1 justify-items-end"
+                    onClick={handleBack}
+                    ><img src={close} className="w-[30px]"/></button>
+            <h1 className="text-xl text-center font-semibold p-1 mb-2">{initiativeDetail.name}</h1>
+            <img src={initiativeDetail.logo}
+                  alt={initiativeDetail.name}
+                  className=" w-[100px] h-[100px] m-auto"
+                  />
+            
+            <div className="flex flex-col m-1 gap-1">
+              <div className="flex flex-col items-center">
+                <h2 className="text-l italic font-semibold">Problema:</h2> 
+                <p className="m-1 w-[400px] text-center  h-[50px] justify-center">{initiativeDetail.problem}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <h2 className="text-l italic font-semibold">Oportunidad:</h2> 
+                <p className="m-1 w-[400px] text-center h-[50px] justify-center">{initiativeDetail.opportunity}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <h2 className="text-l italic font-semibold">Solución:</h2> 
+                <p className="m-1 w-[400px] text-center h-[50px] justify-center">{initiativeDetail.solution}</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <h2 className="text-l italic font-semibold">idea:</h2>
+                <p  className="m-1 w-[400px] text-center h-[50px] justify-center">{initiativeDetail.idea}</p>
+              </div>
+            </div>
+
+          <div>
+              <div className="">
+                <h2  className="text-l italic font-semibold text-center m-2 pb-2">Valores Históricos:</h2> 
+                 <DetailedGraph priceFluctuation={initiativeDetail.priceFluctuation } />
+              </div>
+              <div className="flex flex-row items-center justify-evenly m-3">
+                    <div className="flex flex-col items-center">
+                      <h2  className="text-l italic font-semibold text-center">Precio de venta:</h2> 
+                      <p className="m-3">${initiativeDetail.sell_price}</p>
+                    </div>
+
+                    <div className="flex flex-col items-center p-2">
+                      <h2  className="text-l italic font-semibold text-center">Precio de Compra:</h2> 
+                      <p className="m-3">${initiativeDetail.buy_price}</p>     
+                    </div>
+
+                    <button className="text-sm italic bg-[#A9A9A9]/80 text-white p-1 rounded-lg shadow">Actualizar</button>
+
+              </div>
+              <br/>
+          </div>
+          
+          <div className="bg-white fixed bottom-0 left-0 right-0 z-10 border rounded-lg shadow">
+              <div className="flex flex-row justify-evenly p-2">
+                {isConnected
+                  ? <button 
+                    className="bg-[#00B2FF] text-white justify-center p-2 rounded-full w-[54px] h-[34px] flex items-center shadow-lg"
+                    onClick={() => handleBuy(initiativeDetail)} 
+                    >Buy</button>
+                  
+                  :<button 
+                    className="bg-[#E0E0E0] text-black p-2  justify-center rounded-full w-[54px] h-[34px] flex items-center shadow-lg"
+                    onClick={()=>{toast.info('Please connect the wallet first')}}
+                    >Buy</button>
+                      }
+
+                    {isJoined
+                    ?<button 
+                      className="bg-[#E0E0E0] text-white p-2 justify-center rounded-full w-[54px] h-[34px] flex items-center shadow-lg"
+                      onClick={()=>handleJoin(initiativeDetail.id)}
+                      >Join</button> 
+                    :<button 
+                      className="bg-color-1 text-white p-2  justify-center rounded-full w-[54px] h-[34px] flex items-center shadow-lg"
+                      onClick={()=>handleJoin(initiativeDetail.id)}
+                      >Join</button>
+                          }
+                      <button 
+                            className="m-2"
+                            onClick={()=>handleLike(initiativeDetail.id)}
+                            ><img src={isLiked ? likeIcon: dislikeIcon} className="h-[20px]"/>
+                            </button>
+                            <button className="m-2"
+                            onClick={()=>handleShare(initiativeDetail.id)}
+                            ><img src={shareIcon} className="h-[20px]"/>
+                            </button>
+                </  div>
+
+          </div>
+          <br/>
+          </div>
+    </div>
+        
         </>
         // **-*-*-*-*-*-*-*-*-*-*-*-*-*-*- WebApp*-*-*-*-*-*-*-**-*-*-*-*-
         : <><div className="flex flex-row gap-2 justify-between m-auto ">
@@ -129,7 +222,7 @@ useEffect(() => {
                     className="text-xl font-semibold mb-1 items-center justify-items-end"
                     onClick={handleBack}
                     ><img src={close} className="w-[35px]"/></button>
-                    <div className="bg-white rounded-lg shadow p-2 flex flex-col gap-3 m-3">
+                    <div className="bg-white rounded-lg shadow p-2 flex flex-col gap-3 m-3 mr-12">
                         <div>
                           <h2 className="text-l italic font-semibold text-center">Colaboradores:</h2><p className="bg-[#00B2FF]/20 rounded-lg p-1 w-[73px] text-center m-auto text-sm p-1"> {initiativeDetail.colaborator}</p></div>
                         <div><h2 className="text-l italic font-semibold text-center">Misiones:</h2><p  className="text-center m-auto text-sm p-1"> {initiativeDetail.missions}</p></div>
@@ -141,10 +234,10 @@ useEffect(() => {
         </div>
 
         <div className="flex  flex-row  justify-center gap-6">
-                <div className="bg-white rounded-lg shadow p-1 flex flex-row  justify-evenly gap-8">
+                <div className="bg-white rounded-lg shadow p-1 flex flex-row  justify-evenly gap-10">
 
                     <div className="">
-                        <h2  className="text-l italic font-semibold text-center">Valores Históricos:</h2> 
+                        <h2  className="text-l italic font-semibold text-center pb-1">Valores Históricos:</h2> 
                             <DetailedGraph priceFluctuation={initiativeDetail.priceFluctuation}/>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-4 p-2">
@@ -154,7 +247,7 @@ useEffect(() => {
                                 
                             </div>
 
-                            <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center p-2">
                                 <h2  className="text-l italic font-semibold text-center">Precio de Compra:</h2> 
                                 <p className="m-3">${initiativeDetail.buy_price}</p>
                                 

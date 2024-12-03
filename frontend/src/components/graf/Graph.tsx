@@ -18,6 +18,7 @@ type DetailedGraphProps = {
   priceFluctuation: PriceFluctuation[];
 };
 
+
 const DetailedGraph: React.FC<DetailedGraphProps> = ({ priceFluctuation }) => {
 
   const maxValue = Math.max(...priceFluctuation.map((point) => point.value));
@@ -57,7 +58,8 @@ const DetailedGraph: React.FC<DetailedGraphProps> = ({ priceFluctuation }) => {
 
   return (
     <div style={{ width:500, height: 300 }}>
-      <ResponsiveContainer >
+    {/* <div style={{ width:500, height: 300 }}> */}
+      <ResponsiveContainer width="90%" height={250} >
         <LineChart
           data={priceFluctuation}
         >
