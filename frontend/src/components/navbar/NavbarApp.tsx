@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { profile, line, on, off, newini, home, init, create, log_out } from "../../assets";
+import { profile, line, on, off, newini, home, init, log_out } from "../../assets";
 import { useAppKit } from '@reown/appkit/react';
 import { useAppKitAccount } from '@reown/appkit/react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/auth/authSlice';
 import { useSelector } from 'react-redux';
@@ -70,10 +70,10 @@ const NavbarApp: React.FC = () => {
             </div>
 
             <div className="flex flex-col items-center space-y-4 min-h-screen">
-              <a href="#" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={home} className='m-1' />Home</a>
-              <a href="#" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={create} className='m-1' />Create New</a>
-              <a href="#" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={newini} className='m-1' />New Initiatives</a>
-              <a href="/initiatives" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={init} className='m-1' />Iniciatives</a>
+              <Link to="/test" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={home} className='m-1' />Home</Link>
+              {/* < className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={create} className='m-1' />Create New</Link> */}
+              <Link to="/MyInitiatives" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={newini} className='m-1' />My Initiatives</Link>
+              <Link to="/initiatives" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={init} className='m-1' />Initiatives</Link>
               <br /><br /><br /><br /><br /><br /><br /><br />
 
               <button className="flex items-end text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 mt-auto rounded hover:text-white" onClick={handleOut}>
@@ -109,10 +109,10 @@ const NavbarApp: React.FC = () => {
           <div id="profile-menu" className="absolute right-0 top-14 w-48 bg-white shadow-lg rounded-md w-[145px]">
             <ul className="space-y-2 p-2 text-sm">
               <li>
-                <a href="/profile" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">My profile</a>
+                <Link to="/profile" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">My profile</Link>
               </li>
               <li>
-                <a href="/settings" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Setting</a>
+                <Link to="/settings" className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Setting</Link>
               </li>
               {/* <li className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">Dicc</li>
               <li className="block px-4 py-2 text-black hover:bg-blue-100 rounded-md">DarkMode</li> */}
