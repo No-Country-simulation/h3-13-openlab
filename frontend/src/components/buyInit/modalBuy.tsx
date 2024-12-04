@@ -31,7 +31,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
       <div className="bg-white rounded shadow-lg w-[964px] h-[600px] flex flex-col gap-4">
         <div className='flex flex-row justify-between items-center p-6'>
             <div className="flex flex-row items-center justify-center">
-                <h1 className='text-3xl font-semibold mt-4 ml-5'>Buy Token Inititive :</h1>
+                <h1 className='text-3xl font-semibold mt-4 ml-5'>Buy Token DAO:</h1>
                 <h1 className="font-bold text-3xl mt-4 ml-5 ">{initiative.name}</h1>
             </div>
             <button onClick={handleClose} className='p-2'>
@@ -39,26 +39,25 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
             </button>
         </div>
 
-        <div className='flex flex-row gap-4 items-center justify-around'>
-            <div className='flex flex-col gap-3 ml-5 '>
+        <div className='flex flex-row items-center justify-around'>
+            <div className='flex flex-col gap-3 m-auto w-[462px]'>
                 <div className="flex items-center justify-center">
                     <img src={initiative.logo} className="w-[200px]" alt={initiative.name} />
                 </div>
-
                 <div>
-                    <h1 className='text-sm font-bold m-2'>Idea</h1>
-                    <h1 className="w-[90%] m-auto">{initiative.idea}</h1>
+                    <h1 className='text-sm font-bold m-2 pl-4'>Idea</h1>
+                    <h1 className=" w-[400px] m-auto">{initiative.idea}</h1>
                 </div>
             </div>
 
-            <div className='flex flex-col gap-3 mr-5 '>
+            <div className='flex flex-col gap-3 m-auto w-[462px]'>
                 <div>
                     <h1 className='text-sm font-bold m-2'>Problem</h1>
-                    <h1 className="w-[90%] m-auto">{initiative.problem}</h1>
+                    <h1 className=" w-[400px] m-auto">{initiative.problem}</h1>
                 </div>
                 <div>
                     <h1 className='text-sm font-bold m-2'>Solution</h1>
-                    <h1 className="w-[90%] m-auto">{initiative.solution}</h1>
+                    <h1 className=" w-[400px] m-auto">{initiative.solution}</h1>
                 </div>
             </div>
         </div>
