@@ -67,11 +67,22 @@ export const fetchInitiatives = createAsyncThunk(
   'initiatives/fetchInitiatives',
   async () => {
     try {
-      const response = await axios.get(`${URL}/api/iniciativa/getAll`);
+      const response = await axios.get(`${URL}/api/iniciativa/getAllIniciativas`);
       const mappedInitiatives = response.data.dataIterable.map((item: BackendInitiative) => ({
-        id: item.id,
+        id: String(item.id),
         name: item.nombre,
-        priceFluctuation: [100,300,200,400,500],
+        priceFluctuation: [
+          { date: "2024-11-22", value: 15 },
+          { date: "2024-11-23", value: 2 },
+          { date: "2024-11-24", value: 89 },
+          { date: "2024-11-25", value: 45 },
+          { date: "2024-11-26", value: 60 },
+          { date: "2024-11-27", value: 35 },
+          { date: "2024-11-28", value: 40 },
+          { date: "2024-11-29", value: 85 },
+          { date: "2024-11-30", value: 30 },
+          { date: "2024-12-01", value: 55 },
+        ],
         colaborator: item.colaboradores,
         tokens: 400,
         missions: `${item.misiones_actuales}/${item.misiones_objetivo}`,
