@@ -26,7 +26,6 @@ const Detail = () => {
 
   const [initiativeDetail, setInitiativeDetail] = useState<Initiative | null | undefined>(null);
   const { width } = useWindowSize();
-
   const isMobile = width <= 768;
 
   const handleBuy = (initiative: Initiative) => {
@@ -104,7 +103,7 @@ useEffect(() => {
         // **-*-*-*-*-*-*-*-*-*-*-*-*-*-*- Mobil*-*-*-*-*-*-*-**-*-*-*-*-
         ? <>
         <div className="flex flex-col items-center w-[screen]">
-          <div className="flex flex-col p-2 gap-3">
+          <div className="flex flex-col p-2 gap-3 ">
           <button 
                     className="text-xl font-semibold mb-1 justify-items-end"
                     onClick={handleBack}
@@ -136,7 +135,7 @@ useEffect(() => {
 
           <div>
               <div className="">
-                <h2  className="text-l italic font-semibold text-center m-2 pb-2">Valores Históricos:</h2> 
+                <h2  className="text-l italic font-semibold text-center m-2">Valores Históricos:</h2> 
                  <DetailedGraph priceFluctuation={initiativeDetail.priceFluctuation } />
               </div>
               <div className="flex flex-row items-center justify-evenly m-3">
@@ -237,7 +236,7 @@ useEffect(() => {
                 <div className="bg-white rounded-lg shadow p-1 flex flex-row  justify-evenly gap-10">
 
                     <div className="">
-                        <h2  className="text-l italic font-semibold text-center pb-1">Valores Históricos:</h2> 
+                        <h2  className="text-l italic font-semibold text-center">Valores Históricos:</h2> 
                             <DetailedGraph priceFluctuation={initiativeDetail.priceFluctuation}/>
                     </div>
                     <div className="flex flex-col items-center justify-center gap-4 p-2">

@@ -13,6 +13,7 @@ import { sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIni
 import { fetchInitiatives} from "../../store/Initiatives/myIniSlice";
 import { openModal } from "../../store/Initiatives/createIniSlice";
 import { useAppKitAccount } from "@reown/appkit/react";
+import { Link } from "react-router-dom";
 const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT;
 
 const MyInitiatives = () => {
@@ -189,7 +190,8 @@ const MyInitiatives = () => {
          <div key={index} className="flex flex-col gap-4 border-b p-4">
 
            <div className="flex flex-row items-center gap-4">
-             <div className="flex items-center m-auto text-sm font-semibold text-center">{item.name}</div>
+             <div className="flex items-center m-auto text-sm font-semibold text-center">
+             <Link to={`/initiative/${item.id}`}>{item.name}</Link></div>
              <div className="flex items-center m-auto text-sm">
                <MiniGraph data={item.priceFluctuation} color="#3D7BFF" />
              </div>
@@ -388,7 +390,9 @@ const MyInitiatives = () => {
 
                   {filteredAndSortedInitiatives.map((item, index) => (
                     <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b mr-8">
-                      <div className="flex items-center m-auto text-sm text-center">{item.name}</div>
+                      <div className="flex items-center m-auto text-sm text-center">
+                      <Link to={`/initiative/${item.id}`}>{item.name}</Link>
+                      </div>
                       <div className="flex items-center m-auto text-sm">
                         <MiniGraph data={item.priceFluctuation} color="#3D7BFF" />
                       </div>

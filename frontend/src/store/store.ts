@@ -15,6 +15,7 @@ export const store = configureStore({
     joinInitiatives: joinInitiativesSlice.reducer,
     likeInitiatives: likedInitiativesSlice.reducer,
     myInitiatives: myInitiativesSlice.reducer,
+
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
