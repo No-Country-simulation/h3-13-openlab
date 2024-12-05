@@ -65,7 +65,7 @@ const Dashboard = () => {
   const lastTenMyInitiatives = myInitiatives.slice(-6);
 
   useEffect(() => {
-    // dispatch(fetchInitiatives())
+    dispatch(fetchInitiatives())
     dispatch(fetchMyInitiatives());
     if (isConnected) {
       fetchData();

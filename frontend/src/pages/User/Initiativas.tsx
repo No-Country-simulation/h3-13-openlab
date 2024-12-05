@@ -169,7 +169,7 @@ const handleSortClick = (criteria: string) => {
 };
 
     useEffect(() => {
-      // dispatch(fetchInitiatives());
+      dispatch(fetchInitiatives());
       // const filtered = filterNewInitiatives(initiatives); 
       // setNewInitiatives(filtered);
     }, [dispatch]);
