@@ -3,6 +3,7 @@ import line from "./icons/Line 64.svg"
 import on from "./icons/wallet-1.webp"
 import off from "./icons/wallet-2.webp"
 import newini from "./icons/NewIni.svg"
+import newiniBlue from "./icons/NewIniBlue.svg"
 import home from "./icons/home.svg"
 import init from "./icons/Init.svg"
 import create from "./icons/CreateIni.svg"
@@ -22,6 +23,13 @@ import flecha1 from "./icons/Flecha1.svg"
 import flecha2 from "./icons/Flecha2.svg"
 import flechaAsc from "./icons/FlechaAsc.svg"
 import flechaDsc from "./icons/FlechaDsc.svg"
+import acount from "./icons/bank.svg"
+import wallet from "./icons/wallet.svg"
+import segurity from "./icons/exchange.svg"
+import gas from "./icons/cloud.svg"
+import warning from "./icons/billetera.svg"
+import estadist from "./icons/estadistica.svg"
+import historial from "./icons/transaccion.svg"
 
 export{
     profile,
@@ -34,6 +42,7 @@ export{
     create,
     log_out,
     newiniW,
+    newiniBlue,
     homeW ,
     initW ,
     createW,
@@ -47,5 +56,12 @@ export{
     flecha1,
     flecha2,
     flechaAsc,
-    flechaDsc
+    flechaDsc,
+    wallet,
+    acount,
+    segurity,
+    gas,
+    warning,
+    estadist,
+    historial
 };

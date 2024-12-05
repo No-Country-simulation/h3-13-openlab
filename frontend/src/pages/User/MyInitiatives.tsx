@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 // import ModalBuy from "../../components/buyInit/modalBuy";
 import { sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
-import { fetchInitiatives} from "../../store/Initiatives/myIniSlice";
+import { fetchMyInitiatives} from "../../store/Initiatives/myIniSlice";
 import { openModal } from "../../store/Initiatives/createIniSlice";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { Link } from "react-router-dom";
@@ -139,7 +139,7 @@ const MyInitiatives = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchInitiatives());
+    dispatch(fetchMyInitiatives());
   }, [dispatch]);
 
   return (
@@ -274,7 +274,7 @@ const MyInitiatives = () => {
         </>
       ) : (
         <>
-          <div className="bg-[#afafaf1a]/10 h-screen flex flex-col">
+          <div className="bg-[#afafaf1a]/10 h-[80] flex flex-col">
             <h1 className="text-3xl p-4 sm:w-full">My Initiatives</h1>
 
             <div className="p-5">

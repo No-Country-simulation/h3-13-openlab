@@ -169,14 +169,14 @@ const handleSortClick = (criteria: string) => {
 };
 
     useEffect(() => {
-      dispatch(fetchInitiatives());
+      // dispatch(fetchInitiatives());
       // const filtered = filterNewInitiatives(initiatives); 
       // setNewInitiatives(filtered);
     }, [dispatch]);
     
         return (
 
-      <div className="bg-[#afafaf1a]/10 h-screen flex flex-col justify">
+      <div className="bg-[#afafaf1a]/10 flex flex-col justify">
         {isMobile
         ? <>
         <div className="flex flex-row items-center justify-between m-4">
