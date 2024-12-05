@@ -30,9 +30,13 @@ import gas from "./icons/cloud.svg"
 import warning from "./icons/billetera.svg"
 import estadist from "./icons/estadistica.svg"
 import historial from "./icons/transaccion.svg"
+import profileW from "./icons/profileW.svg"
+import profileB from "./icons/profileB.svg"
 
 export{
     profile,
+    profileW,
+    profileB,
     line,
     on,
     off,

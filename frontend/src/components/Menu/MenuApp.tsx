@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { newini, home, init, log_out, newiniW, homeW, initW } from "../../assets";
+import { newini, home, init, log_out, newiniW, homeW, initW, profileB, profileW } from "../../assets";
 import Logo from "../../assets/Openlab_logo2.svg";
 import { Link, useNavigate } from "react-router-dom"; 
 
@@ -8,15 +8,15 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 const MenuApp = () => {
-  const [activeLink, setActiveLink] = useState("home");
+  const [activeLink, setActiveLink] = useState("Home");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const links = [
 
     { id: "Home", name: "Home", img: home, imgActive: homeW, path: "/test" },
+    { id: "Profile", name: "Profile", img:profileB , imgActive: profileW , path:"/profile" },
     { id: "My Initiatives", name: "My Initiatives", img: newini, imgActive: newiniW, path: "/MyInitiatives" },
-    // { id: "newini", name: "New Initiatives", img: newini, imgActive: newiniW, path: "" },
     { id: "init", name: "Initiatives", img: init, imgActive: initW, path: "/initiatives" },
   ];
 
@@ -47,7 +47,7 @@ const MenuApp = () => {
           >
             <img
               src={activeLink === link.id ? link.imgActive : link.img}
-              className="m-1 mr-4"
+              className="m-1 mr-4 w-[2em]"
               alt={link.name}
             />
             {link.name}
