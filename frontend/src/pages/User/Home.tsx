@@ -161,9 +161,9 @@ const Dashboard = () => {
               <h1 className="text-l font-semibold italic content-end mr-[5em]">Mis Iniciativas</h1>
             </Link>
           </div>
-          <ul className="p-2 flex flex-col items-center">
+          <ul className="p-2 flex flex-col ml-[6em]">
             {lastTenMyInitiatives.map((initiative: any) => (
-              <Link to={`/initiative/${initiative.id}`} className="flex flex-row items-center">
+              <Link to={`/initiative/${initiative.id}`} className="flex flex-row">
                 <img src={initiative.logo} className="w-8 h-8 rounded-lg shadow"/>
                 <li key={initiative.id} className="p-2">
                 {initiative.name}
