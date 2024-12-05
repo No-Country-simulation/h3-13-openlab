@@ -4,12 +4,14 @@ import { ethers } from "ethers";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState , AppDispatch } from "../../store/store";
-import { acount, estadist, gas, historial, newiniBlue, segurity, wallet, warning } from "../../assets";
+import { acount, estadist, gas, historial, line, newiniBlue, segurity, wallet, warning } from "../../assets";
 import { fetchMyInitiatives } from "../../store/Initiatives/myIniSlice";
 import { fetchInitiatives } from "../../store/Initiatives/showInitiativesSlice";
 import DashBar from "../../components/graf/dash";
+import SearchBar from "../../components/searchBar/searchDash";
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
   const { address, isConnected } = useAppKitAccount();
   const { caipNetwork } = useAppKitNetwork();
   const [balanceETH, setBalanceETH] = useState<string | null>(null);
@@ -18,8 +20,6 @@ const Dashboard = () => {
   const [networkName, setNetworkName] = useState<string | null>(null);
   const { myInitiatives } = useSelector((state: RootState) => state.myInitiatives);
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const dispatch = useDispatch<AppDispatch>();
 
   const provider = caipNetwork ? new ethers.providers.JsonRpcProvider(caipNetwork.rpcUrls.default.http[0]) : null;
@@ -45,55 +45,41 @@ const Dashboard = () => {
     }
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const term = e.target.value;
-    setSearchTerm(term);
-
-    if (term.trim() === "") {
-      setFilteredResults([]);
-      return;
-    }
-
-    const results = myInitiatives.filter((initiative: any) =>
-      initiative.name.toLowerCase().includes(term.toLowerCase())
-    );
-
-    setFilteredResults(results);
-  };
 
   const lastTenInitiatives = initiatives.slice(-10);
   const lastTenMyInitiatives = myInitiatives.slice(-6);
 
+  const isDataLoading = useSelector((state: RootState) => 
+    state.myInitiatives.loading || state.initiatives.loading
+  );
+  
   useEffect(() => {
-    dispatch(fetchInitiatives())
+    dispatch(fetchInitiatives());
     dispatch(fetchMyInitiatives());
     if (isConnected) {
       fetchData();
     }
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [isConnected, address, caipNetwork]);
+  
+  if (loading || isDataLoading) {
+    return (
+      <div className="flex items-center flex-col justify-center h-[40em] bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+        <p className="p-2">Cargando...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col  bg-[#afafaf1a]/10 gap-4">
       <div className="flex flex-row p-1 justify-between">
         <h1 className="text-3xl p-4">Dashboard</h1>
-        <div className="relative p-2">
-          <input
-            type="text"
-            placeholder="Search for anything ..."
-            value={searchTerm}
-            className="border p-1 rounded-lg shadow w-[30em] self-center h-[30px] mr-[15em]"
-            onChange={handleSearchChange}
-          />
-          <div className="absolute top-[35px] left-0 w-[30em] bg-white rounded-lg shadow-lg">
-            {filteredResults.map((result) => (
-              <button
-                key={result.id}
-                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-              >
-                {result.name}
-              </button>
-            ))}
-          </div>
+        <div className="">
+          <SearchBar/>
         </div>
       </div>
 
@@ -156,9 +142,9 @@ const Dashboard = () => {
 
         <div className="h-[300px] w-[350px] bg-white shadow-lg border rounded-lg p-1">
           <div className="flex flex-row gap-5">
-            <img src={newiniBlue} alt="initiatives" className="w-8" />
-            <Link to="/MyInitiatives" className="content-end ">
-              <h1 className="text-l font-semibold italic content-end mr-[5em]">Mis Iniciativas</h1>
+            <img src={newiniBlue} alt="initiatives" className="w-8 m-1" />
+            <Link to="/MyInitiatives" className="content-end">
+              <h1 className="text-l font-semibold italic content-end mr-2">Mis Iniciativas</h1>
             </Link>
           </div>
           <ul className="p-2 flex flex-col ml-[6em]">
@@ -175,11 +161,34 @@ const Dashboard = () => {
       </div>
 
         <div className="flex flex-col items-center">
-            <div className="flex flex-row w-[80em] h-[250px] bg-white shadow rounded-lg ">
-              <div className="flex flex-row gap-5">
+            <div className="flex flex-col w-[80em] h-[10em] bg-white shadow rounded-lg p-1">
+              <div className="flex flex-row gap-5 mb-[1em] p-1">
                   <img src={historial} alt="Historial" className="w-10 h-10"/>
-                  <h1 className="text-l font-semibold italic mr-[5em]">Historial</h1>
+                  <h1 className="text-l font-semibold italic content-end mr-[5em]">Últimas transacciones realizadas</h1>
+              </div>
+
+              <div className="flex flex-row justify-evenly">
+                <div className="flex flex-col w-[35em]">
+                  <h1 className="text-l font-semibold bg-color-1/20 text-center">Compras </h1>
+                  <div className="flex flex-row bg-color-1/10 justify-evenly italic">
+                    <h1>Fecha</h1><img src={line} className="h-[1.7em]"/>
+                    <h1>Detalle</h1><img src={line} className="h-[1.7em]"/>
+                    <h1>Estado</h1>
+                  </div>
+                  <p className="m-1">No se han realizado transacciones en los últimos 30 dias </p>
                 </div>
+              
+                <div className="flex flex-col w-[35em]">
+                  <h1 className="text-l font-semibold bg-color-1/20 text-center">Ventas</h1>
+                  <div className="flex flex-row bg-color-1/10 justify-evenly italic">
+                    <h1>Fecha</h1><img src={line} className="h-[1.7em]"/>
+                    <h1>Detalle</h1><img src={line} className="h-[1.7em]"/>
+                    <h1>Estado</h1>
+                    </div>
+                  <p className="m-1">No se han realizado transacciones en los últimos 30 dias </p>
+                </div>
+              </div>
+
             </div>
           </div>
     </div>
