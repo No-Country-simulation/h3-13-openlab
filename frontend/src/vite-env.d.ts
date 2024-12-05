@@ -8,3 +8,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+/// <reference types="vite/client" />
+
+interface Window {
+  ethereum: any;
+}
