@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { Initiative } from './showInitiativesSlice';
 
@@ -16,7 +17,7 @@ interface InitiativesState {
 
 // Estado inicial
 const initialState: InitiativesState = {
-  myInitiatives:[],  
+  myInitiatives: [],
   loading: false,
   error: null,
   filter: '',
@@ -24,13 +25,15 @@ const initialState: InitiativesState = {
   sortOrder: 'asc', 
 };
 
-export const fetchInitiatives = createAsyncThunk(
-  'initiatives/fetchInitiatives',
-  async (_, { getState }) => {
-    const { user } = (getState() as RootState).auth;
+export const fetchMyInitiatives = createAsyncThunk(
+  'initiatives/fetchMyInitiatives',
+  async () => {
+    const { user } = useSelector((state: RootState) => state.auth);
+    console.log(user)
 
     try {
       const response = await axios.get(`${URL}/api/iniciativa/getUserIniciativas/${user?.id}`);
+      console.log(response)
       return response.data;
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : 'Error al obtener las iniciativas');
@@ -54,14 +57,14 @@ export const myInitiativesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInitiatives.pending, (state) => {
+      .addCase(fetchMyInitiatives.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchInitiatives.fulfilled, (state, action) => {
+      .addCase(fetchMyInitiatives.fulfilled, (state, action) => {
         state.loading = false;
         state.myInitiatives = action.payload;
       })
-      .addCase(fetchInitiatives.rejected, (state, action) => {
+      .addCase(fetchMyInitiatives.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Algo salió mal';
       });

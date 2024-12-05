@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
 // import ModalBuy from "../../components/buyInit/modalBuy";
 import { sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
-import { fetchInitiatives} from "../../store/Initiatives/myIniSlice";
+import { fetchMyInitiatives} from "../../store/Initiatives/myIniSlice";
 import { openModal } from "../../store/Initiatives/createIniSlice";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { Link } from "react-router-dom";
@@ -139,7 +139,7 @@ const MyInitiatives = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchInitiatives());
+    dispatch(fetchMyInitiatives());
   }, [dispatch]);
 
   return (
@@ -153,12 +153,12 @@ const MyInitiatives = () => {
         <div>
           {isConnected?
           <button 
-          className="flex items-center justify-center bg-color-5 text-white mr-5 text-sm font-semibold p-3  gap-6 rounded-lg"
+          className="flex items-center justify-center bg-color-5 text-white mr-5 text-sm font-semibold p-3 shadow-lg gap-6 rounded-lg"
           onClick={handleCreate}>
             <img src={sumIcon}/>Create
             </button>
           : <button 
-          className="flex items-center justify-center bg-[#E0E0E0] text-black mr-5 text-sm font-semibold p-3  gap-6 rounded-lg"
+          className="flex items-center shadow-lg justify-center bg-[#E0E0E0] text-black mr-5 text-sm font-semibold p-3  gap-6 rounded-lg"
           onClick={()=>{toast.info('Please connect the wallet first')}}>
             <img src={sumIcon}/>Create
             </button>
@@ -177,7 +177,7 @@ const MyInitiatives = () => {
               type="text"
               placeholder="Search"
               value={searchTerm}  
-              className="border shadow w-[8em] p-1 rounded-lg"
+              className="border shadow-lg w-[30em] p-1 rounded-lg"
               onChange={handleSearchChange} 
               />
           </div>
@@ -274,7 +274,7 @@ const MyInitiatives = () => {
         </>
       ) : (
         <>
-          <div className="bg-[#afafaf1a]/10 h-screen flex flex-col">
+          <div className="bg-[#afafaf1a]/10 h-[80] flex flex-col">
             <h1 className="text-3xl p-4 sm:w-full">My Initiatives</h1>
 
             <div className="p-5">
@@ -284,7 +284,7 @@ const MyInitiatives = () => {
                     type="text"
                     placeholder="Search in my initiatives..."
                     value={searchTerm}
-                    className="border p-1 rounded-lg mr-4 shadow"
+                    className="border p-1 rounded-lg mr-4 w-[30em] shadow-lg"
                     onChange={handleSearchChange}
                   ></input>
                 </div>
@@ -292,14 +292,14 @@ const MyInitiatives = () => {
                 <div>
                   {isConnected ? (
                     <button
-                      className="flex items-center justify-center bg-color-5 text-white shadow mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
+                      className="flex items-center justify-center bg-color-5 shadow-lg text-white mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
                       onClick={handleCreate}
                     >
                       <img src={sumIcon} /> Create
                     </button>
                   ) : (
                     <button
-                      className="flex items-center justify-center bg-[#E0E0E0] text-black shadow mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
+                      className="flex items-center justify-center bg-[#E0E0E0] text-black shadow-lg  mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
                       onClick={() => {
                         toast.info("Please connect the wallet first");
                       }}

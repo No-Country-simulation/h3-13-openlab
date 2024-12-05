@@ -17,7 +17,7 @@ interface AuthState {
 const emptyUser: AuthState = {
   token: null,
   user: {
-    id: 0,
+    id: 1,
     name:"Fabio",
     lastName:"A.",
     role:"user"

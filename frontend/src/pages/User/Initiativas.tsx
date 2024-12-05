@@ -176,7 +176,7 @@ const handleSortClick = (criteria: string) => {
     
         return (
 
-      <div className="bg-[#afafaf1a]/10 h-screen flex flex-col justify">
+      <div className="bg-[#afafaf1a]/10 flex flex-col justify">
         {isMobile
         ? <>
         <div className="flex flex-row items-center justify-between m-4">
@@ -366,7 +366,7 @@ const handleSortClick = (criteria: string) => {
             type="text"
             placeholder="Search initiatives ..."
             value={searchTerm}  
-            className="border p-1 rounded-lg mr-4 shadow"
+            className="border p-1 rounded-lg  w-[30em] mr-4 shadow"
             onChange={handleSearchChange} 
             />
 
@@ -376,12 +376,12 @@ const handleSortClick = (criteria: string) => {
 
           {isConnected?
           <button 
-          className="flex items-center justify-center bg-color-5 text-white shadow mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
+          className="flex items-center justify-center bg-color-5 text-white shadow-lg mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
           onClick={handleCreate}>
             <img src={sumIcon}/>Create 
             </button>
           : <button 
-          className="flex items-center justify-center bg-[#E0E0E0] text-black shadow mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
+          className="flex items-center justify-center bg-[#E0E0E0] text-black shadow-lg mr-5 text-sm font-semibold p-3 w-[163px] gap-6 rounded-lg"
            onClick={()=>{toast.info('Please connect the wallet first')}}>
             <img src={sumIcon}/>Create
             </button>

@@ -37,7 +37,7 @@ interface InitiativesState {
 }
 
 const initialState: InitiativesState = {
-  initiatives:[],
+  initiatives: [],
   loading: false,
   error: null,
   filter: '',
