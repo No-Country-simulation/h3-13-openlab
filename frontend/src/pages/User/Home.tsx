@@ -148,14 +148,16 @@ const Dashboard = () => {
             </Link>
           </div>
           <ul className="p-2 flex flex-col ml-[6em]">
-            {lastTenMyInitiatives.map((initiative: any) => (
+            {lastTenMyInitiatives.length > 0
+            ?lastTenMyInitiatives.map((initiative: any) => (
               <Link to={`/initiative/${initiative.id}`} className="flex flex-row">
                 <img src={initiative.logo} className="w-8 h-8 rounded-lg shadow"/>
                 <li key={initiative.id} className="p-2">
                 {initiative.name}
               </li>
               </Link>
-            ))}
+            ))
+            :<li>Aun no has creado Iniciativas</li>}
           </ul>
         </div>
       </div>
