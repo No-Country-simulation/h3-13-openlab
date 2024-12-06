@@ -83,7 +83,6 @@ export function AppKitProvider({ children }) {
 }
 
 
-
 ///// Usar esto para implementar WAGMI Y no EtherV5 como arriba /////
 
 // import { createAppKit } from '@reown/appkit/react'
