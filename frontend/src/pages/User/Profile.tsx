@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { AppDispatch, RootState } from "../../store/store";
 import { items, profile, sumIcon } from "../../assets";
 import { ethers } from "ethers";
+import { toast, ToastContainer } from "react-toastify";
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
 import SimpleBar from 'simplebar-react';
 import "../../index.css"
@@ -100,16 +101,126 @@ const Profile = () => {
   }
 
   const handleCancel = (id: string) => {
-    dispatch(desactivateOrder({ orderId: id, type: active }));
+
+    const confirmationToast = toast(
+      <div>
+        <p>Are you sure you want to reactivate this order?</p>
+        <div className="flex gap-4">
+          <button
+            onClick={() => {
+ 
+              toast.dismiss(confirmationToast);
+
+              dispatch(desactivateOrder({ orderId: id, type: active }))
+  
+              toast.success("Order was canceled");
+            }}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(confirmationToast);
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",  
+        autoClose: false,       
+        style: {
+          transform: 'translateY(200%)' 
+        }
+      }
+    );
   };
+
 
   const handleUncancel = (id: string) => {
-    dispatch(reactivateOrder({ orderId: id, type: active }));
-  };
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteOrder({ orderId: id, type: active }));
+    const confirmationToast = toast(
+      <div>
+        <p>Are you sure you want to reactivate this order?</p>
+        <div className="flex gap-4">
+          <button
+            onClick={() => {
+ 
+              toast.dismiss(confirmationToast);
+  
+
+              dispatch(reactivateOrder({ orderId: id, type: active }));
+  
+              toast.success("Order was activated successfully!");
+            }}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(confirmationToast);
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false,  
+                style: {
+          transform: 'translateY(200%)' 
+        }
+      }
+    );
   };
+  
+  const handleDelete = (id: string) => {
+
+    const confirmationToast = toast(
+      <div>
+        <p>Are you sure you want to delete this order? This action cannot be undone.</p>
+        <div className="flex gap-4">
+          <button
+            onClick={() => {
+
+              toast.dismiss(confirmationToast);
+  
+     
+              dispatch(deleteOrder({ orderId: id, type: active }));
+  
+
+              toast.success("Order deleted successfully!");
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+          >
+            Yes, Delete
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(confirmationToast);
+            }}
+            className="bg-gray-500 text-white px-4 py-2 rounded"
+          >
+            No, Cancel
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false,  
+        style: {
+          transform: 'translateY(200%)' 
+        }
+      }
+    );
+  };
+  
 
   const handleEdit = (order: any) => {
     setEditOrder(order);
@@ -120,7 +231,7 @@ const Profile = () => {
 
   return (
     <div className="bg-[#afafaf1a]/10 p-3">
-      {modalEdit && editOrder && <EditOrders order={editOrder} />}
+      {modalEdit && editOrder && <EditOrders order={editOrder}  onClose={() => setModalEdit(false)} type={active}/>}
       {modalCreate && <CreateOrders onClose={() => setModalCreate(false)}/>}
       <h1 className="text-3xl p-1">Profile</h1>
       <div className="p-3 flex flex-col bg-white shadow-lg rounded-lg">
@@ -272,7 +383,7 @@ const Profile = () => {
               <div className="col-span-2">  </div>
               {order.state === true 
                 ? <>
-                <div className="col-start-8 flex flex-row gap-4">
+                <div className="col-start-8 flex flex-row gap-2">
                   <button onClick={() => handleCancel(order.id)}
                   >Cancel</button>
                   <button onClick={() => handleEdit(order)}
@@ -281,7 +392,7 @@ const Profile = () => {
                   >Delete</button></div>
                 </>
                 : <>
-                <div className="col-start-8 flex flex-row gap-4">
+                <div className="col-start-8 flex flex-row gap-2">
                   <button onClick={() => handleUncancel(order.id)}
                   >Uncancel</button>
                   <button onClick={() => handleEdit(order)}
@@ -297,7 +408,9 @@ const Profile = () => {
         </div>
     
       </div>
+      <ToastContainer/>
     </div>
+
   );
 };
 

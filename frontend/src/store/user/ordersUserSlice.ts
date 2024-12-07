@@ -31,7 +31,7 @@ interface OrdersState {
 const initialState: OrdersState = {
   sells: [ {
     "id": "1",
-    "logoDao": "https://example.com/logo1.png",
+    "logoDao": "https://cdn-icons-png.freepik.com/256/10429/10429931.png?semt=ais_hybrid",
     "tokenDao": "DAO1",
     "quantity": 100,
     "price": 150.5,
@@ -144,6 +144,17 @@ export const fetchOrders = createAsyncThunk(
   }
 );
 
+// Acción para actualizar una orden
+export const updateOrder = createAsyncThunk(
+  'ordersBooks/updateOrder',
+  async ({ orderId, orderData, type }: { orderId: string; orderData: OrderCreate; type: 'Sells' | 'Buys' }) => {
+    const response = await axios.put(`${API_URL}/${orderId}`, { ...orderData, type });
+    const updatedOrder = response.data;
+    return { orderId, type, updatedOrder };
+  }
+);
+
+
 export const ordersBooksSlice = createSlice({
   name: 'ordersBooks',
   initialState,
@@ -199,7 +210,17 @@ export const ordersBooksSlice = createSlice({
         if (index >= 0) {
           list.splice(index, 1); 
         }
-      });
+      })
+      .addCase(updateOrder.fulfilled, (state, action) => {
+        const { orderId, type, updatedOrder } = action.payload;
+        const list = type === 'Sells' ? state.sells : state.buys;
+        const index = list.findIndex(order => order.id === orderId);
+      
+        if (index >= 0) {
+          list[index] = updatedOrder;
+        }
+      })
+      
   }
 });
 
