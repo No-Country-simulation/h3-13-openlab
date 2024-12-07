@@ -207,7 +207,7 @@ const Profile = () => {
       >
         <h1 className="text-xl p-2 ml-[2em] font-semibold">Purchase and Sale Orders</h1>
         
-          <div className="flex flex-row mb-2 justify-items-end gap-2 mr-10">
+          <div className="flex flex-row mb-2 justify-items-end self-end gap-2 mr-10">
               <button 
               className="w-[8em] flex items-center justify-center bg-color-5 text-white text-sm font-semibold p-1 gap-6 rounded-lg"
               onClick={handleCreate}>
