@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { items, profile, sumIcon } from "../../assets";
 import { ethers } from "ethers";
 import { useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
@@ -8,6 +8,9 @@ import SimpleBar from 'simplebar-react';
 import "../../index.css"
 import 'simplebar/dist/simplebar.min.css';
 import GrafEther from "../../components/graf/Cryptos/Etherium";
+import { deleteOrder, desactivateOrder, reactivateOrder } from "../../store/user/ordersUserSlice";
+import EditOrders from "../../components/orders/editOrders";
+import CreateOrders from "../../components/orders/createOrders";
 
 const Profile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -16,8 +19,8 @@ const Profile = () => {
   const [balanceETH, setBalanceETH] = useState<string | null>(null);
   const {statistics} = useSelector((state:RootState) => state.userStadistics);
   const {sells , buys} =useSelector((state:RootState) => state.ordersBooks);
-  const [active, setActive] = useState("Buys");
-
+  const [active, setActive] = useState<'Sells' | 'Buys'>('Buys');
+  const dispatch= useDispatch<AppDispatch>();
   const provider = caipNetwork ? new ethers.providers.JsonRpcProvider(caipNetwork.rpcUrls.default.http[0]) : null;
 
   const fetchData = async () => {
@@ -35,6 +38,9 @@ const Profile = () => {
   const [precios, setPrecios] = useState<any>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [modalCreate , setModalCreate]= useState(false);
+  const [modalEdit , setModalEdit] = useState(false);
+  const [editOrder , setEditOrder] = useState(null)
 
   useEffect(() => {
     if (isConnected) {
@@ -75,28 +81,47 @@ const Profile = () => {
   }, [isConnected, address, caipNetwork]);
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return <div className="flex items-center flex-col justify-center h-[40em] bg-gray-100">
+    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+    <p className="p-2">Cargando...</p>
+  </div>;
   }
 
   if (error) {
     return <div>Error:{error}</div>;
   }
 
-  const handleButtonClick = (button: 'Buys' | 'Sells') => {
+  const handleButtonClick = (button: 'Sells' | 'Buys') => {
     setActive(button);
   };
   
-  const handleCreate = () =>{}
+  const handleCreate = () =>{
+    setModalCreate(true)
+  }
 
-  const handleCancel = () =>{}
+  const handleCancel = (id: string) => {
+    dispatch(desactivateOrder({ orderId: id, type: active }));
+  };
 
-  const handleEdit = () =>{}
+  const handleUncancel = (id: string) => {
+    dispatch(reactivateOrder({ orderId: id, type: active }));
+  };
 
+  const handleDelete = (id: string) => {
+    dispatch(deleteOrder({ orderId: id, type: active }));
+  };
+
+  const handleEdit = (order: any) => {
+    setEditOrder(order);
+    setModalEdit(true);
+  };
 
   const filterOrders = (active==="Buys"? buys : sells)
 
   return (
     <div className="bg-[#afafaf1a]/10 p-3">
+      {modalEdit && editOrder && <EditOrders order={editOrder} />}
+      {modalCreate && <CreateOrders onClose={() => setModalCreate(false)}/>}
       <h1 className="text-3xl p-1">Profile</h1>
       <div className="p-3 flex flex-col bg-white shadow-lg rounded-lg">
         <div className="flex flex-row gap-3 m-[1em]">
@@ -239,14 +264,32 @@ const Profile = () => {
               <div className="col-start-8"></div>
           </div>
           {filterOrders.map((order)=>(
-          <div className="grid grid-cols-8 grid-rows-1 bg-white  text-center items-center border-b border-gray-200 h-[4em]">
-              <div className=" items-center" ><img src={order.logoDao} className="w-8 h-8 m-auto"/></div>
+          <div className="grid grid-cols-8 grid-rows-1 bg-white text-center items-center border-b border-gray-200 h-[4em]">
+              <div className=" items-center" key={order.id}><img src={order.logoDao} className="w-8 h-8 m-auto"/></div>
               <div className=" text-base">{order.tokenDao}</div>
               <div className=" text-base">{order.quantity}</div>
               <div className=" text-base font-semibold">$ {order.price}</div>
               <div className="col-span-2">  </div>
-              <div className="col-start-7"><button>Cancel</button></div>
-              <div className="col-start-8 "><button>Edit</button></div>
+              {order.state === true 
+                ? <>
+                <div className="col-start-8 flex flex-row gap-4">
+                  <button onClick={() => handleCancel(order.id)}
+                  >Cancel</button>
+                  <button onClick={() => handleEdit(order)}
+                  >Edit</button>
+                  <button onClick={() => handleDelete(order.id)}
+                  >Delete</button></div>
+                </>
+                : <>
+                <div className="col-start-8 flex flex-row gap-4">
+                  <button onClick={() => handleUncancel(order.id)}
+                  >Uncancel</button>
+                  <button onClick={() => handleEdit(order)}
+                  >Edit</button>
+                  <button onClick={() => handleDelete(order.id)}
+                  >Delete</button></div>
+              </>
+              }
           </div>
           )
           )}
