@@ -53,12 +53,12 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="relative p-2">
+    <div className="relative p-2 ">
       <input
         type="text"
         placeholder="Search for anything ..."
         value={searchTerm}
-        className="border p-1 rounded-lg shadow w-[30em] self-center h-[30px] mr-[15em]"
+        className="border p-1 rounded-lg shadow lg:w-[30em] self-center h-[30px] mr-[15em] sm:w-[15em]"
         onChange={handleSearchChange}
       />
       {filteredResults.length > 0 && (

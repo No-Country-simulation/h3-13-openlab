@@ -9,6 +9,7 @@ import { fetchMyInitiatives } from "../../store/Initiatives/myIniSlice";
 import { fetchInitiatives } from "../../store/Initiatives/showInitiativesSlice";
 import DashBar from "../../components/graf/dash";
 import SearchBar from "../../components/searchBar/searchDash";
+import useWindowSize from "../../components/hooks/Responsive";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,9 @@ const Dashboard = () => {
   const { myInitiatives } = useSelector((state: RootState) => state.myInitiatives);
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
   const dispatch = useDispatch<AppDispatch>();
+  const { width } = useWindowSize();
 
+  const isMobile = width <= 768;
   const provider = caipNetwork ? new ethers.providers.JsonRpcProvider(caipNetwork.rpcUrls.default.http[0]) : null;
 
   const fetchData = async () => {
@@ -74,7 +77,93 @@ const Dashboard = () => {
     );
   }
 
-  return (
+  return (<>
+    {isMobile
+    ?
+    <div className="flex flex-col  bg-[#afafaf1a]/10  gap-3" >
+
+      <div className="flex flex-col p-1">
+        <h1 className="text-3xl p-4">Dashboard</h1>
+          <SearchBar/>
+      </div>
+
+      {isConnected
+        ?
+          <div className="flex flex-row justify-evenly items-center">
+            <div className="w-[8em] h-[7em] bg-white shadow-lg border rounded-lg flex flex-col gap-1 p-3">
+              <img src={wallet} alt="wallet" className="w-7" />
+              <h3 className="text-l font-semibold italic">Balance</h3>
+              <p>{balanceETH ? `${balanceETH} ETH` : "Cargando..."}</p>
+            </div>
+
+            <div className="w-[8em] h-[7em] bg-white shadow-lg rounded-lg border flex flex-col gap-1 p-3">
+              <img src={segurity} alt="segurity" className="w-7" />
+              <h3 className="text-l font-semibold italic">Bloque Nº</h3>
+              <p>{blockNumber !== null ? blockNumber : "Cargando..."}</p>
+            </div>
+            <div className="w-[8em] h-[7em] bg-white shadow-lg rounded-lg border flex flex-col gap-1 p-3">
+              <img src={gas} alt="gas" className="w-7" />
+              <h3 className="text-l font-semibold italic">Gas Price</h3>
+              <p>{gasPrice ? `${gasPrice}` : "Cargando..."}</p>
+            </div>
+          </div>
+
+        : <div className="flex flex-col w-[15em] m-auto h-[10em] bg-white shadow-lg rounded-lg content-center items-center justify-center gap-10">
+          <img src={warning} alt="warning" className="w-20" />
+          <h1>Por favor conecta tu billetera </h1>
+          </div>
+        }
+
+        <div className="h-[15em] m-auto bg-white shadow-lg border rounded-lg p-1">
+            <div className="flex flex-row gap-5 mr-[5em]">
+              <img src={estadist} alt="analitycs" className="w-8" />
+              <Link to="/initiatives"  className="content-end ">
+              <h1 className="text-l font-semibold italic content-end mr-[5em]">Iniciativas</h1>
+              </Link>
+            </div>
+              <DashBar initiatives={lastTenInitiatives} />
+        </div>
+
+        <div className="flex flex-row justify-evenly ">
+          <Link to="/iniciatives"
+          className="bg-white p-4 border shadow-lg rounded-lg text-l font-semibold text-center "
+          >Iniciativas</Link>
+          <Link to="/Myiniciatives"
+          className="bg-white p-4 border shadow-lg rounded-lg text-l font-semibold text-center "
+          >Mis Iniciativas</Link>
+        </div>.
+
+        <div className="flex flex-col items-center border shadow-lg ">
+            <div className="flex flex-col w-[25em] h-[12em] bg-white rounded-lg">
+              <div className="flex flex-row gap-5 mb-[1em] p-1">
+                  <img src={historial} alt="Historial" className="w-10 h-10"/>
+                  <h1 className="text-l font-semibold italic content-end mr-[5em]">Últimas transacciones realizadas</h1>
+              </div>
+
+              <div className="flex flex-row justify-evenly">
+                <div className="flex flex-col  w-[25em] h-[12em]">
+                  <h1 className="text-l font-semibold bg-color-1/20 ">Compras </h1>
+                  <div className="flex flex-row bg-color-1/10  italic">
+                    <h1 className="text-sm">Resumen</h1>
+                  </div>
+                  <p className="m-1">No se han realizado transacciones</p>
+                </div>
+              
+                <div className="flex flex-col w-[25em] h-[12em]">
+                  <h1 className="text-l font-semibold bg-color-1/20">Ventas</h1>
+                  <div className="flex flex-row bg-color-1/10  italic">
+                  <h1 className="text-sm">Resumen</h1>
+                    </div>
+                  <p className="m-1">No se han realizado transacciones</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+    </div> 
+    :
+
+    ////////////////////////WEB APP ///////////////////
     <div className="flex flex-col  bg-[#afafaf1a]/10 gap-4">
       <div className="flex flex-row p-1 justify-between">
         <h1 className="text-3xl p-4">Dashboard</h1>
@@ -194,7 +283,8 @@ const Dashboard = () => {
             </div>
           </div>
     </div>
-  );
+  }
+  </>);
 };
 
 export default Dashboard;

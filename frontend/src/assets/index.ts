@@ -32,6 +32,7 @@ import estadist from "./icons/estadistica.svg"
 import historial from "./icons/transaccion.svg"
 import profileW from "./icons/profileW.svg"
 import profileB from "./icons/profileB.svg"
+import items from "./icons/Rectangle.svg"
 
 export{
     profile,
@@ -67,5 +68,6 @@ export{
     gas,
     warning,
     estadist,
-    historial
+    historial,
+    items,
 };

@@ -5,6 +5,8 @@ import {createMSlice} from "./Initiatives/createIniSlice";
 import { showInitiativesSlice } from "./Initiatives/showInitiativesSlice";
 import { joinInitiativesSlice, likedInitiativesSlice } from "./Initiatives/joinLikesIniSlice";
 import { myInitiativesSlice } from "./Initiatives/myIniSlice";
+import { userStatsSlice } from "./user/statsUserSlice";
+import { ordersBooksSlice } from "./user/ordersUserSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +17,8 @@ export const store = configureStore({
     joinInitiatives: joinInitiativesSlice.reducer,
     likeInitiatives: likedInitiativesSlice.reducer,
     myInitiatives: myInitiativesSlice.reducer,
+    userStadistics: userStatsSlice.reducer,
+    ordersBooks: ordersBooksSlice.reducer
 
   },
   middleware: (getDefaultMiddleware) =>
