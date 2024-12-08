@@ -4,12 +4,13 @@ import { ethers } from "ethers";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState , AppDispatch } from "../../store/store";
-import { acount, estadist, gas, historial, line, newiniBlue, segurity, wallet, warning } from "../../assets";
+import { acount, estadist, gas,newiniBlue, segurity, wallet, warning } from "../../assets";
 import { fetchMyInitiatives } from "../../store/Initiatives/myIniSlice";
 import { fetchInitiatives } from "../../store/Initiatives/showInitiativesSlice";
 import DashBar from "../../components/graf/dash";
 import SearchBar from "../../components/searchBar/searchDash";
 import useWindowSize from "../../components/hooks/Responsive";
+import { TransactionsUser } from "../../components/transactions/transa";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,6 @@ const Dashboard = () => {
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
   const dispatch = useDispatch<AppDispatch>();
   const { width } = useWindowSize();
-
   const isMobile = width <= 768;
   const provider = caipNetwork ? new ethers.providers.JsonRpcProvider(caipNetwork.rpcUrls.default.http[0]) : null;
 
@@ -133,33 +133,7 @@ const Dashboard = () => {
           >Mis Iniciativas</Link>
         </div>.
 
-        <div className="flex flex-col items-center border shadow-lg ">
-            <div className="flex flex-col w-[25em] h-[12em] bg-white rounded-lg">
-              <div className="flex flex-row gap-5 mb-[1em] p-1">
-                  <img src={historial} alt="Historial" className="w-10 h-10"/>
-                  <h1 className="text-l font-semibold italic content-end mr-[5em]">Últimas transacciones realizadas</h1>
-              </div>
-
-              <div className="flex flex-row justify-evenly">
-                <div className="flex flex-col  w-[25em] h-[12em]">
-                  <h1 className="text-l font-semibold bg-color-1/20 ">Compras </h1>
-                  <div className="flex flex-row bg-color-1/10  italic">
-                    <h1 className="text-sm">Resumen</h1>
-                  </div>
-                  <p className="m-1">No se han realizado transacciones</p>
-                </div>
-              
-                <div className="flex flex-col w-[25em] h-[12em]">
-                  <h1 className="text-l font-semibold bg-color-1/20">Ventas</h1>
-                  <div className="flex flex-row bg-color-1/10  italic">
-                  <h1 className="text-sm">Resumen</h1>
-                    </div>
-                  <p className="m-1">No se han realizado transacciones</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
+        <TransactionsUser/>
     </div> 
     :
 
@@ -237,7 +211,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <ul className="p-2 flex flex-col ml-[6em]">
-            {lastTenMyInitiatives.length > 0
+            {myInitiatives.length > 0
             ?lastTenMyInitiatives.map((initiative: any) => (
               <Link to={`/initiative/${initiative.id}`} className="flex flex-row">
                 <img src={initiative.logo} className="w-8 h-8 rounded-lg shadow"/>
@@ -246,42 +220,11 @@ const Dashboard = () => {
               </li>
               </Link>
             ))
-            :<li>Aun no has creado Iniciativas</li>}
+            :<li className="ml-[-3em] mt-4">You have not created initiatives</li>}
           </ul>
         </div>
       </div>
-
-        <div className="flex flex-col items-center">
-            <div className="flex flex-col w-[80em] h-[10em] bg-white shadow rounded-lg p-1">
-              <div className="flex flex-row gap-5 mb-[1em] p-1">
-                  <img src={historial} alt="Historial" className="w-10 h-10"/>
-                  <h1 className="text-l font-semibold italic content-end mr-[5em]">Últimas transacciones realizadas</h1>
-              </div>
-
-              <div className="flex flex-row justify-evenly">
-                <div className="flex flex-col w-[35em]">
-                  <h1 className="text-l font-semibold bg-color-1/20 text-center">Compras </h1>
-                  <div className="flex flex-row bg-color-1/10 justify-evenly italic">
-                    <h1>Fecha</h1><img src={line} className="h-[1.7em]"/>
-                    <h1>Detalle</h1><img src={line} className="h-[1.7em]"/>
-                    <h1>Estado</h1>
-                  </div>
-                  <p className="m-1">No se han realizado transacciones en los últimos 30 dias </p>
-                </div>
-              
-                <div className="flex flex-col w-[35em]">
-                  <h1 className="text-l font-semibold bg-color-1/20 text-center">Ventas</h1>
-                  <div className="flex flex-row bg-color-1/10 justify-evenly italic">
-                    <h1>Fecha</h1><img src={line} className="h-[1.7em]"/>
-                    <h1>Detalle</h1><img src={line} className="h-[1.7em]"/>
-                    <h1>Estado</h1>
-                    </div>
-                  <p className="m-1">No se han realizado transacciones en los últimos 30 dias </p>
-                </div>
-              </div>
-
-            </div>
-          </div>
+          <TransactionsUser/>
     </div>
   }
   </>);

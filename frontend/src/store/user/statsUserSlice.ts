@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const API_URL = 'https://api.tuservicio.com/user/statistics';
+const URL = import.meta.env.VITE_URL_DEL_BACKEND;
 
 
 export const fetchUserStatistics = createAsyncThunk(
   'userStats/fetchUserStatistics',
   async () => {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(URL);
     return response.data; 
   }
 );

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'https://api.tuservicio.com/orders';
+const URL = import.meta.env.VITE_URL_DEL_BACKEND;
 
 export interface Order {
   id:string;
@@ -32,7 +32,7 @@ const initialState: OrdersState = {
   sells: [ {
     "id": "1",
     "logoDao": "https://cdn-icons-png.freepik.com/256/10429/10429931.png?semt=ais_hybrid",
-    "tokenDao": "DAO1",
+    "tokenDao": "UNIK",
     "quantity": 100,
     "price": 150.5,
     "address": "0x1234567890abcdef1234567890abcdef12345678",
@@ -41,7 +41,7 @@ const initialState: OrdersState = {
   {
     "id":"2",
     "logoDao": "https://example.com/logo2.png",
-    "tokenDao": "DAO2",
+    "tokenDao": "REBN",
     "quantity": 50,
     "price": 75.75,
     "address": "0xabcdef1234567890abcdef1234567890abcdef12",
@@ -50,7 +50,7 @@ const initialState: OrdersState = {
   {
     "id": "3",
     "logoDao": "https://example.com/logo1.png",
-    "tokenDao": "DAO1",
+    "tokenDao": "FEVR",
     "quantity": 100,
     "price": 150.5,
     "address": "0x1234567890abcdef1234567890abcdef12345678",
@@ -59,7 +59,7 @@ const initialState: OrdersState = {
   {
     "id":"4",
     "logoDao": "https://example.com/logo2.png",
-    "tokenDao": "DAO2",
+    "tokenDao": "EMEL",
     "quantity": 50,
     "price": 75.75,
     "address": "0xabcdef1234567890abcdef1234567890abcdef12",
@@ -70,7 +70,7 @@ const initialState: OrdersState = {
     {
       "id":"1",
         "logoDao": "https://example.com/logo3.png",
-        "tokenDao": "DAO3",
+        "tokenDao": "SWIN",
         "quantity": 200,
         "price": 120.25,
         "address": "0x7890abcdef1234567890abcdef1234567890abcd",
@@ -79,7 +79,7 @@ const initialState: OrdersState = {
       {
         "id": "2",
         "logoDao": "https://example.com/logo4.png",
-        "tokenDao": "DAO4",
+        "tokenDao": "DIMO",
         "quantity": 300,
         "price": 99.99,
         "address": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcdef",
@@ -88,7 +88,7 @@ const initialState: OrdersState = {
       {
         "id": "3",
         "logoDao": "https://example.com/logo4.png",
-        "tokenDao": "DAO4",
+        "tokenDao": "TIKM",
         "quantity": 300,
         "price": 99.99,
         "address": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcdef",
@@ -103,7 +103,7 @@ const initialState: OrdersState = {
 export const desactivateOrder = createAsyncThunk(
   'ordersBooks/deactivateOrder',
   async ({ orderId, type }: { orderId: string; type: 'Sells' | 'Buys' }) => {
-    const response = await axios.put(`${API_URL}/${orderId}/deactivate`, { type });
+    const response = await axios.put(`${URL}/${orderId}/deactivate`, { type });
     return {  response , orderId, type, state: false }; 
   }
 );
@@ -112,7 +112,7 @@ export const desactivateOrder = createAsyncThunk(
 export const reactivateOrder = createAsyncThunk(
   'ordersBooks/reactivateOrder',
   async ({ orderId, type }: { orderId: string; type: 'Sells' | 'Buys' }) => {
-    const response = await axios.put(`${API_URL}/${orderId}/reactivate`, { type });
+    const response = await axios.put(`${URL}/${orderId}/reactivate`, { type });
     return { response , orderId, type, state: true };  
   }
 );
@@ -121,7 +121,7 @@ export const reactivateOrder = createAsyncThunk(
 export const deleteOrder = createAsyncThunk(
   'ordersBooks/deleteOrder',
   async ({ orderId, type }: { orderId: string; type: 'Sells' | 'Buys' }) => {
-    const response = await axios.delete(`${API_URL}/${orderId}`);
+    const response = await axios.delete(`${URL}/${orderId}`);
     return { response, orderId, type  }; 
   }
 );
@@ -130,7 +130,7 @@ export const deleteOrder = createAsyncThunk(
 export const createOrder = createAsyncThunk(
   'ordersBooks/createOrder',
   async ({ orderData, type }: { orderData: OrderCreate; type: 'Sells' | 'Buys' }) => {
-    const response = await axios.post(`${API_URL}/create`, { orderData, type });
+    const response = await axios.post(`${URL}/create`, { orderData, type });
     return { newOrder: response.data, type };  
   }
 );
@@ -139,7 +139,7 @@ export const createOrder = createAsyncThunk(
 export const fetchOrders = createAsyncThunk(
   'ordersBooks/fetchOrders',
   async () => {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(URL);
     return response.data;
   }
 );
@@ -148,7 +148,7 @@ export const fetchOrders = createAsyncThunk(
 export const updateOrder = createAsyncThunk(
   'ordersBooks/updateOrder',
   async ({ orderId, orderData, type }: { orderId: string; orderData: OrderCreate; type: 'Sells' | 'Buys' }) => {
-    const response = await axios.put(`${API_URL}/${orderId}`, { ...orderData, type });
+    const response = await axios.put(`${URL}/${orderId}`, { ...orderData, type });
     const updatedOrder = response.data;
     return { orderId, type, updatedOrder };
   }

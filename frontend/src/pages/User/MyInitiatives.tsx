@@ -186,7 +186,7 @@ const MyInitiatives = () => {
 
       <div className="bg-white">
       
-        {filteredAndSortedInitiatives.map((item, index) => (
+        {myInitiatives.length < 0 ? filteredAndSortedInitiatives.map((item, index) => (
          <div key={index} className="flex flex-col gap-4 border-b p-4">
 
            <div className="flex flex-row items-center gap-4">
@@ -267,7 +267,7 @@ const MyInitiatives = () => {
           )}
           </div>
         )
-        )}
+        ):<p className="text-center ">You have not created initiatives</p> }
  
       </div> 
       </div> 
@@ -388,7 +388,7 @@ const MyInitiatives = () => {
                     <div className="flex items-center m-auto text-sm font-semibold">   </div>
                   </div>
 
-                  {filteredAndSortedInitiatives.map((item, index) => (
+                  {myInitiatives.length < 0 ? filteredAndSortedInitiatives.map((item, index) => (
                     <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b mr-8">
                       <div className="flex items-center m-auto text-sm text-center">
                       <Link to={`/initiative/${item.id}`}>{item.name}</Link>
@@ -436,7 +436,8 @@ const MyInitiatives = () => {
                         </button>
                       </div>
                     </div>
-                  ))}
+                  ))
+                : <p className="text-center p-2">You have not created initiatives</p> }
                 </SimpleBar>
               </div>
             </div>
