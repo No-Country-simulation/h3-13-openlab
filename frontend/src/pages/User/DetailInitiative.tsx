@@ -116,36 +116,36 @@ useEffect(() => {
               />
               <div className="flex flex-col m-1 gap-1">
                 <div className="flex flex-col items-center">
-                  <h2 className="text-l italic font-semibold">Problema:</h2>
+                  <h2 className="text-lg italic font-semibold">Problema:</h2>
                   <p className="m-1 w-[25em] text-center h-[3.125em] justify-center">{initiativeDetail.problem}</p>
                 </div>
                 <div className="flex flex-col items-center">
-                  <h2 className="text-l italic font-semibold">Oportunidad:</h2>
+                  <h2 className="text-lg italic font-semibold">Oportunidad:</h2>
                   <p className="m-1 w-[25em] text-center h-[3.125em] justify-center">{initiativeDetail.opportunity}</p>
                 </div>
                 <div className="flex flex-col items-center">
-                  <h2 className="text-l italic font-semibold">Solución:</h2>
+                  <h2 className="text-lg italic font-semibold">Solución:</h2>
                   <p className="m-1 w-[25em] text-center h-[3.125em] justify-center">{initiativeDetail.solution}</p>
                 </div>
                 <div className="flex flex-col items-center">
-                  <h2 className="text-l italic font-semibold">Idea:</h2>
+                  <h2 className="text-lg italic font-semibold">Idea:</h2>
                   <p className="m-1 w-[25em] text-center h-[3.125em] justify-center">{initiativeDetail.idea}</p>
                 </div>
               </div>
   
               <div>
                 <div className="">
-                  <h2 className="text-l italic font-semibold text-center m-2">Valores Históricos:</h2>
+                  <h2 className="text-lg italic font-semibold text-center m-2">Valores Históricos:</h2>
                   <DetailedGraph priceFluctuation={initiativeDetail.priceFluctuation} />
                 </div>
                 <div className="flex flex-row items-center justify-evenly m-3">
                   <div className="flex flex-col items-center">
-                    <h2 className="text-l italic font-semibold text-center">Precio de venta:</h2>
+                    <h2 className="text-lg italic font-semibold text-center">Precio de venta:</h2>
                     <p className="m-3">${initiativeDetail.sell_price}</p>
                   </div>
   
                   <div className="flex flex-col items-center p-2">
-                    <h2 className="text-l italic font-semibold text-center">Precio de Compra:</h2>
+                    <h2 className="text-lg italic font-semibold text-center">Precio de Compra:</h2>
                     <p className="m-3">${initiativeDetail.buy_price}</p>
                   </div>
   
@@ -196,35 +196,37 @@ useEffect(() => {
         </>
         // **-*-*-*-*-*-*-*-*-*-*-*-*-*-*- WebApp*-*-*-*-*-*-*-**-*-*-*-*-
         : <>
-          <div className="flex flex-row gap-2 justify-between m-auto ">
-            <div className="flex flex-row justify-between m-3 bg-white rounded-lg shadow">
-              <div className="w-[20.625em] m-auto mr-4">
-                <img src={initiativeDetail.logo}
-                  alt={initiativeDetail.name}
-                  className="w-[15.625em] h-[15.625em] p-4 m-auto mr-6"
-                />
-              </div>
-              <div className="flex flex-col gap-2 w-[37.5em] m-auto">
-                <h1 className="text-3xl font-semibold mb-4 text-color-5 text-center mr-4">{initiativeDetail.name}</h1>
-                <div><h2 className="text-l italic font-semibold">Problema:</h2>
-                  <p className="m-1">{initiativeDetail.problem}</p></div>
-                <div><h2 className="text-l italic font-semibold">Oportunidad:</h2> <p className="m-1">{initiativeDetail.opportunity}</p></div>
-                <div><h2 className="text-l italic font-semibold">Solución:</h2> <p className="m-1">{initiativeDetail.solution}</p></div>
-                <div><h2 className="text-l italic font-semibold">Idea:</h2> <p className="m-1">{initiativeDetail.idea}</p></div>
-              </div>
-            </div>
+          <div className="flex flex-row gap-2 justify-between m-auto">
+            <div className="flex flex-col">
+              <h1 className="text-3xl p-3">Initiative: <strong>{initiativeDetail.name} - {initiativeDetail.tokenDao}</strong></h1>
+                <div className="flex flex-row  m-3 bg-white h-[17em] w-[60em] justify-flex-start gap-5 rounded-lg shadow">
+                  <div className="flex m-[2em]">
+                    <img src={initiativeDetail.logo}
+                      alt={initiativeDetail.name}
+                      className="w-[10em] h-[10em] rounded-lg shadow m-auto "
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 ">
+                    <div><h2 className="text-lg italic font-semibold">Problema:</h2>
+                      <p className="m-1">{initiativeDetail.problem}</p></div>
+                    <div><h2 className="text-lg italic font-semibold">Oportunidad:</h2> <p className="m-1">{initiativeDetail.opportunity}</p></div>
+                    <div><h2 className="text-lg italic font-semibold">Solución:</h2> <p className="m-1">{initiativeDetail.solution}</p></div>
+                    <div><h2 className="text-lg italic font-semibold">Idea:</h2> <p className="m-1">{initiativeDetail.idea}</p></div>
+                  </div>
+                </div>
+                  </div>
   
             <div className="m-auto flex flex-col">
               <button
                 className="text-xl font-semibold mb-1 items-center justify-items-end"
                 onClick={handleBack}
-              ><img src={close} className="w-[2.1875em]" /></button>
+              ><img src={close} className="w-[1.7em]" /></button>
               <div className="bg-white rounded-lg shadow p-2 flex flex-col gap-3 m-3 mr-12">
                 <div>
-                  <h2 className="text-l italic font-semibold text-center">Colaboradores:</h2><p className="bg-[#00B2FF]/20 rounded-lg p-1 w-[4.5625em] text-center m-auto text-sm p-1"> {initiativeDetail.colaborator}</p></div>
-                <div><h2 className="text-l italic font-semibold text-center">Misiones:</h2><p className="text-center m-auto text-sm p-1"> {initiativeDetail.missions}</p></div>
-                <div><h2 className="text-l italic font-semibold text-center">Likes:</h2><p className="text-center m-auto text-sm p-1"> {initiativeDetail.likes}</p></div>
-                <div><h2 className="text-l italic font-semibold text-center">Shares:</h2><p className="text-center m-auto text-sm p-1"> {initiativeDetail.shares}</p></div>
+                  <h2 className="text-lg italic font-semibold text-center">Colaboradores:</h2><p className="bg-[#00B2FF]/20 rounded-lg p-1 w-[4.5625em] text-center m-auto text-sm p-1"> {initiativeDetail.colaborator}</p></div>
+                <div><h2 className="text-lg italic font-semibold text-center">Misiones:</h2><p className="text-center m-auto text-sm p-1"> {initiativeDetail.missions}</p></div>
+                <div><h2 className="text-lg italic font-semibold text-center">Likes:</h2><p className="text-center m-auto text-sm p-1"> {initiativeDetail.likes}</p></div>
+                <div><h2 className="text-lg italic font-semibold text-center">Shares:</h2><p className="text-center m-auto text-sm p-1"> {initiativeDetail.shares}</p></div>
               </div>
             </div>
   
@@ -234,17 +236,17 @@ useEffect(() => {
             <div className="bg-white rounded-lg shadow p-1 flex flex-row justify-evenly gap-10">
   
               <div className="">
-                <h2 className="text-l italic font-semibold text-center">Valores Históricos:</h2>
+                <h2 className="text-lgg font-semibold text-center">Token {initiativeDetail.tokenDao}</h2>
                 <DetailedGraph priceFluctuation={initiativeDetail.priceFluctuation} />
               </div>
               <div className="flex flex-col items-center justify-center gap-4 p-2">
                 <div className="flex flex-col items-center">
-                  <h2 className="text-l italic font-semibold text-center">Precio de venta:</h2>
+                  <h2 className="text-lg italic font-semibold text-center">Precio de venta:</h2>
                   <p className="m-3">${initiativeDetail.sell_price}</p>
                 </div>
   
                 <div className="flex flex-col items-center p-2">
-                  <h2 className="text-l italic font-semibold text-center">Precio de Compra:</h2>
+                  <h2 className="text-lg italic font-semibold text-center">Precio de Compra:</h2>
                   <p className="m-3">${initiativeDetail.buy_price}</p>
                 </div>
   
@@ -253,7 +255,7 @@ useEffect(() => {
             </div>
             <div className="flex flex-col justify-center gap-4 rounded-lg shadow bg-white m-1 ">
               <div className="flex flex-col w-[25em] p-1">
-                <h1 className="text-center font-semibold text-l">¿Quieres apoyar esta iniciativa?</h1>
+                <h1 className="text-center font-semibold text-lg">¿Quieres apoyar esta iniciativa?</h1>
                 <h1 className="text-center italic">Puedes participar en ella y formar parte de ella!</h1>
                 <div className="flex flex-row justify-evenly p-2">
                   {isConnected
@@ -282,7 +284,7 @@ useEffect(() => {
               </div>
 
               <div className="flex flex-col w-[25em] p-2">
-                <h1 className="text-center font-semibold text-l">¿Te gustó esta iniciativa?</h1>
+                <h1 className="text-center font-semibold text-lg">¿Te gustó esta iniciativa?</h1>
                 <h1 className="text-center italic">Ayudarías mucho compartiéndola y dándole like</h1>
                 <div className="flex flex-row justify-evenly p-2">
                   <button
