@@ -49,4 +49,10 @@ public class AutenticacionController {
 
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> register(GoogleUserInfoCompleta googleUserInfoCompleta) {
+        String result = autenticacionService.autenticarConGooglePersonalizado(googleUserInfoCompleta);
+        return ResponseEntity.ok(result);
+    }
 }

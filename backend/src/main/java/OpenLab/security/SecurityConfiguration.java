@@ -50,6 +50,11 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/social/getUserLikes/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/social/getUserJoins/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/social/getUserShares/{id}").permitAll()
+                        // BuyOrder Controller - SellOrder Controller
+                        .requestMatchers(HttpMethod.GET, "api/orders/getAllBuyOrders").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/orders/getAllSellOrders").permitAll()
+                        // Estadisticas Controller
+                        .requestMatchers(HttpMethod.GET, "api/stadistics/{id}").permitAll()
                         //Swagger
                         .requestMatchers(HttpMethod.GET,"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated())

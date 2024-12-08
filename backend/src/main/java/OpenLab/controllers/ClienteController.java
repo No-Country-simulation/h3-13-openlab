@@ -29,7 +29,7 @@ public class ClienteController {
     }
 
     @GetMapping("/getAll")
-    @Operation(summary = "Obtiene todos los estudiantes")
+    @Operation(summary = "Obtiene todos los clientes")
     public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> findAll() {
         try {
             List<Cliente> clientes = clienteService.findAll();
