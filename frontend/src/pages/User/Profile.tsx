@@ -13,13 +13,14 @@ import CreateOrders from "../../components/orders/createOrders";
 import UncancelNoti from "../../components/notifications/uncancelNoti";
 import CancelNoti from "../../components/notifications/cancelNoti";
 import DeleteNoti from "../../components/notifications/deleteNoti";
+import { StatisticsProfile } from "../../components/stats/stadistics";
+import { obtenerPreciosCripto } from "../../components/hooks/CryptoData";
 
 const Profile = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { caipNetwork } = useAppKitNetwork();
   const { address, isConnected } = useAppKitAccount();
   const [balanceETH, setBalanceETH] = useState<string | null>(null);
-  const {statistics} = useSelector((state:RootState) => state.userStadistics);
   const {sells , buys} =useSelector((state:RootState) => state.ordersBooks);
   const [active, setActive] = useState<'Sells' | 'Buys'>('Buys');
   const provider = caipNetwork ? new ethers.providers.JsonRpcProvider(caipNetwork.rpcUrls.default.http[0]) : null;
@@ -38,7 +39,7 @@ const Profile = () => {
 
   const [precios, setPrecios] = useState<any>({});
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
   const [modalCreate , setModalCreate]= useState(false);
   const [modalEdit , setModalEdit] = useState(false);
   const [editOrder , setEditOrder] = useState(null)
@@ -49,38 +50,17 @@ const Profile = () => {
     if (isConnected) {
       fetchData();
     }
-
-    const obtenerPreciosCripto = async () => {
+    const obtenerPrecios = async () => {
       try {
-        const response = await fetch(
-           "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1"
-        );
-        const data = await response.json();
-
-
-        if (response.ok) {
-          const preciosConImagenes = data.reduce((acc: any, coin: any) => {
-            acc[coin.name] = {
-              usd: coin.current_price,
-              image: coin.image,
-              symbol:coin.symbol,
-              porcentage:coin.ath_change_percentage
-            };
-            return acc;
-          }, {});
-
-          setPrecios(preciosConImagenes);
-        } else {
-          throw new Error("Error al obtener los datos de las criptomonedas");
-        }
-      } catch (err: any) {
-        setError(err?.message || "Error desconocido");
+        const preciosConImagenes = await obtenerPreciosCripto(); 
+        setPrecios(preciosConImagenes);
+      } catch (err) {
+        console.log(err)
       } finally {
         setLoading(false);
       }
     };
-
-    obtenerPreciosCripto();
+    obtenerPrecios();
   }, [isConnected, address, caipNetwork]);
 
   if (loading) {
@@ -203,37 +183,11 @@ const Profile = () => {
             </SimpleBar>
         </div>
           
-          <div className="flex flex-col bg-white rounded-lg shadow-lg w-[35em]">
-            <ul className="p-4 w-[27em] m-auto">
-              <li className=" p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
-                  Founded projects 
-                  <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
-              </li>
-              <li className=" p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
-                  Participated projects 
-                  <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
-              </li>
-              <li className="p-6 flex flex-row  justify-between font-semibold border-b border-gray-300 text-xl ">
-                  Solved missions 
-                  <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
-              </li>
-              <li className="p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
-                  Validated missions 
-                  <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
-              </li>
-              <li className="p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
-                  Likes per missions
-                  <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
-              </li>
-              <li className="p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
-                  Generated tokens
-                  <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
-              </li>
-            </ul>
-          </div>
+         <StatisticsProfile/>
+
       </div>
               <br/>
-      <div className="flex flex-col w-[82em] m-auto h-[37em] pt-4 bg-white shadow-lg rounded-lg"
+      <div className="flex flex-col w-[82em] m-auto h-[30em] pt-4 bg-white shadow-lg rounded-lg"
       >
         <h1 className="text-xl p-2 ml-[2em] font-semibold">Purchase and Sale Orders</h1>
         
