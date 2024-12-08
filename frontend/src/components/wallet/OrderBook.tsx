@@ -1,82 +1,125 @@
 import { useEffect, useState } from "react";
-import Web3 from "web3";
-import ABI_DEL_CONTRATO from "../../utils/contracts/OrderBookABI.json";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setOrderbookInstance,
+  setUserAddress,
+} from "../../store/contracts/contractsSlices";
+import { RootState } from "../../store/store";
+import { addPair, loadOrderbook } from "../../utils/contracts/contractServices";
 
 const OrderBook = () => {
-  const [userAccount, setUserAccount] = useState("");
+  const { userAddress } = useSelector((state: RootState) => state.contracts);
+  const dispatch = useDispatch();
+  /* const [buyPrice, setBuyPrice] = useState("");
+  const [buyQuantity, setBuyQuantity] = useState("");
+  const [sellPrice, setSellPrice] = useState("");
+  const [sellQuantity, setSellQuantity] = useState(""); */
+  const [token1, setToken1] = useState("");
+  const [token2, setToken2] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleAddPair = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const price = "1200";
-      const quantity = "5";
+    addPair(token1, token2, userAddress);
+  };
 
-      // Convertir los valores de precio y cantidad a la unidad mínima (Wei)
-      const priceInWei = Web3.utils.toWei(price, "ether"); // Convierte el precio a Wei
-      const quantityInWei = Web3.utils.toWei(quantity, "ether"); // Convierte la cantidad a Wei
+  const handleOrderbook = async (identifier: string) => {
+    const orderbook = await loadOrderbook(identifier);
+    console.log(orderbook);
 
-      console.log("Precio en Wei:", priceInWei);
-      console.log("Cantidad en Wei:", quantityInWei);
-
-      // Proceder con la transacción si la validación es exitosa
-      const web3 = new Web3(window.ethereum);
-      const contract = new web3.eth.Contract(
-        ABI_DEL_CONTRATO,
-        "0xA3B71e8ED0B215E8908330bE070d2b92ab8f9279"
-      );
-
-      const buyCount = await contract.methods
-        .buyCount()
-        .send({ from: userAccount });
-      console.log(buyCount);
-
-      // Enviar la transacción
-      /* await contract.methods
-        .placeBuy(priceInWei, quantityInWei)
-        .send({
-          from: userAccount,
-          gas: "3000000", // Ajusta según sea necesario
-        })
-        .on("transactionHash", (hash) => {
-          console.log("Hash de transacción:", hash);
-        })
-        .on("receipt", (receipt) => {
-          console.log("Recibo de transacción:", receipt);
-        })
-        .on("error", (error) => {
-          console.error("Error en la transacción:", error);
-          alert("Error al procesar la orden.");
-        });
- */
-      alert("Orden de compra colocada con éxito");
-    } catch (error) {
-      console.error("Error al realizar la transacción:", error);
-      alert("Error al procesar la orden.");
-    }
+    dispatch(setOrderbookInstance(orderbook));
   };
 
   useEffect(() => {
     // Si usamos Reown directamente guardamos el usuario
-    if (window.ethereum) {
-      const web3 = new Web3(window.ethereum);
-      web3.eth.getAccounts().then((accounts) => {
-        if (accounts.length > 0) {
-          setUserAccount(accounts[0]);
+    const init = async () => {
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+
+          //console.log("Cuentas conectadas:", accounts[0]);
+
+          dispatch(setUserAddress(accounts[0])); // Guardar en Redux
+        } catch (error) {
+          console.error("Error al solicitar las cuentas:", error);
         }
-        console.log(userAccount);
-      });
-    }
+      } else {
+        console.error("MetaMask no está instalado.");
+      }
+    };
+    init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div>
-      <h3>Bienvenido Cliente:</h3>
-      <h3>Wallet: {userAccount}</h3>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Enviar Orden</button>
+      <h1>Orderbook DApp</h1>
+      <form onSubmit={handleAddPair}>
+        <p>{userAddress}</p>
+        <input
+          type="text"
+          placeholder="Token 1"
+          value={token1}
+          onChange={(e) => setToken1(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Token 2"
+          value={token2}
+          onChange={(e) => setToken2(e.target.value)}
+        />
+
+        <button>Add Token Pair</button>
       </form>
+
+      <div>
+        <h2>Load Orderbook</h2>
+        <input
+          type="text"
+          placeholder="Pair Identifier"
+          onChange={(e) => handleOrderbook(e.target.value)}
+        />
+      </div>
+
+      {/* {orderbookInstance && (
+        <>
+          <div>
+            <h2>Place Buy Order</h2>
+            <input
+              type="number"
+              placeholder="Price"
+              value={buyPrice}
+              onChange={(e) => setBuyPrice(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Quantity"
+              value={buyQuantity}
+              onChange={(e) => setBuyQuantity(e.target.value)}
+            />
+            <button onClick={placeBuyOrder}>Place Buy Order</button>
+          </div>
+
+          <div>
+            <h2>Place Sell Order</h2>
+            <input
+              type="number"
+              placeholder="Price"
+              value={sellPrice}
+              onChange={(e) => setSellPrice(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Quantity"
+              value={sellQuantity}
+              onChange={(e) => setSellQuantity(e.target.value)}
+            />
+            <button onClick={placeSellOrder}>Place Sell Order</button>
+          </div>
+        </>
+      )} */}
     </div>
   );
 };

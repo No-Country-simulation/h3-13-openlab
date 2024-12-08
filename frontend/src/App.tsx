@@ -1,20 +1,20 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { Ethers5Adapter } from "@reown/appkit-adapter-ethers5";
-import { defineChain, sepolia } from "@reown/appkit/networks";
+import { defineChain } from "@reown/appkit/networks";
 import { createAppKit } from "@reown/appkit/react";
-import { RouterProvider } from "react-router-dom";
-import { AppRouter } from "./router/AppRouter";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import { AppRouter } from "./router/AppRouter";
+import { store } from "./store/store";
 
-// 1. Define custom Ganache network
-const ganacheNetwork = defineChain({
-  id: 1337,
-  caipNetworkId: "eip155:1337",
+// 1. Define custom Hardhat network
+const hardhatNetwork = defineChain({
+  id: 31337,
+  caipNetworkId: "eip155:31337",
   chainNamespace: "eip155",
-  name: "Ganache",
+  name: "hardhat",
   nativeCurrency: {
     decimals: 18,
     name: "Ether",
@@ -28,8 +28,37 @@ const ganacheNetwork = defineChain({
   },
   blockExplorers: {
     default: {
-      name: "Ganache Explorer",
+      name: "Hardhat Explorer",
       url: "http://127.0.0.1:8545",
+    },
+  },
+});
+
+// 1. Definir la red Sepolia
+const sepoliaNetwork = defineChain({
+  id: 11155111,
+  caipNetworkId: "eip155:11155111",
+  chainNamespace: "eip155",
+  name: "Sepolia Testnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "SepoliaETH",
+    symbol: "SepoliaETH",
+  },
+  rpcUrls: {
+    default: {
+      http: [
+        "https://eth-sepolia.g.alchemy.com/v2/pL77TKg5FWlzPukPXaJpGRtElEHspjzi",
+      ], // Asegúrate de reemplazar con tu propio Project ID de Infura
+      webSocket: [
+        "wss://eth-sepolia.g.alchemy.com/v2/pL77TKg5FWlzPukPXaJpGRtElEHspjzi",
+      ], // Opcional
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Sepolia Etherscan",
+      url: "https://sepolia.etherscan.io",
     },
   },
 });
@@ -49,7 +78,7 @@ const metadata = {
 createAppKit({
   adapters: [new Ethers5Adapter()],
   metadata: metadata,
-  networks: [sepolia, ganacheNetwork],
+  networks: [sepoliaNetwork, hardhatNetwork],
   projectId,
   features: {
     analytics: true, // Optional -
@@ -67,7 +96,7 @@ export const App = () => {
     >
       <Provider store={store}>
         <RouterProvider router={AppRouter} />
-        <ToastContainer position="top-center"/>
+        <ToastContainer position="top-center" />
       </Provider>
     </Auth0Provider>
   );
