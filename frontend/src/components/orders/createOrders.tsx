@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createOrder } from "../../store/user/ordersUserSlice";
+import {  useSelector } from "react-redux";
 import { OrderCreate } from "../../store/user/ordersUserSlice";
-import { AppDispatch, RootState } from "../../store/store";
+import {  RootState } from "../../store/store";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { close, sumIcon } from "../../assets";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CreateNoti from "../notifications/createNoti";
 
 interface CreateOrdersProps {
   onClose: () => void;
@@ -14,7 +14,7 @@ interface CreateOrdersProps {
 
 const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
   const { address } = useAppKitAccount();
-  const dispatch = useDispatch<AppDispatch>();
+
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
 
   const [orderData, setOrderData] = useState<OrderCreate>({
@@ -27,6 +27,8 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
 
   const [type, setType] = useState<'Sells' | 'Buys'>('Buys');
   const [selectedInitiative, setSelectedInitiative] = useState<any>(null);
+  const [modalNoti, setModalNoti] = useState(false)
+  
 
   const handleInitiativeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = e.target.value;
@@ -63,47 +65,12 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
       return;
     }
 
-    const toastId = toast(
-        <div className="items-center">
-        <p className="text-lg">Do you want to create this order?</p><br/>
-        <p><strong>{type} </strong>Order for <strong>{orderData.quantity} {selectedInitiative?.tokens}</strong> to $<strong>{orderData.price}</strong></p>
-        <br/>
-        <div className="flex gap-4 justify-center items-center">
-          <button
-            onClick={() => {
-              dispatch(createOrder({ orderData, type }));
-
-              toast.dismiss(toastId);
-
-              toast.success("Order created successfully!");
-
-              setTimeout(() => {
-                onClose();
-              }, 2000); 
-            }}
-            className="bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Yes
-          </button>
-          <button
-            onClick={() => {
-              toast.dismiss(toastId);
-            }}
-            className="bg-red-500 text-white px-4 py-2 rounded"
-          >
-            No
-          </button>
-        </div>
-      </div>,
-      {
-        position: "top-center",
-        autoClose: false, 
-      }
-    );
-  };
+    setModalNoti(true)
+    }
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col bg-opacity-70 flex justify-center items-center z-50">
+        {modalNoti === true ? <CreateNoti orderData={orderData} type={type} onClose={() => { setModalNoti(false); onClose(); }}/> :""}
       <div className="bg-white rounded-lg shadow-lg border p-3 w-[30em]">
         <button onClick={onClose} className="float-end">
           <img src={close} alt="close" />
