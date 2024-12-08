@@ -2,18 +2,23 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'rec
 import { Initiative } from '../../store/Initiatives/showInitiativesSlice';
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import useWindowSize from '../hooks/Responsive';
 
 interface MyBarChartProps {
     initiatives: Initiative[];
 }
 
+
 const DashBar: FC<MyBarChartProps> = ({ initiatives }) => {
     const navigate = useNavigate();
 
+    const { width } = useWindowSize();
+    const isMobile = width <= 768;
+
     return (
         <BarChart
-            width={730}
-            height={270}
+            width={!isMobile ? 730: 440}
+            height={!isMobile ? 270: 200}
             data={initiatives}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
         >
@@ -21,11 +26,16 @@ const DashBar: FC<MyBarChartProps> = ({ initiatives }) => {
             <XAxis dataKey="tokens" />
             <YAxis />
             <Tooltip />
+            {isMobile 
+            ?
+            <></>
+            :
             <Legend 
             layout="vertical" 
             align="left" 
             verticalAlign="middle" 
             />
+            }
             <Bar 
               dataKey="buy_price" 
               fill="#3A23ff" 

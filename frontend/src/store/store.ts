@@ -8,7 +8,11 @@ import {
   likedInitiativesSlice,
 } from "./Initiatives/joinLikesIniSlice";
 import { myInitiativesSlice } from "./Initiatives/myIniSlice";
+import { userStatsSlice } from "./user/statsUserSlice";
+import { ordersBooksSlice } from "./user/ordersUserSlice";
+import { transactionsSlice } from "./user/transactionsUserSlice";
 import contractsSlice from "./contracts/contractsSlices";
+
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +23,11 @@ export const store = configureStore({
     joinInitiatives: joinInitiativesSlice.reducer,
     likeInitiatives: likedInitiativesSlice.reducer,
     myInitiatives: myInitiativesSlice.reducer,
-    contracts: contractsSlice,
+    userStadistics: userStatsSlice.reducer,
+    ordersBooks: ordersBooksSlice.reducer,
+    transactions: transactionsSlice.reducer,
+     contracts: contractsSlice,
+
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

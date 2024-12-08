@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
+interface Tag{
+  dao:string,
+  role:string
+}
 interface User {
   id: number | null;
   role: string;
   name: string;
   lastName: string;
+  email: string;
+  tags:Tag[];
 }
 
 interface AuthState {
@@ -20,7 +26,19 @@ const emptyUser: AuthState = {
     id: 1,
     name:"Fabio",
     lastName:"A.",
-    role:"user"
+    email:"FabioA@gmail.com",
+    role:"user",
+    tags:[{
+      dao:"Fractal",
+      role:"Co-founder"
+    },
+    {dao:"EasyMed",
+    role:"Colaborator"
+    },
+    {dao:"Shared",
+    role:"Workspace owner"
+    }
+  ]
   }, 
 };
 

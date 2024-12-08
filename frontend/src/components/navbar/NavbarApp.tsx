@@ -46,10 +46,10 @@ const NavbarApp: React.FC = () => {
             </div>
 
             <div className="flex flex-col items-center space-y-4 min-h-screen">
-              <Link to="/test" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={home} className='m-1' />Home</Link>
-              <Link to="/profile" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={profileB} className='m-1' />Profile</Link>
-              <Link to="/MyInitiatives" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={newini} className='m-1' />My Initiatives</Link>
-              <Link to="/initiatives" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"><img src={init} className='m-1' />Initiatives</Link>
+              <Link to="/test" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"   onClick={() => setIsMenuOpen(false)}><img src={home} className='m-1' />Home</Link>
+              <Link to="/profile" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"   onClick={() => setIsMenuOpen(false)}><img src={profileB} className='m-1 w-6' />Profile</Link>
+              <Link to="/MyInitiatives" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"   onClick={() => setIsMenuOpen(false)}><img src={newini} className='m-1' />My Initiatives</Link>
+              <Link to="/initiatives" className="flex items-center text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 rounded hover:text-white"  onClick={() => setIsMenuOpen(false)}><img src={init} className='m-1' />Initiatives</Link>
               <br /><br /><br /><br /><br /><br /><br /><br />
 
               <button className="flex items-end text-lg font-semibold p-2 hover:bg-gradient-to-br from-blue-700 to-sky-400 mt-auto rounded hover:text-white" onClick={handleOut}>

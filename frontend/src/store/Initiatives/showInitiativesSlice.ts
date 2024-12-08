@@ -14,6 +14,7 @@ export interface Initiative {
   priceFluctuation: PriceFluctuation[]
   colaborator: number;
   tokens: string;
+  tokenDao:string;
   missions: string;
   likes: number;
   shares: string;
@@ -85,6 +86,7 @@ export const fetchInitiatives = createAsyncThunk(
         ],
         colaborator: item.colaboradores,
         tokens: 400,
+        tokenDao:"AYU",
         missions: `${item.misiones_actuales}/${item.misiones_objetivo}`,
         likes: item.likes,
         shares: item.shares,

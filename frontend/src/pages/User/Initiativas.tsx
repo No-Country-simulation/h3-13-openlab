@@ -221,12 +221,12 @@ const handleSortClick = (criteria: string) => {
             </button>
           </div>
           
-          <div className="flex flex-row justify items-center p-3">
+          <div className="flex flex-row justify items-center w-[4em] p-3">
             <input
               type="text"
               placeholder="Search"
               value={searchTerm}  
-              className="border shadow w-[8em] p-1 rounded-lg"
+              className="border shadow p-1 rounded-lg w-[3em]"
               onChange={handleSearchChange} 
               />
           </div>
