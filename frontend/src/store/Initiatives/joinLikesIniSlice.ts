@@ -77,18 +77,18 @@ export const likedInitiativesSlice = createSlice({
 export const sendLikeDislike = createAsyncThunk(
   'likedInitiatives/sendLikeDislike',
   async ({ initiativeId, isLiked }: { initiativeId: string; isLiked: boolean }) => {
-    // const { user } = useSelector((state: RootState) => state.auth);
+    const { user } = useSelector((state: RootState) => state.auth);
 
-    // try {
-    //   await axios.post(`${URL}/api/social/socials`, {
-    //     // userId: user?.id,
-    //     initiativeId,
-    //     isLiked,
-    //   });
-    //   return { initiativeId, isLiked };
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      await axios.post(`${URL}/api/social/socials`, {
+        userId: user?.id,
+        initiativeId,
+        isLiked,
+      });
+      return { initiativeId, isLiked };
+    } catch (error) {
+      console.log(error);
+    }
     return { initiativeId, isLiked }
   }
 );
@@ -97,17 +97,17 @@ export const sendLikeDislike = createAsyncThunk(
 export const sendJoinLeave = createAsyncThunk(
   'joinInitiatives/sendJoinLeave',
   async ({ initiativeId, isJoined }: { initiativeId: string; isJoined: boolean }) => {
-    // const { user } = useSelector((state: RootState) => state.auth);
-    // try {
-    //   await axios.post(`${URL}/api/social/socials`, {
-    //     userId: user?.id,
-    //     initiativeId,
-    //     isJoined,
-    //   });
-    //   return { initiativeId, isJoined };
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    const { user } = useSelector((state: RootState) => state.auth);
+    try {
+      await axios.post(`${URL}/api/social/socials`, {
+        userId: user?.id,
+        initiativeId,
+        isJoined,
+      });
+      return { initiativeId, isJoined };
+    } catch (error) {
+      console.log(error);
+    }
     return { initiativeId, isJoined };
   }
 );
