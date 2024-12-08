@@ -211,41 +211,47 @@ const Profile = () => {
               Sells</button>
         </div>
         
-        <div className="flex flex-col pt-2 pl-8 pr-8">
+        <div className="flex flex-col pt-2 pl-8 pr-8 w-[80em]">
           <SimpleBar style={{ maxHeight: 500 }}>
-          <div className="grid grid-cols-8 grid-rows-1 gap-4 h-[4em] text-center text-base font-semibold items-center bg-[#00B2FF]/10">
+          <div className="grid grid-cols-8 grid-rows-1 h-[4em] w-[76em] text-center text-base font-semibold items-center bg-[#00B2FF]/10">
               <div >    </div>
               <div >Name</div>
               <div >Tokens</div>
               <div >Price</div>
-              <div className="col-span-2"></div>
-              <div className="col-start-7"></div>
-              <div className="col-start-8"></div>
+              <div className="col-span-2">    </div>
+              <div className="col-start-7">   </div>
+              <div className="col-start-8">   </div>
           </div>
           {filterOrders.map((order)=>(
-          <div className="grid grid-cols-8 grid-rows-1 bg-white text-center items-center border-b border-gray-200 h-[4em]">
+          <div className="grid grid-cols-8 grid-rows-1 bg-white w-[74em] text-center justify-center  items-center border-b border-gray-200 h-[4em] ">
               <div className=" items-center" key={order.id}><img src={order.logoDao} className="w-8 h-8 m-auto"/></div>
-              <div className=" text-base">{order.tokenDao}</div>
-              <div className=" text-base">{order.quantity}</div>
-              <div className=" text-base font-semibold">$ {order.price}</div>
+              <div className="  ml-[1em] text-base">{order.tokenDao}</div>
+              <div className="  ml-[1em] text-base">{order.quantity}</div>
+              <div className="  ml-[1.5em] text-base font-semibold">$ {order.price}</div>
               <div className="col-span-2">  </div>
               {order.state === true 
                 ? <>
-                <div className="col-start-8 flex flex-row gap-2">
+                <div className="col-start-8 flex flex-row gap-3 justify-center ">
                   <button  onClick={() => openNoti('cancel', order.id)}
+                  className="bg-color-1 text-white p-2 rounded-lg shadow "
                   >Cancel</button>
                   <button onClick={() => handleEdit(order)}
+                   className="bg-[#00B2FF] text-white p-2 rounded-lg shadow "
                   >Edit</button>
                   <button onClick={() => openNoti('delete', order.id)}
+                  className="bg-black text-white p-2 rounded-lg shadow "
                   >Delete</button></div>
                 </>
                 : <>
-                <div className="col-start-8 flex flex-row gap-2">
+                <div className="col-start-8 flex flex-row gap-2 justify-center ]">
                   <button onClick={() => openNoti('uncancel', order.id)}
+                  className="bg-color-1/50 text-white p-2 rounded-lg shadow "
                   >Uncancel</button>
                   <button onClick={() => handleEdit(order)}
+                  className="bg-[#00B2FF] text-white p-2 rounded-lg shadow "
                   >Edit</button>
                   <button onClick={() => openNoti('delete', order.id)}
+                  className="bg-black text-white p-2 rounded-lg shadow "
                   >Delete</button></div>
               </>
               }

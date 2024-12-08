@@ -40,7 +40,7 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
       setOrderData((prev) => ({
         ...prev,
         logoDao: selected.logo,
-        tokenDao: selected.tokens,
+        tokenDao: selected.tokenDao,
         address: address || prev.address,
       }));
     }
@@ -107,7 +107,7 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
               {initiatives?.map((initiative) => (
                 <option key={initiative.id} value={initiative.id}>
                   <img src={initiative.logo} className="w-4 h-4" alt={initiative.name} />
-                  {initiative.tokens} - {initiative.name}
+                  {initiative.tokenDao} - {initiative.name}
                 </option>
               ))}
             </select>
