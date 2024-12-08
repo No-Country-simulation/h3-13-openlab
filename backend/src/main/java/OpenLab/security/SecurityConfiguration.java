@@ -28,7 +28,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         //Autenticacion Controller
-                        .requestMatchers(HttpMethod.POST, "/api/**","/api/login", "/api/login/signup","/api/admin/add", "/api/cliente/add").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/**","/api/login", "/api/login/signup", "/api/login/register","/api/admin/add", "/api/cliente/add").permitAll()
                         //Cliente Controller
                         .requestMatchers(HttpMethod.GET, "/api/cliente/getAll", "/api/cliente/{id}").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/cliente/update").authenticated()
