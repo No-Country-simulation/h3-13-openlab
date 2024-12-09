@@ -49,7 +49,7 @@ public class SocialController {
     @GetMapping("/getUserShares/{id}")
     @Operation(summary = "Se devuelven las iniciativas que el usuario compartio")
     public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> getUserShares(@PathVariable @Valid Long id) {
-        List<IniciativaResponseDTO> socialsShares = socialService.getUserJoins(id);
+        List<IniciativaResponseDTO> socialsShares = socialService.getUserShares(id);
         String message = "Iniciativas Encontradas";
         return new ResponseEntity<>(new ApiResponseDTO<>(true, message, socialsShares), HttpStatus.OK);
     }

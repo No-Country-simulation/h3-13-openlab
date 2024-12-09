@@ -39,7 +39,7 @@ public class AutenticacionController {
         List<String> roles = (List<String>) claims.get(namespace + "roles"); // Extraer roles
 
         GoogleUserInfoCompleta googleUserInfoCompleta = new GoogleUserInfoCompleta(
-                userId, name, givenName, familyName, picture, email, roles
+                userId, name, givenName, familyName, picture, email//, roles
         );
 
         System.out.println(googleUserInfoCompleta);

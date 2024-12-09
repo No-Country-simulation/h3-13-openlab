@@ -1,5 +1,7 @@
 package OpenLab.dtos.UserDTO;
 
+import java.util.List;
+
 public record GoogleUserInfoCompleta(
         String sub,
         String name,
@@ -7,5 +9,6 @@ public record GoogleUserInfoCompleta(
         String family_name,
         String picture,
         String email
+        //List<String> roles
 ) {
 }
