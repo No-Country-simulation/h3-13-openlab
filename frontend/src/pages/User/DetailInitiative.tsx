@@ -30,7 +30,6 @@ const Detail = () => {
   const { width } = useWindowSize();
   const isMobile = width <= 768;
 
-  console.log("initiativeDetail",initiativeDetail)
   const handleBuy = (initiative: Initiative) => {
     setSelectedInitiative(initiative);  
     setIsModalOpen(true);              

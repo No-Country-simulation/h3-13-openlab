@@ -50,8 +50,6 @@ const Dashboard = () => {
     }
   };
 
-
-  console.log(myInitiatives)
   const lastTenInitiatives = initiatives.slice(-10);
   const lastTenMyInitiatives = myInitiatives.slice(-6);
 

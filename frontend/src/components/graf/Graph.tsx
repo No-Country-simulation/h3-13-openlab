@@ -21,7 +21,6 @@ type DetailedGraphProps = {
 
 const DetailedGraph: React.FC<DetailedGraphProps> = ({ priceFluctuation }) => {
 
-  console.log(priceFluctuation)
   const maxValue = Math.max(...priceFluctuation.map((point) => point.value));
 
   const calculateTrendLine = (data: PriceFluctuation[]) => {
