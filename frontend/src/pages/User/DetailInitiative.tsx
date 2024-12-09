@@ -16,6 +16,8 @@ const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT;
 const Detail = () => {
   const { id } = useParams();
   const { initiatives } = useSelector((state: RootState) => state.initiatives);  
+  const { user } = useSelector((state: RootState) => state.auth);
+  const userId = user?.id ?? ""; 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInitiative, setSelectedInitiative] = useState<Initiative | null>(null);
   const joinedInitiatives = useSelector((state: RootState) => state.joinInitiatives.joinedInitiatives);
@@ -37,9 +39,9 @@ const Detail = () => {
   function handleJoin(id: string) {
     const { isJoined } = checkIfLikeOrJoined(id); 
     if (isJoined) {
-      dispatch(sendJoinLeave({ initiativeId: id, isJoined: false }));
+      dispatch(sendJoinLeave({ initiativeId: id, isJoined: false , userId }));
     } else {
-      dispatch(sendJoinLeave({ initiativeId: id, isJoined: true }));
+      dispatch(sendJoinLeave({ initiativeId: id, isJoined: true , userId}));
     }
   }
   
@@ -47,9 +49,9 @@ const Detail = () => {
     const { isLiked } = checkIfLikeOrJoined(id); 
 
     if (isLiked) {
-      dispatch(sendLikeDislike({ initiativeId: id, isLiked: false }));
+      dispatch(sendLikeDislike({ initiativeId: id, isLiked: false , userId }));
     } else {
-      dispatch(sendLikeDislike({ initiativeId: id, isLiked: true }));
+      dispatch(sendLikeDislike({ initiativeId: id, isLiked: true , userId}));
 
     }
   }
@@ -74,7 +76,7 @@ const Detail = () => {
         title: 'Check this initiative!',
         url: initiativeUrl,
       });
-      dispatch(sendShare({isShare:true, initiativeId:id}))
+      dispatch(sendShare({isShare:true, initiativeId:id, userId}))
 
     } else {
       toast.warning('Share API is not supported on this device.');
@@ -167,7 +169,7 @@ useEffect(() => {
                     >Buy</button>
                   }
   
-                  {isJoined
+                  {!isJoined
                     ? <button
                       className="bg-[#E0E0E0] text-white p-2 justify-center rounded-full w-[3.375em] h-[2.125em] flex items-center shadow-lg"
                       onClick={() => handleJoin(initiativeDetail.id)}
@@ -180,7 +182,7 @@ useEffect(() => {
                   <button
                     className="m-2"
                     onClick={() => handleLike(initiativeDetail.id)}
-                  ><img src={isLiked ? likeIcon : dislikeIcon} className="h-[1.25em]" />
+                  ><img src={!isLiked ? likeIcon : dislikeIcon} className="h-[1.25em]" />
                   </button>
                   <button className="m-2"
                     onClick={() => handleShare(initiativeDetail.id)}
@@ -270,7 +272,7 @@ useEffect(() => {
                     >Buy</button>
                   }
 
-                  {isJoined
+                  {!isJoined
                     ? <button
                       className="bg-[#E0E0E0] text-white p-2 justify-center rounded-full w-[3.375em] h-[2.125em] flex items-center shadow-lg"
                       onClick={() => handleJoin(initiativeDetail.id)}
@@ -290,7 +292,7 @@ useEffect(() => {
                   <button
                     className="m-2"
                     onClick={() => handleLike(initiativeDetail.id)}
-                  ><img src={isLiked ? likeIcon : dislikeIcon} className="h-[1.25em]" />
+                  ><img src={!isLiked ? likeIcon : dislikeIcon} className="h-[1.25em]" />
                   </button>
                   <button className="m-2"
                     onClick={() => handleShare(initiativeDetail.id)}

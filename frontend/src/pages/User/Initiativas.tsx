@@ -10,7 +10,7 @@ import "../../index.css"
 import 'simplebar/dist/simplebar.min.css';
 import useWindowSize from "../../components/hooks/Responsive";
 import ModalBuy from "../../components/buyInit/modalBuy";
-import { sendJoinLeave, sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
+import { fetchJoinedInitiatives, fetchLikedInitiatives, sendJoinLeave, sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
 const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT
 import { useAppKitAccount } from "@reown/appkit/react";
 import { toast } from "react-toastify";
@@ -20,7 +20,8 @@ import { Link } from "react-router-dom";
 const Initiativas = () => {
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
   const dispatch = useDispatch<AppDispatch>()
-
+  const { user } = useSelector((state: RootState) => state.auth);
+  const userId = user?.id ?? ""; 
   const [searchTerm, setSearchTerm] = useState('');
   const [activeButton, setActiveButton] = useState("initiatives")
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
@@ -43,35 +44,33 @@ const Initiativas = () => {
 
     const handleBuy = (initiative: Initiative) => {
       setSelectedInitiative(initiative);  
-      setIsModalOpen(true);              
+      setIsModalOpen(true);
     };
     
     function handleJoin(id: string) {
-      const { isJoined } = checkIfLikeOrJoined(id); 
+      const { isJoined } = checkIfLikeOrJoined(id);
       if (isJoined) {
-        dispatch(sendJoinLeave({ initiativeId: id, isJoined: false }));
+        dispatch(sendJoinLeave({ initiativeId: id, isJoined: false , userId}));
       } else {
-        dispatch(sendJoinLeave({ initiativeId: id, isJoined: true }));
+        dispatch(sendJoinLeave({ initiativeId: id, isJoined: true , userId}));
       }
     }
-    
+  
     function handleLike(id: string) {
-      const { isLiked } = checkIfLikeOrJoined(id); 
-
+      const { isLiked } = checkIfLikeOrJoined(id);
       if (isLiked) {
-        dispatch(sendLikeDislike({ initiativeId: id, isLiked: false }));
+        dispatch(sendLikeDislike({ initiativeId: id, isLiked: false , userId }));
       } else {
-        dispatch(sendLikeDislike({ initiativeId: id, isLiked: true }));
-
+        dispatch(sendLikeDislike({ initiativeId: id, isLiked: true , userId}));
       }
     }
-    
-    
-    const checkIfLikeOrJoined = (id: string): { isLiked: boolean, isJoined: boolean } => {
+  
+    const checkIfLikeOrJoined = (id: string): { isLiked: boolean; isJoined: boolean } => {
       const isLiked = likedInitiatives.includes(id);
       const isJoined = joinedInitiatives.includes(id);
       return { isLiked, isJoined };
     };
+    
 
     const handleShare = (id: string) => {
       const initiativeUrl = `${URL_DEL_FRONT}/initiatives/${id}`;
@@ -80,7 +79,7 @@ const Initiativas = () => {
           title: 'Check this initiative!',
           url: initiativeUrl,
         });
-        dispatch(sendShare({isShare:true, initiativeId:id}))
+        dispatch(sendShare({isShare:true, initiativeId:id , userId}))
 
       } else {
         toast.warning('Share API is not supported on this device.');
@@ -170,8 +169,10 @@ const handleSortClick = (criteria: string) => {
 
     useEffect(() => {
       dispatch(fetchInitiatives());
-      // const filtered = filterNewInitiatives(initiatives); 
-      // setNewInitiatives(filtered);
+      if(userId){
+        dispatch(fetchLikedInitiatives(userId));
+        dispatch(fetchJoinedInitiatives(userId))
+      }
     }, [dispatch]);
     
         return (
@@ -491,7 +492,7 @@ const handleSortClick = (criteria: string) => {
               }
 
               {
-                item.isJoined
+                !item.isJoined
                 ?<button 
                 className="bg-[#E0E0E0] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
                 onClick={()=>handleJoin(item.id)}
@@ -504,7 +505,7 @@ const handleSortClick = (criteria: string) => {
               <button 
               className="m-1"
               onClick={()=>handleLike(item.id)}
-              ><img src={item.isLiked ? likeIcon: dislikeIcon} className="h-[20px]"/>
+              ><img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]"/>
               </button>
               <button className="m-1"
               onClick={()=>handleShare(item.id)}

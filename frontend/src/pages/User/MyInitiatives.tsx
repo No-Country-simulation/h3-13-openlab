@@ -8,8 +8,7 @@ import MiniGraph from "../../components/graf/Mini";
 import { likeIcon, dislikeIcon, shareIcon, sumIcon, flechaAsc, flechaDsc, flecha1, flecha2 } from "../../assets";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
-// import ModalBuy from "../../components/buyInit/modalBuy";
-import { sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
+import { fetchJoinedInitiatives, fetchLikedInitiatives, sendLikeDislike, sendShare } from "../../store/Initiatives/joinLikesIniSlice";
 import { fetchMyInitiatives} from "../../store/Initiatives/myIniSlice";
 import { openModal } from "../../store/Initiatives/createIniSlice";
 import { useAppKitAccount } from "@reown/appkit/react";
@@ -18,13 +17,11 @@ const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT;
 
 const MyInitiatives = () => {
   const { myInitiatives } = useSelector((state: RootState) => state.myInitiatives);
-  const likedInitiatives = useSelector(
-    (state: RootState) => state.likeInitiatives.likedInitiatives
-  );
+  const likedInitiatives = useSelector((state: RootState) => state.likeInitiatives.likedInitiatives);
   const [searchTerm, setSearchTerm] = useState("");
-  // const [selectedInitiative, setSelectedInitiative] = useState<Initiative | null>(null);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const userId = user?.id ?? "";
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const { isConnected } = useAppKitAccount();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -49,23 +46,19 @@ const MyInitiatives = () => {
         title: "Check this initiative!",
         url: initiativeUrl,
       });
-      dispatch(sendShare({ isShare: true, initiativeId: id }));
+      dispatch(sendShare({ isShare: true, initiativeId: id , userId}));
     } else {
       toast.warning("Share API is not supported on this device.");
     }
   };
 
-  // const handleBuy = (initiative: Initiative) => {
-  //   setSelectedInitiative(initiative);
-  //   setIsModalOpen(true);
-  // };
 
   function handleLike(id: string) {
     const { isLiked} = checkIfLikeOrJoined(id);
     if (isLiked) {
-      dispatch(sendLikeDislike({ initiativeId: id, isLiked: false }));
+      dispatch(sendLikeDislike({ initiativeId: id, isLiked: false , userId}));
     } else {
-      dispatch(sendLikeDislike({ initiativeId: id, isLiked: true }));
+      dispatch(sendLikeDislike({ initiativeId: id, isLiked: true , userId }));
     }
   }
 
@@ -139,7 +132,11 @@ const MyInitiatives = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchMyInitiatives());
+    if(userId){
+      dispatch(fetchMyInitiatives(userId));
+      dispatch(fetchLikedInitiatives(userId));
+      dispatch(fetchJoinedInitiatives(userId));
+    }
   }, [dispatch]);
 
   return (
@@ -147,8 +144,6 @@ const MyInitiatives = () => {
       {isMobile ? (
         <>
         <div className="flex flex-row items-center justify-between m-4">
-        {/* {isModalOpen && selectedInitiative && <ModalBuy initiative={selectedInitiative} onClose={() => setIsModalOpen(false)} />} */}
-
           <h1 className="text-3xl p-4 sm:w-full font-semibold">Initiatives</h1>
         <div>
           {isConnected?
@@ -186,7 +181,7 @@ const MyInitiatives = () => {
 
       <div className="bg-white">
       
-        {myInitiatives.length < 0 ? filteredAndSortedInitiatives.map((item, index) => (
+        {myInitiatives.length > 0 ? filteredAndSortedInitiatives.map((item, index) => (
          <div key={index} className="flex flex-col gap-4 border-b p-4">
 
            <div className="flex flex-row items-center gap-4">
@@ -240,22 +235,11 @@ const MyInitiatives = () => {
                   </div>
 
                   <div className="flex flex-row items-center justify-between w-[262px] m-auto">
-                    {/* {isConnected
-                    ?<button 
-                    className="bg-[#00B2FF] text-white p-2 font-semibold rounded-full justify-center w-[83px] h-[34px] flex items-center shadow"
-                    onClick={() => handleBuy(item)} 
-                    >Buy</button>
-                    :<button 
-                    className="bg-[#E0E0E0] text-black  p-2 font-semibold rounded-full justify-center w-[83px] h-[34px] flex items-center shadow"
-                    onClick={()=>{toast.info('Please connect the wallet first')}}
-                    >Buy</button>
-                    } */}
-
                     <button 
                     className=""
                     onClick={()=>handleLike(item.id)}
                     >
-                     <img src={item.isLiked ? likeIcon: dislikeIcon} className="h-[20px]"/>
+                     <img src={item.isLiked ? dislikeIcon : likeIcon} className="h-[20px]"/>
                     </button>
                     <button className=""
                       onClick={()=>handleShare(item.id)}
@@ -308,9 +292,6 @@ const MyInitiatives = () => {
                     </button>
                   )}
                 </div>
-                {/* {isModalOpen && selectedInitiative && (
-                  <ModalBuy initiative={selectedInitiative} onClose={() => setIsModalOpen(false)} />
-                )} */}
               </div>
               <div className="m-1">
                 <SimpleBar style={{ maxHeight: 500 }}>
@@ -388,7 +369,7 @@ const MyInitiatives = () => {
                     <div className="flex items-center m-auto text-sm font-semibold">   </div>
                   </div>
 
-                  {myInitiatives.length < 0 ? filteredAndSortedInitiatives.map((item, index) => (
+                  {myInitiatives.length > 0 ? filteredAndSortedInitiatives.map((item, index) => (
                     <div key={index} className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b mr-8">
                       <div className="flex items-center m-auto text-sm text-center">
                       <Link to={`/initiative/${item.id}`}>{item.name}</Link>
@@ -407,26 +388,11 @@ const MyInitiatives = () => {
                       <div className="flex items-center m-auto text-sm">{item.likes}</div>
                       <div className="flex items-center m-auto text-sm">{item.shares}</div>
                       <div className="flex items-center m-auto text-sm flex-row gap-6">
-                        {/* { isConnected
-                          ?<button
-                          className="bg-[#00B2FF] text-white p-2 rounded-full w-[44px] h-[34px] flex items-center justify-center shadow"
-                          onClick={() => handleBuy(item)}
-                        >
-                          Buy
-                        </button>
-                      :  <button
-                      className="bg-[#E0E0E0] text-black  p-2 rounded-full w-[44px] h-[34px] flex items-center jus-center shadow"
-                      onClick={()=>{toast.info('Please connect the wallet first')}}
-                    >
-                      Buy
-                    </button>
-                      } */}
-
                         <button
                           className="m-1"
                           onClick={() => handleLike(item.id)}
                         >
-                          <img src={item.isLiked ?  likeIcon: dislikeIcon} className="h-[20px]" />
+                          <img src={item.isLiked ? dislikeIcon: likeIcon} className="h-[20px]" />
                         </button>
                         <button
                           className="m-1"

@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { Initiative } from './showInitiativesSlice';
+import { BackendInitiative } from './showInitiativesSlice';
 
 const URL = import.meta.env.VITE_URL_DEL_BACKEND;
 
@@ -27,14 +27,41 @@ const initialState: InitiativesState = {
 
 export const fetchMyInitiatives = createAsyncThunk(
   'initiatives/fetchMyInitiatives',
-  async () => {
-    const { user } = useSelector((state: RootState) => state.auth);
-    console.log(user)
-
+  async (userId : string | number ) => {
     try {
-      const response = await axios.get(`${URL}/api/iniciativa/getUserIniciativas/${user?.id}`);
-      console.log(response)
-      return response.data;
+      const response = await axios.get(`${URL}/api/iniciativa/getUserIniciativas/${userId}`);
+      const mappedInitiatives = response.data.dataIterable.map((item: BackendInitiative) => ({
+        id: String(item.id),
+        name: item.nombre,
+        priceFluctuation: [
+          { date: "2024-11-22", value: 15 },
+          { date: "2024-11-23", value: 2 },
+          { date: "2024-11-24", value: 89 },
+          { date: "2024-11-25", value: 45 },
+          { date: "2024-11-26", value: 60 },
+          { date: "2024-11-27", value: 35 },
+          { date: "2024-11-28", value: 40 },
+          { date: "2024-11-29", value: 85 },
+          { date: "2024-11-30", value: 30 },
+          { date: "2024-12-01", value: 55 },
+        ],
+        colaborator: item.colaboradores,
+        tokens: 400,
+        tokenDao:"AYU",
+        missions: `${item.misiones_actuales}/${item.misiones_objetivo}`,
+        likes: item.likes,
+        shares: item.shares,
+        createdAt: "2024-11-20T10:00:00Z",
+        logo: "https://www.shutterstock.com/image-photo/help-friend-through-tough-time-600nw-1899282823.jpg",
+        idea: item.idea,
+        problem: item.problema,
+        solution: item.solucion,
+        opportunity: item.oportunidad,
+        buy_price: item.monto_requerido,
+        sell_price: item.buy_price,
+      }));
+
+      return mappedInitiatives;  
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : 'Error al obtener las iniciativas');
     }

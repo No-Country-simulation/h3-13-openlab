@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from '../store';
 const URL = import.meta.env.VITE_URL_DEL_BACKEND;
-import { useSelector } from "react-redux";
 
 interface JoinInitiativesState {
   joinedInitiatives: string[];
@@ -13,13 +11,44 @@ interface LikedInitiativesState {
 }
 
 const initialJoinState: JoinInitiativesState = {
-  joinedInitiatives: JSON.parse(localStorage.getItem('joinedInitiatives') || '[]'),
+  joinedInitiatives: [],
 };
 
 const initialLikeState: LikedInitiativesState = {
-  likedInitiatives: JSON.parse(localStorage.getItem('likedInitiatives') || '[]'),
+  likedInitiatives: [],
 };
 
+
+export const fetchJoinedInitiatives = createAsyncThunk(
+  'joinInitiatives/fetchJoinedInitiatives',
+  async (userId: string | number) => {
+    
+    try {
+      const response = await axios.get(`${URL}/api/social/getUserJoins/${userId}`);
+      return response.data.dataIterable
+    } catch (error) {
+      console.error('Error al obtener las iniciativas unidas:', error);
+      throw error;
+    }
+  }
+);
+
+// 2. Obtener las iniciativas con like desde el backend
+export const fetchLikedInitiatives = createAsyncThunk(
+  'likedInitiatives/fetchLikedInitiatives',
+  async (userId: string | number) => {
+
+    try {
+      const response = await axios.get(`${URL}/api/social/getUserLikes/${userId}`);
+      return response.data.dataIterable; 
+    } catch (error) {
+      console.error('Error al obtener las iniciativas con like:', error);
+      throw error;
+    }
+  }
+);
+
+// Reducer para iniciativas unidas
 export const joinInitiativesSlice = createSlice({
   name: "joinInitiatives",
   initialState: initialJoinState,
@@ -29,24 +58,20 @@ export const joinInitiativesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(sendJoinLeave.fulfilled, (state, action) => {
-      if (action.payload) { 
-        const { initiativeId, isJoined } = action.payload;
-        if (isJoined) {
-          state.joinedInitiatives.push(initiativeId);
-        } else {
-          state.joinedInitiatives = state.joinedInitiatives.filter(
-            (id) => id !== initiativeId
-          );
-        }
-
-        localStorage.setItem('joinedInitiatives', JSON.stringify(state.joinedInitiatives));
-      }
-    });
+    builder
+      .addCase(fetchJoinedInitiatives.pending, (state) => {
+        state.joinedInitiatives = [];
+      })
+      .addCase(fetchJoinedInitiatives.fulfilled, (state, action) => {
+        state.joinedInitiatives = action.payload;
+      })
+      .addCase(fetchJoinedInitiatives.rejected, (state) => {
+        console.error('Error al cargar las iniciativas unidas' , state);
+      });
   }
 });
-  
 
+// Reducer para iniciativas con like
 export const likedInitiativesSlice = createSlice({
   name: "likedInitiatives",
   initialState: initialLikeState,
@@ -56,32 +81,26 @@ export const likedInitiativesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(sendLikeDislike.fulfilled, (state, action) => {
-      if(action.payload){
-        const { initiativeId, isLiked } = action.payload;
-       if (isLiked) {
-        state.likedInitiatives.push(initiativeId);
-      } else {
-        state.likedInitiatives = state.likedInitiatives.filter(
-          (id) => id !== initiativeId
-        );
-      }
-      console.log('Estado actualizado:', state.likedInitiatives); 
-      localStorage.setItem('likedInitiatives', JSON.stringify(state.likedInitiatives));
-      }
-    });
+    builder
+      .addCase(fetchLikedInitiatives.pending, (state) => {
+        state.likedInitiatives = [];
+      })
+      .addCase(fetchLikedInitiatives.fulfilled, (state, action) => {
+        state.likedInitiatives = action.payload;
+      })
+      .addCase(fetchLikedInitiatives.rejected, (state) => {
+        console.error('Error al cargar las iniciativas con like', state);
+      });
   }
 });
 
-//  Like o Dislike 
+// 3. Acción para enviar el "Like" o "Dislike"
 export const sendLikeDislike = createAsyncThunk(
   'likedInitiatives/sendLikeDislike',
-  async ({ initiativeId, isLiked }: { initiativeId: string; isLiked: boolean }) => {
-    const { user } = useSelector((state: RootState) => state.auth);
-
+  async ({ initiativeId, isLiked , userId}: { initiativeId: string; isLiked: boolean , userId:string| number }) => {
     try {
       await axios.post(`${URL}/api/social/socials`, {
-        userId: user?.id,
+        userId,
         initiativeId,
         isLiked,
       });
@@ -89,18 +108,18 @@ export const sendLikeDislike = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
-    return { initiativeId, isLiked }
+    return { initiativeId, isLiked };
   }
 );
 
-// Join o Leave 
+// 4. Acción para unirse o salir de una iniciativa
 export const sendJoinLeave = createAsyncThunk(
   'joinInitiatives/sendJoinLeave',
-  async ({ initiativeId, isJoined }: { initiativeId: string; isJoined: boolean }) => {
-    const { user } = useSelector((state: RootState) => state.auth);
+  async ({ initiativeId, isJoined , userId }: { initiativeId: string; isJoined: boolean, userId: string|number }) => {
+    console.log(initiativeId, isJoined , userId)
     try {
       await axios.post(`${URL}/api/social/socials`, {
-        userId: user?.id,
+        userId,
         initiativeId,
         isJoined,
       });
@@ -112,14 +131,14 @@ export const sendJoinLeave = createAsyncThunk(
   }
 );
 
-//Share
+// 5. Acción para compartir una iniciativa
 export const sendShare = createAsyncThunk(
   'shareInitiatives',
-  async ({ initiativeId, isShare }: { initiativeId: string; isShare: boolean }) => {
-    const { user } = useSelector((state: RootState) => state.auth);
+  async ({ initiativeId, isShare , userId}: { initiativeId: string; isShare: boolean ,userId: string | number}) => {
+
     try {
       await axios.post(`${URL}/api/social/socials`, {
-        userId: user?.id,
+        userId,
         initiativeId,
         isShare,
       });

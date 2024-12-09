@@ -46,7 +46,7 @@ const initialState: InitiativesState = {
   sortOrder: 'asc',
 };
 
-interface BackendInitiative {
+export interface BackendInitiative {
   id: string;
   nombre: string;
   idea: string;

@@ -22,6 +22,8 @@ const Dashboard = () => {
   const [networkName, setNetworkName] = useState<string | null>(null);
   const { myInitiatives } = useSelector((state: RootState) => state.myInitiatives);
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const userId = user?.id ?? ""; 
   const dispatch = useDispatch<AppDispatch>();
   const { width } = useWindowSize();
   const isMobile = width <= 768;
@@ -49,6 +51,7 @@ const Dashboard = () => {
   };
 
 
+  console.log(myInitiatives)
   const lastTenInitiatives = initiatives.slice(-10);
   const lastTenMyInitiatives = myInitiatives.slice(-6);
 
@@ -58,7 +61,7 @@ const Dashboard = () => {
   
   useEffect(() => {
     dispatch(fetchInitiatives());
-    dispatch(fetchMyInitiatives());
+    if(userId) dispatch(fetchMyInitiatives(userId));
     if (isConnected) {
       fetchData();
     }
