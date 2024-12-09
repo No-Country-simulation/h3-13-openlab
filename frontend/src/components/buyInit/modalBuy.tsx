@@ -28,7 +28,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
     <div className="fixed inset-0 bg-black flex flex-col bg-opacity-70 flex justify-center items-center z-50">
 
     {!isMobile ? (
-      <div className="bg-white rounded shadow-lg w-[964px] h-[600px] flex flex-col gap-4">
+      <div className="bg-white rounded shadow-lg w-[964px] flex flex-col gap-4">
         <div className='flex flex-row justify-between items-center p-6'>
             <div className="flex flex-row items-center justify-center">
                 <h1 className='text-3xl font-semibold mt-4 ml-5'>Buy Token DAO:</h1>
@@ -84,7 +84,7 @@ const ModalBuy =  ({ initiative, onClose }: { initiative: Initiative; onClose: (
             <h1 className="font-bold text-2xl">${initiative.buy_price * quantity }</h1>
         </div>
 
-        <div className='flex items-center flex-row justify-evenly text-white text-base font-semibold mt-5'>
+        <div className='flex items-center flex-row justify-evenly text-white text-base font-semibold mt-5 mb-5'>
             <button className='flex flex-row bg-[#3D7BFF] w-[404px] h-[45px] justify-center items-center rounded-lg hover:bg-[#00b2ff]'
                     onClick={handleBuy}>
                 Buy
