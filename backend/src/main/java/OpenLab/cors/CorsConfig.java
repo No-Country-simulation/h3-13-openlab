@@ -15,7 +15,7 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOriginPattern("http://localhost:5173");
-        corsConfiguration.addAllowedOriginPattern("https://open-lab-test.vercel.app/");
+        corsConfiguration.addAllowedOriginPattern("https://open-lab-test.vercel.app");
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedHeaders(List.of("Origin", "X-Requested-With", "Authorization", "Content-Type", "Accept"));

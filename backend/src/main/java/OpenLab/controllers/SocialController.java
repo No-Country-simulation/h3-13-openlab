@@ -3,7 +3,6 @@ package OpenLab.controllers;
 import OpenLab.dtos.ApiResponseDTO;
 import OpenLab.dtos.IiniciativaDTO.IniciativaResponseDTO;
 import OpenLab.dtos.SocialsDTO.SocialsRequestDTO;
-import OpenLab.models.Socials;
 import OpenLab.services.ISocialService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

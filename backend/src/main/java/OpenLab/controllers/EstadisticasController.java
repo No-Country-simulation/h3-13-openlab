@@ -2,8 +2,8 @@ package OpenLab.controllers;
 
 import OpenLab.dtos.ApiResponseDTO;
 import OpenLab.dtos.EstadisticasDTO.EstadisticasResponseDTO;
-import OpenLab.models.Estadisticas;
 import OpenLab.services.IEstadisticasService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +22,7 @@ public class EstadisticasController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Se devuelven las estadisticas")
     public ResponseEntity<ApiResponseDTO<EstadisticasResponseDTO>> obtenerEstadisticas(@PathVariable Long id) {
         EstadisticasResponseDTO estadisticasResponseDTO = estadisticasService.calcularEstadisticas(id);
         return new ResponseEntity<>(new ApiResponseDTO<>(true, "Exito", estadisticasResponseDTO), HttpStatus.CREATED);
