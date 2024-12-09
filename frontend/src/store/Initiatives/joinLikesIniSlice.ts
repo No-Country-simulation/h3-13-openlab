@@ -100,9 +100,9 @@ export const sendLikeDislike = createAsyncThunk(
   async ({ initiativeId, isLiked , userId}: { initiativeId: string; isLiked: boolean , userId:string| number }) => {
     try {
       await axios.post(`${URL}/api/social/socials`, {
-        userId,
-        initiativeId,
-        isLiked,
+        idCliente:userId,
+        idIniciativa:initiativeId,
+        like:isLiked,
       });
       return { initiativeId, isLiked };
     } catch (error) {
@@ -119,9 +119,9 @@ export const sendJoinLeave = createAsyncThunk(
     console.log(initiativeId, isJoined , userId)
     try {
       await axios.post(`${URL}/api/social/socials`, {
-        userId,
-        initiativeId,
-        isJoined,
+        idCliente:userId,
+        idIniciativa:initiativeId,
+        join:isJoined,
       });
       return { initiativeId, isJoined };
     } catch (error) {
@@ -138,9 +138,9 @@ export const sendShare = createAsyncThunk(
 
     try {
       await axios.post(`${URL}/api/social/socials`, {
-        userId,
-        initiativeId,
-        isShare,
+        idCliente:userId,
+        idIniciativa:initiativeId,
+        share:isShare,
       });
       return { initiativeId, isShare };
     } catch (error) {
