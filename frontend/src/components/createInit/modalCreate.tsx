@@ -5,7 +5,7 @@ import { addCircle, close, tickCircle } from '../../assets';
 import useWindowSize from '../hooks/Responsive';
 import { useState } from 'react';
 import { AppDispatch } from '../../store/store';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 const ModalCreate = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -112,13 +112,24 @@ const ModalCreate = () => {
       };
     
       try {
-        await dispatch(createInitiative(requestData)).unwrap(); 
+        // await dispatch(createInitiative(requestData)).unwrap(); 
     
         toast.success('Initiative successfully created!', {
           style: { backgroundColor: '#1e8736', color: '#fff' },
         });
-    
-        dispatch(closeModal());
+        setTimeout(() => {
+          dispatch(closeModal());
+        }, 2000);
+        setData( {
+          image:null,
+          imageUrl: '',
+          name: '',
+          idea: '',
+          problem: '',
+          oportunity: '',
+          solution: '',}
+        )
+
       } catch (error) {
         toast.error('There was an error creating the initiative. Please try again.', {
           style: { backgroundColor: '#991e2a', color: '#fff' },
@@ -351,6 +362,7 @@ const ModalCreate = () => {
           </div>
         </>
       )}
+      <ToastContainer/>
     </div>
   );
 };

@@ -16,23 +16,23 @@ return(
             </li>
             <li className=" p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
                 Participated projects 
-                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
+                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.joinedInitiatives}</p>
             </li>
             <li className="p-6 flex flex-row  justify-between font-semibold border-b border-gray-300 text-xl ">
                 Solved missions 
-                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
+                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.solvedMissions}</p>
             </li>
             <li className="p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
                 Validated missions 
-                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
+                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.validatedMissions}</p>
             </li>
             <li className="p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
                 Likes per missions
-                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
+                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.sharedInitiatives}</p>
             </li>
             <li className="p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
                 Generated tokens
-                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.createdInitiatives}</p>
+                <p className="bg-[#00B2FF]/20 w-[87px] h-[23px] flex justify-center rounded-lg">{statistics.generatedTokens}</p>
             </li>
         </ul>
   </div>

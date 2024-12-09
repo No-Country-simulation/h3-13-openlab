@@ -82,7 +82,7 @@ export const TransactionsUser = () => {
                     buys.map((transaction) => (
                         <div key={transaction.id} className="flex flex-row gap-7 items-center text-center p-1">
                         <p className="w-[10em]">{new Date(transaction.createdAt).toLocaleString()}  </p>
-                         | <p>{transaction.order.quantity} - {transaction.order.tokenDao} to {transaction.order.price}</p> | <strong>{transaction.state ? 'Completado' : 'Pendiente'}</strong>
+                         | <p className="w-[10em]">{transaction.order.quantity} - {transaction.order.tokenDao} to {transaction.order.price}</p> | <strong>{transaction.state ? 'Completado' : 'Cancelada'}</strong>
                   </div>
               ))
                 ) : (
@@ -107,7 +107,7 @@ export const TransactionsUser = () => {
                   sells.map((transaction) => (
                     <div key={transaction.id} className="flex flex-row gap-7 items-center text-center p-1">
                         <p className="w-[10em]">{new Date(transaction.createdAt).toLocaleString()}  </p>
-                         | <p>{transaction.order.quantity} - {transaction.order.tokenDao} to {transaction.order.price}</p> | <strong>{transaction.state ? 'Completado' : 'Pendiente'}</strong>
+                         | <p className="w-[10em]">{transaction.order.quantity} - {transaction.order.tokenDao} to {transaction.order.price}</p> | <strong>{transaction.state ? 'Completado' : 'Cancelada'}</strong>
                   </div>
                   ))
                 ) : (
