@@ -116,7 +116,6 @@ export const sendLikeDislike = createAsyncThunk(
 export const sendJoinLeave = createAsyncThunk(
   'joinInitiatives/sendJoinLeave',
   async ({ initiativeId, isJoined , userId }: { initiativeId: string; isJoined: boolean, userId: string|number }) => {
-    console.log(initiativeId, isJoined , userId)
     try {
       await axios.post(`${URL}/api/social/socials`, {
         idCliente:userId,
