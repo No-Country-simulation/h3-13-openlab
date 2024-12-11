@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -16,7 +17,9 @@ import org.springframework.security.oauth2.client.registration.InMemoryClientReg
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
@@ -101,7 +104,7 @@ public class SecurityConfiguration {
                 .addFilterBefore(securityFilter, OAuth2LoginAuthenticationFilter.class)
                 .logout(logout -> logout
                         .logoutSuccessHandler((request, response, authentication) -> {
-                            response.sendRedirect("/apii/saludo");
+                            response.sendRedirect("/");
                         })
                         // Redirige a esta URL después de logout
                         .deleteCookies("JSESSIONID")
@@ -117,7 +120,23 @@ public class SecurityConfiguration {
 
     @Bean
     public OidcUserService oidcUserService() {
-        return new OidcUserService(); // Manejo básico de OIDC User
+        return new OidcUserService() {
+
+            @Override
+            public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
+                OidcUser oidcUser = super.loadUser(userRequest);
+
+                // Verifica si los claims necesarios están presentes
+                String email = oidcUser.getAttribute("email");
+                if (email == null) {
+                    throw new OAuth2AuthenticationException("El email no está presente en el token.");
+                }
+
+                return oidcUser;
+            }
+
+            ; // Manejo básico de OIDC User
+        };
     }
 
     @Bean
@@ -137,6 +156,7 @@ public class SecurityConfiguration {
                 .userNameAttributeName("sub")
                 .clientName("Auth0")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+               // .scope("openid", "profile", "email")
                 .build();
 
         return new InMemoryClientRegistrationRepository(registration);

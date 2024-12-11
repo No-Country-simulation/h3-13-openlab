@@ -3,19 +3,20 @@ package OpenLab.controllers;
 import OpenLab.services.Impl.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
@@ -31,6 +32,34 @@ public class AuthController {
         this.clientRegistrationRepository = clientRegistrationRepository;
         this.authorizedClientService = authorizedClientService;
         this.authService = authService;
+    }
+
+    @GetMapping("/user-info2")
+    public ResponseEntity<?> getUserInfo(OAuth2AuthenticationToken authentication) {
+        OAuth2AuthorizedClient client = authorizedClientService.loadAuthorizedClient(
+                authentication.getAuthorizedClientRegistrationId(),
+                authentication.getName()
+        );
+
+        if (client == null || client.getAccessToken() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No access token available.");
+        }
+
+        String userInfoEndpointUri = "https://<YOUR_AUTH0_DOMAIN>/userinfo";
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + client.getAccessToken().getTokenValue());
+        HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(
+                userInfoEndpointUri,
+                HttpMethod.GET,
+                entity,
+                Map.class
+        );
+
+        return ResponseEntity.ok(response.getBody());
     }
 
     @GetMapping("/user-info")
@@ -75,6 +104,13 @@ public class AuthController {
             // Obtener el token de acceso
             String accessToken = client.getAccessToken().getTokenValue();
 
+            OAuth2User principal = authentication.getPrincipal();
+            String email = (String) principal.getAttributes().get("email");
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("No se pudo extraer el email del usuario.");
+            }
+
             String customToken = String.valueOf(authService.autentificarUser(accessToken));
             if (customToken == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -95,7 +131,7 @@ public class AuthController {
         logoutHandler.logout(request, response, null);
 
         // Redirige a Auth0 para el logout
-        String logoutUrl = "https://dev-byesylnv0qhe4lwt.us.auth0.com/v2/logout?returnTo=http://localhost:8081/apii/saludo";  // Cambia tu dominio y la URL de retorno
+        String logoutUrl = "https://dev-byesylnv0qhe4lwt.us.auth0.com/v2/logout";  // Cambia tu dominio y la URL de retorno
         System.out.println("Logout URL: " + logoutUrl);
 
         // Redirige al usuario a Auth0 para el logout
@@ -120,7 +156,7 @@ public class AuthController {
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-       logoutHandler.logout(request, response, null);
+        logoutHandler.logout(request, response, null);
 
         //String logoutUrl = authService.logoutt(request.getHeader("Authorization"));
         String logoutUrl = authService.logout();

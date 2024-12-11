@@ -34,7 +34,6 @@ public class AuthService {
     private final UserMapper userMapper;
 
 
-
     public AuthService(TokenServiceImpl jwtService, UserServiceImpl userService, UserMapper userMapper) {
         this.jwtService = jwtService;
         this.userService = userService;
@@ -52,13 +51,13 @@ public class AuthService {
             if (userResponse == null) {
                 User newUser = userService.save(userMapper.toEntitySave(userinfo));
 
-                JWTTokenDTO tokennew= new JWTTokenDTO(jwtService.generateTokenn(newUser, userinfo));
+                JWTTokenDTO tokennew = new JWTTokenDTO(jwtService.generateTokenn(newUser, userinfo));
 
                 return new JWTTokenDTO(jwtService.generateTokenn(newUser, userinfo));
             }
 
             return new JWTTokenDTO((jwtService.generateTokenn(userResponse, userinfo)));
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
 
@@ -70,6 +69,7 @@ public class AuthService {
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
+
 
         return webClient.get()
                 .uri(userInfoUrl)
@@ -84,10 +84,10 @@ public class AuthService {
 
     public String logout() throws Exception {
 
-        String logoutUrl = String.format("https://"+ "%s/v2/logout?client_id=%s",
+        String logoutUrl = String.format("https://" + "%s/v2/logout?client_id=%s",
                 auth0Domain, clientId);
         System.out.println("saliendo del logout global");
-        System.out.println("logoutUrl: " + logoutUrl    );
+        System.out.println("logoutUrl: " + logoutUrl);
 
         return logoutUrl;
     }

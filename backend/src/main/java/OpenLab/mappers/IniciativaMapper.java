@@ -30,5 +30,6 @@ public interface IniciativaMapper {
     @Mapping(source = "fecha_creacion", target = "fechaCreacion")
     IniciativaResponseDTO toResponseDTO(Iniciativa iniciativa);
 
+    @Mapping(source = "fecha_creacion", target = "fechaCreacion")
     List<IniciativaResponseDTO> toListResponseDTO(List<Iniciativa> iniciativa);
 }
