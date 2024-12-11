@@ -1,7 +1,9 @@
 package OpenLab.services.Impl;
 
+import OpenLab.dtos.ClienteDTO.ClienteResponseDTO;
 import OpenLab.dtos.UserDTO.GoogleUserInfoCompleta;
 import OpenLab.enums.Roles;
+import OpenLab.mappers.ClienteMapper;
 import OpenLab.models.Cliente;
 import OpenLab.models.User;
 import OpenLab.repositorys.IClienteRepository;
@@ -17,26 +19,41 @@ public class AutenticacionServiceImpl implements IAutenticacionService {
 
     private final IUserRepository userRepository;
     private final IClienteRepository clienteRepository;
+    private final ClienteMapper clienteMapper;
 
-    public AutenticacionServiceImpl(IUserRepository userRepository, IClienteRepository clienteRepository) {
+    public AutenticacionServiceImpl(IUserRepository userRepository, IClienteRepository clienteRepository, ClienteMapper clienteMapper) {
         this.userRepository = userRepository;
         this.clienteRepository = clienteRepository;
+        this.clienteMapper = clienteMapper;
     }
 
+//    @Override
+//    public String autenticarConGooglePersonalizado(GoogleUserInfoCompleta googleUserInfoCompleta) {
+//        if (googleUserInfoCompleta == null) {
+//            throw new RuntimeException("No hay datos");
+//        }
+//        Optional<User> existingUser = userRepository.findByEmail(googleUserInfoCompleta.email());
+//        if (existingUser.isPresent()) {
+//            return "El usuario con el email ya existe en el sistema";
+//        }
+//        createNewUserPersonalizado(googleUserInfoCompleta);
+//        return "Usuario registrado exitosamente";
+//    }
+
     @Override
-    public String autenticarConGooglePersonalizado(GoogleUserInfoCompleta googleUserInfoCompleta) {
+    public ClienteResponseDTO autenticarConGooglePersonalizado(GoogleUserInfoCompleta googleUserInfoCompleta) {
+
         if (googleUserInfoCompleta == null) {
             throw new RuntimeException("No hay datos");
         }
-        Optional<User> existingUser = userRepository.findByEmail(googleUserInfoCompleta.email());
-        if (existingUser.isPresent()) {
-            return "El usuario con el email ya existe en el sistema";
-        }
-        createNewUserPersonalizado(googleUserInfoCompleta);
-        return "Usuario registrado exitosamente";
+        // Obtiene el cliente existente o lo crea si no existe
+        Cliente cliente = clienteRepository.findByUsuarioEmail(googleUserInfoCompleta.email())
+                .orElseGet(() -> createNewUserPersonalizado(googleUserInfoCompleta));
+        // Mapea el cliente a DTO y lo retorna
+        return clienteMapper.toResponseDTO(cliente);
     }
 
-    private User createNewUserPersonalizado(GoogleUserInfoCompleta googleUserInfoCompleta) {
+    private Cliente createNewUserPersonalizado(GoogleUserInfoCompleta googleUserInfoCompleta) {
         User user = new User();
         user.setEmail(googleUserInfoCompleta.email());
         user.setPassword("");
@@ -56,6 +73,6 @@ public class AutenticacionServiceImpl implements IAutenticacionService {
         cliente.setPicture(googleUserInfoCompleta.picture());
         clienteRepository.save(cliente);
 
-        return savedUser;
+        return cliente;
     }
 }
