@@ -27,7 +27,7 @@ const SearchBar = () => {
     const initiativeResults = initiatives.filter(
       (initiative: any) =>
         initiative.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        initiative.tokens?.toLowerCase().includes(searchTerm.toLowerCase())
+        initiative.tokenDao?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
 

@@ -29,6 +29,7 @@ const Initiativas = () => {
   const [selectedInitiative, setSelectedInitiative] = useState<Initiative | null>(null);
   const joinedInitiatives = useSelector((state: RootState) => state.joinInitiatives.joinedInitiatives);
   const likedInitiatives = useSelector((state: RootState) => state.likeInitiatives.likedInitiatives);
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
   const { isConnected } = useAppKitAccount();
   const [sortState, setSortState] = useState({
     criteria: "name",
@@ -202,13 +203,16 @@ const handleSortClick = (criteria: string) => {
         </div>
 
       <div className="p-5">
-        <div className="flex flex-col items-center bg-white p-1 rounded-lg ">
+        <div className="flex flex-col items-center bg-white p-1 rounded-lg " style={{ backgroundColor: isDarkMode ? '#3a3a3a' : '#ffffff',
+        color: isDarkMode ? '#ffffff' : '#000000',}}>
           <div className="flex flex-row gap-4 p-2">
             <button
                 className={`text-sm font-semibold p-3 w-[116px] ${
                   activeButton === 'initiatives' ? 'text-color-1  border border-color-1 rounded-lg' : 'text-black'
                 }`}
                 onClick={() => handleButtonClick('initiatives')}
+              style={{color: isDarkMode && activeButton === "newInitiatives" ? "white":""}}
+
               >
                 Initiatives
             </button>
@@ -217,26 +221,28 @@ const handleSortClick = (criteria: string) => {
                 activeButton === 'newInitiatives' ? 'text-color-1  border border-color-1 rounded-lg' : 'text-black'
               }`}
               onClick={() => handleButtonClick('newInitiatives')}
+              style={{color: isDarkMode && activeButton === "initiatives" ? "white":""}}
             >
               New Initiatives
             </button>
           </div>
           
-          <div className="flex flex-row justify items-center w-[4em] p-3">
+          <div className="flex flex-row justify-center items-center w-[4em] p-3">
             <input
               type="text"
               placeholder="Search"
               value={searchTerm}  
-              className="border shadow p-1 rounded-lg w-[3em] text-black"
+              className="border shadow p-1 rounded-lg w-[30em] text-black"
               onChange={handleSearchChange} 
               />
           </div>
           
         </div>
-
-      <div className="bg-white">
+            <br/>
+      <div className="bg-white rounded-lg" style={{ backgroundColor: isDarkMode ? '#3a3a3a' : '#ffffff',
+        color: isDarkMode ? '#ffffff' : '#000000',}}>
       
-        {filteredAndSortedInitiatives.map((item, index) => (
+        { filteredAndSortedInitiatives.map((item, index) => (
          <div key={index} className="flex flex-col gap-4 border-b p-4">
 
            <div className="flex flex-row items-center gap-4">
@@ -307,10 +313,12 @@ const handleSortClick = (criteria: string) => {
                       ?<button 
                       className="bg-[#E0E0E0] text-black p-2 font-semibold rounded-full  justify-center w-[83px] h-[34px] flex items-center shadow"
                       onClick={()=>handleJoin(item.id)}
+                      style={{color: isDarkMode ? "black":""}}
                       >Join</button> 
                       :<button 
                       className="bg-color-1 text-white p-2  font-semibold rounded-full  justify-center w-[83px] h-[34px] flex items-center shadow"
                       onClick={()=>handleJoin(item.id)}
+                      style={{color: isDarkMode ? "black":""}}
                       >Join</button>
                     }
                     <button 
@@ -349,6 +357,7 @@ const handleSortClick = (criteria: string) => {
               activeButton === 'initiatives' ? 'text-color-1 shadow border border-color-1 rounded-lg' : 'text-black'
             }`}
             onClick={() => handleButtonClick('initiatives')}
+            style={{color: isDarkMode && activeButton === "newInitiatives" ? "white":""}}
           >
             Initiatives
         </button>
@@ -356,6 +365,7 @@ const handleSortClick = (criteria: string) => {
           className={`text-sm font-semibold p-3 ${
             activeButton === 'newInitiatives' ? 'text-color-1 shadow border border-color-1 rounded-lg' : 'text-black'
           }`}
+          style={{color: isDarkMode && activeButton=== "initiatives" ? "white":""}}
           onClick={() => handleButtonClick('newInitiatives')}
         >
           New Initiatives
@@ -496,10 +506,12 @@ const handleSortClick = (criteria: string) => {
                 ?<button 
                 className="bg-[#E0E0E0] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
                 onClick={()=>handleJoin(item.id)}
+                style={{color: isDarkMode ? "black":""}}
                 >Join</button> 
                 :<button 
                 className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
                 onClick={()=>handleJoin(item.id)}
+                style={{color: isDarkMode ? "black":""}}
                 >Join</button>
               }
               <button 

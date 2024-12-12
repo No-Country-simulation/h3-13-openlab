@@ -12,7 +12,7 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onclick }) => {
   return (
     <div className="flex items-center space-x-4">
       <div
-        className={`relative w-16 h-8 bg-gray-300 rounded-full cursor-pointer transition-all ease-in-out ${
+        className={`relative w-16 h-8 rounded-full cursor-pointer transition-all ease-in-out ${
           isDarkMode ? "bg-gray-700" : "bg-blue-300"
         }`}
         onClick={onclick}

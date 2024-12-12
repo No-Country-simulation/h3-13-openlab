@@ -24,8 +24,7 @@ const MyInitiatives = () => {
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const { isConnected } = useAppKitAccount();
   const dispatch = useDispatch<AppDispatch>();
-  // const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
-
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
   const [sortState, setSortState] = useState({
     criteria: "name",
@@ -145,7 +144,7 @@ const MyInitiatives = () => {
       {isMobile ? (
         <>
         <div className="flex flex-row items-center justify-between m-4">
-          <h1 className="text-3xl p-4 sm:w-full font-semibold">Initiatives</h1>
+          <h1 className="text-3xl p-4 sm:w-full font-semibold">My initiatives</h1>
         <div>
           {isConnected?
           <button 
@@ -164,7 +163,8 @@ const MyInitiatives = () => {
         </div>
 
       <div className="p-5">
-        <div className="flex flex-col items-center bg-white p-1 rounded-lg ">
+        <div className="flex flex-col items-center bg-white p-1 rounded-lg " style={{ backgroundColor: isDarkMode ? '#3a3a3a' : '#ffffff',
+        color: isDarkMode ? '#ffffff' : '#000000',}}>
           <div className="flex flex-row gap-4 p-2">
           </div>
           
@@ -173,14 +173,15 @@ const MyInitiatives = () => {
               type="text"
               placeholder="Search"
               value={searchTerm}  
-              className="border shadow-lg w-[30em] p-1 rounded-lg text-black"
+              className="border shadow-lg w-[20em] p-1 rounded-lg text-black"
               onChange={handleSearchChange} 
               />
           </div>
           
         </div>
-
-      <div className="bg-white">
+          <br/>
+      <div className="bg-white rounded-lg" style={{ backgroundColor: isDarkMode ? '#3a3a3a' : '#ffffff',
+        color: isDarkMode ? '#ffffff' : '#000000',}}>
       
         {myInitiatives.length > 0 ? filteredAndSortedInitiatives.map((item, index) => (
          <div key={index} className="flex flex-col gap-4 border-b p-4">

@@ -25,7 +25,7 @@ const Detail = () => {
   const { isConnected } = useAppKitAccount();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
   const [initiativeDetail, setInitiativeDetail] = useState<Initiative | null | undefined>(null);
   const { width } = useWindowSize();
   const isMobile = width <= 768;
@@ -94,7 +94,10 @@ useEffect(() => {
 }, [id, initiatives, likedInitiatives, joinedInitiatives]);
 
   if (!initiativeDetail) {
-    return <div>Cargando...</div>; 
+    return <div className="flex items-center flex-col justify-center h-[40em] bg-gray-100" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+            <p className="p-2">Cargando...</p>
+            </div>
   }
 
 
@@ -105,11 +108,11 @@ useEffect(() => {
         // **-*-*-*-*-*-*-*-*-*-*-*-*-*-*- Mobil*-*-*-*-*-*-*-**-*-*-*-*-
         ? <>
           <div className="flex flex-col items-center w-[100vw]">
-            <div className="flex flex-col p-2 gap-3">
+            <div className="flex flex-col p-2 gap-3" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
               <button
                 className="text-xl font-semibold mb-1 justify-items-end"
                 onClick={handleBack}
-              ><img src={close} className="w-[1.875em]" /></button>
+              ><img src={close} className="w-[1.875em]" style={{ backgroundColor: isDarkMode? "grey":"", borderRadius: isDarkMode ? "0.5em":"" }}/></button>
               <h1 className="text-xl text-center font-semibold p-1 mb-2">{initiativeDetail.name}</h1>
               <img src={initiativeDetail.logo}
                 alt={initiativeDetail.name}
@@ -155,7 +158,7 @@ useEffect(() => {
                 <br />
               </div>
   
-              <div className="bg-white fixed bottom-0 left-0 right-0 z-10 border rounded-lg shadow">
+              <div className="bg-white fixed bottom-0 left-0 right-0 z-10 border rounded-lg shadow" style={{ backgroundColor: isDarkMode? "black" :"", border:isDarkMode? "black":""}}>
                 <div className="flex flex-row justify-evenly p-2">
                   {isConnected
                     ? <button
@@ -200,14 +203,14 @@ useEffect(() => {
           <div className="flex flex-row gap-2 justify-between m-auto">
             <div className="flex flex-col">
               <h1 className="text-3xl p-3">Initiative: <strong>{initiativeDetail.name} - {initiativeDetail.tokenDao}</strong></h1>
-                <div className="flex flex-row  m-3 bg-white h-[17em] w-[60em] justify-flex-start gap-5 rounded-lg shadow">
+                <div className="flex flex-row  m-3 bg-white h-[17em] w-[60em] justify-flex-start gap-5 rounded-lg shadow" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
                   <div className="flex m-[2em]">
                     <img src={initiativeDetail.logo}
                       alt={initiativeDetail.name}
                       className="w-[10em] h-[10em] rounded-lg shadow m-auto "
                     />
                   </div>
-                  <div className="flex flex-col gap-2 ">
+                  <div className="flex flex-col gap-2 " >
                     <div><h2 className="text-lg italic font-semibold">Problema:</h2>
                       <p className="m-1">{initiativeDetail.problem}</p></div>
                     <div><h2 className="text-lg italic font-semibold">Oportunidad:</h2> <p className="m-1">{initiativeDetail.opportunity}</p></div>
@@ -221,8 +224,8 @@ useEffect(() => {
               <button
                 className="text-xl font-semibold mb-1 items-center justify-items-end"
                 onClick={handleBack}
-              ><img src={close} className="w-[1.7em]" /></button>
-              <div className="bg-white rounded-lg shadow p-2 flex flex-col gap-3 m-3 mr-12">
+              ><img src={close} className="w-[1.7em]" style={{ backgroundColor: isDarkMode? "grey":"", borderRadius: isDarkMode ? "0.5em":"" }} /></button>
+              <div className="bg-white rounded-lg shadow p-2 flex flex-col gap-3 m-3 mr-12" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
                 <div>
                   <h2 className="text-lg italic font-semibold text-center">Colaboradores:</h2><p className="bg-[#00B2FF]/20 rounded-lg p-1 w-[4.5625em] text-center m-auto text-sm p-1"> {initiativeDetail.colaborator}</p></div>
                 <div><h2 className="text-lg italic font-semibold text-center">Misiones:</h2><p className="text-center m-auto text-sm p-1"> {initiativeDetail.missions}</p></div>
@@ -234,7 +237,7 @@ useEffect(() => {
           </div>
   
           <div className="flex flex-row justify-center gap-6">
-            <div className="bg-white rounded-lg shadow p-1 flex flex-row justify-evenly gap-10">
+            <div className="bg-white rounded-lg shadow p-1 flex flex-row justify-evenly gap-10" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
   
               <div className="">
                 <h2 className="text-lgg font-semibold text-center">Token {initiativeDetail.tokenDao}</h2>
@@ -254,7 +257,7 @@ useEffect(() => {
                 <button className="text-sm italic bg-[#A9A9A9]/80 text-white p-1 rounded-lg shadow">Update</button>
               </div>
             </div>
-            <div className="flex flex-col justify-center gap-4 rounded-lg shadow bg-white m-1 ">
+            <div className="flex flex-col justify-center gap-4 rounded-lg shadow bg-white m-1 " style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
               <div className="flex flex-col w-[25em] p-1">
                 <h1 className="text-center font-semibold text-lg">¿Quieres apoyar esta iniciativa?</h1>
                 <h1 className="text-center italic">Puedes participar en ella y formar parte de ella!</h1>
@@ -275,6 +278,7 @@ useEffect(() => {
                     ? <button
                       className="bg-[#E0E0E0] text-white p-2 justify-center rounded-full w-[3.375em] h-[2.125em] flex items-center shadow-lg"
                       onClick={() => handleJoin(initiativeDetail.id)}
+                      style={{ color: isDarkMode? "#3a3a3a" :""}}
                     >Join</button>
                     : <button
                       className="bg-color-1 text-white p-2 justify-center rounded-full w-[3.375em] h-[2.125em] flex items-center shadow-lg"
