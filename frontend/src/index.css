@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Configuramos anclas suaves */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.simplebar-scrollbar {
+  background-color: #6193ff;
+  border-radius: 10px;
+}
+
+.simplebar-track {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+
+#hero_bg {
+  mask-image: url("assets/landing/hero_bg.svg");
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-position: bottom;
+}
+
