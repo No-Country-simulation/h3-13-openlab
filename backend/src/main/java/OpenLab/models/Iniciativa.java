@@ -38,6 +38,7 @@ public class Iniciativa {
     @JoinColumn(name = "cliente_id",foreignKey = @ForeignKey(name = "FK_CLIENTE"))
     private Cliente cliente;
 
+
     public void incrementLikes() {
         this.likes++;
     }

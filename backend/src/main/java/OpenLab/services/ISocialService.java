@@ -14,4 +14,5 @@ public interface ISocialService extends IGenericService<Socials, Long> {
     List<IniciativaResponseDTO> getUserJoins(Long id);
 
     List<IniciativaResponseDTO> getUserShares(Long id);
+
 }

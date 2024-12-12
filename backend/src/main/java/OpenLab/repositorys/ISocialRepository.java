@@ -1,5 +1,7 @@
 package OpenLab.repositorys;
 
+import OpenLab.models.Cliente;
+import OpenLab.models.Iniciativa;
 import OpenLab.models.Socials;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,4 +19,5 @@ public interface ISocialRepository extends IGenericRepository<Socials, Long>{
 
     @Query("SELECT s FROM Socials s WHERE s.cliente.id = :clienteId AND s.is_shared = true")
     List<Socials> findSharesByClienteId(Long clienteId);
+
 }

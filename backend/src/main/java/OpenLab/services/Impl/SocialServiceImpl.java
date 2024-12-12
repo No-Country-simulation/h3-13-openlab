@@ -28,7 +28,7 @@ public class SocialServiceImpl extends GenericServiceImpl<Socials, Long> impleme
     private final IClienteRepository clienteRepository;
     private final IniciativaMapper iniciativaMapper;
 
-    public SocialServiceImpl(IniciativaRepository iniciativaRepository, IClienteRepository clienteRepository, IniciativaMapper iniciativaMapper) {
+    public SocialServiceImpl(IniciativaRepository iniciativaRepository, IClienteRepository clienteRepository, ISocialRepository socialRepository, IniciativaMapper iniciativaMapper) {
         this.iniciativaRepository = iniciativaRepository;
         this.clienteRepository = clienteRepository;
         this.iniciativaMapper = iniciativaMapper;
@@ -41,50 +41,46 @@ public class SocialServiceImpl extends GenericServiceImpl<Socials, Long> impleme
 
     @Override
     public void saveSocials(SocialsRequestDTO socialsRequestDTO) {
-        Iniciativa existingIniciativa = iniciativaRepository.findById(socialsRequestDTO.idIniciativa())
+        Iniciativa iniciativa = iniciativaRepository.findById(socialsRequestDTO.idIniciativa())
                 .orElseThrow(() -> new IllegalArgumentException("Iniciativa no encontrada con ID: " + socialsRequestDTO.idIniciativa()));
 
-        Cliente existingCliente = clienteRepository.findById(socialsRequestDTO.idCliente())
+        Cliente cliente = clienteRepository.findById(socialsRequestDTO.idCliente())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con ID: " + socialsRequestDTO.idCliente()));
 
-        Socials existingSocials = repo.findByClienteIdAndIniciativaId(socialsRequestDTO.idCliente(), socialsRequestDTO.idIniciativa())
-                .orElse(null);
+        Socials socials = repo.findByClienteIdAndIniciativaId(cliente.getId(), iniciativa.getId())
+                .orElseGet(() -> new Socials(cliente, iniciativa)); // Crea una nueva si no existe
 
-        if (socialsRequestDTO.like()) {
-            existingIniciativa.incrementLikes();
-        } else {
-            existingIniciativa.decrementLikes();
-        }
+        handleLikes(iniciativa, socials, socialsRequestDTO.like());
+        handleShares(iniciativa, socials, socialsRequestDTO.share());
+        handleJoins(iniciativa, socials, socialsRequestDTO.join());
 
-        if (socialsRequestDTO.share()) {
-            existingIniciativa.incrementShares();
-        } else {
-            existingIniciativa.decrementShares();
-        }
+        repo.save(socials);
+        iniciativaRepository.save(iniciativa);
+    }
 
-        if (socialsRequestDTO.join()) {
-            existingIniciativa.incrementColaboradores();
-        } else {
-            existingIniciativa.decrementColaboradores();
-        }
-
-        if (existingSocials != null) {
-            existingSocials.set_liked(socialsRequestDTO.like());
-            existingSocials.set_shared(socialsRequestDTO.share());
-            existingSocials.set_joined(socialsRequestDTO.join());
-            repo.save(existingSocials);
-        } else {
-            // Si no existe, crear uno nuevo
-            Socials newSocial = new Socials();
-            newSocial.set_liked(socialsRequestDTO.like());
-            newSocial.set_shared(socialsRequestDTO.share());
-            newSocial.set_joined(socialsRequestDTO.join());
-            newSocial.setIniciativa(existingIniciativa);
-            newSocial.setCliente(existingCliente);
-            repo.save(newSocial);
+    private void handleLikes(Iniciativa iniciativa, Socials socials, boolean like) {
+        if (like != socials.is_liked()) {
+            if (like) iniciativa.incrementLikes();
+            else iniciativa.decrementLikes();
+            socials.set_liked(like);
         }
     }
 
+    private void handleShares(Iniciativa iniciativa, Socials socials, boolean share) {
+        if (share != socials.is_shared()) {
+            if (share) iniciativa.incrementShares();
+            else iniciativa.decrementShares();
+            socials.set_shared(share);
+        }
+    }
+
+    private void handleJoins(Iniciativa iniciativa, Socials socials, boolean join) {
+        if (join != socials.is_joined()) {
+            if (join) iniciativa.incrementColaboradores();
+            else iniciativa.decrementColaboradores();
+            socials.set_joined(join);
+        }
+    }
     @Override
     public List<IniciativaResponseDTO> getUserLikes(Long id){
         List<Socials> socials = repo.findLikesByClienteId(id);
@@ -111,4 +107,14 @@ public class SocialServiceImpl extends GenericServiceImpl<Socials, Long> impleme
         List<IniciativaResponseDTO> iniciativaResponseDTOS = iniciativaMapper.toListResponseDTO(iniciativas);
         return iniciativaResponseDTOS;
     }
+
+//    private Socials obtenerOSocials(Long idCliente, Long idIniciativa) {
+//        Cliente cliente = clienteRepository.findById(idCliente)
+//                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+//        Iniciativa iniciativa = iniciativaRepository.findById(idIniciativa)
+//                .orElseThrow(() -> new RuntimeException("Iniciativa no encontrada"));
+//
+//        return socialRepository.findByClienteAndIniciativa(cliente, iniciativa)
+//                .orElse(new Socials(null, false, false, false, iniciativa, cliente));
+//    }
 }

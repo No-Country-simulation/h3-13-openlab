@@ -6,6 +6,7 @@ import OpenLab.mappers.IniciativaMapper;
 import OpenLab.models.Cliente;
 import OpenLab.models.Iniciativa;
 import OpenLab.repositorys.IClienteRepository;
+import OpenLab.repositorys.IEstaditicasRepository;
 import OpenLab.repositorys.IGenericRepository;
 import OpenLab.repositorys.IniciativaRepository;
 import OpenLab.services.IniciativaService;
@@ -19,12 +20,14 @@ public class IniciativaServiceImpl extends GenericServiceImpl<Iniciativa, Long> 
 
     private final IniciativaRepository iniciativaRepository;
     private final IClienteRepository clienteRepository;
+    private final IEstaditicasRepository estaditicasRepository;
     private final IniciativaMapper iniciativaMapper;
 
-    public IniciativaServiceImpl(IniciativaRepository iniciativaRepository, IniciativaMapper iniciativaMapper, IClienteRepository clienteRepository) {
+    public IniciativaServiceImpl(IniciativaRepository iniciativaRepository, IniciativaMapper iniciativaMapper, IClienteRepository clienteRepository, IEstaditicasRepository estaditicasRepository) {
         this.iniciativaRepository = iniciativaRepository;
         this.iniciativaMapper = iniciativaMapper;
         this.clienteRepository = clienteRepository;
+        this.estaditicasRepository = estaditicasRepository;
     }
 
     @Override
@@ -54,5 +57,6 @@ public class IniciativaServiceImpl extends GenericServiceImpl<Iniciativa, Long> 
         List<Iniciativa> iniciativas = iniciativaRepository.findByNombreStartingWithIgnoreCase(prefix);
         return iniciativaMapper.toListResponseDTO(iniciativas);
     }
+
 
 }

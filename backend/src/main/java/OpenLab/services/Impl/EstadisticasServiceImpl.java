@@ -2,9 +2,9 @@ package OpenLab.services.Impl;
 
 import OpenLab.dtos.EstadisticasDTO.EstadisticasResponseDTO;
 import OpenLab.mappers.EstadisticasMapper;
-import OpenLab.mappers.IniciativaMapper;
 import OpenLab.models.Cliente;
 import OpenLab.models.Estadisticas;
+import OpenLab.models.Iniciativa;
 import OpenLab.models.Socials;
 import OpenLab.repositorys.IClienteRepository;
 import OpenLab.repositorys.IEstaditicasRepository;

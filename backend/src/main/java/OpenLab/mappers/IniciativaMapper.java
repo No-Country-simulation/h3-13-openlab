@@ -15,7 +15,7 @@ public interface IniciativaMapper {
 
     IniciativaMapper INSTANCE = Mappers.getMapper(IniciativaMapper.class);
 
-    @Mapping(target = "id", ignore = true) // Se el id autoincremental
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "monto_actual", constant = "0")
     @Mapping(target = "buy_price", constant = "150")
     @Mapping(target = "sell_price", constant = "140")
@@ -24,7 +24,7 @@ public interface IniciativaMapper {
     @Mapping(target = "colaboradores", constant = "0")
     @Mapping(target = "likes", constant = "0")
     @Mapping(target = "shares", constant = "0")
-    @Mapping(target = "cliente", ignore = true) // Se asigna cliente manualmente
+    @Mapping(target = "cliente", ignore = true)
     Iniciativa toEntity(IniciativaRequestDTO iniciativaRequestDTO);
 
     @Mapping(source = "fecha_creacion", target = "fechaCreacion")

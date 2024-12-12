@@ -28,16 +28,20 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         //Autenticacion Controller
-                        .requestMatchers(HttpMethod.POST, "/api/**","/api/login", "/api/login/signup", "/api/login/register","/api/admin/add", "/api/cliente/add").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/**","/api/login", "/api/login/signup").permitAll()
                         //Cliente Controller
-                        .requestMatchers(HttpMethod.GET, "/api/cliente/getAll", "/api/cliente/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/cliente/getAll", "/api/cliente/{id}", "/api/cliente/add").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/cliente/update").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/cliente/{id}").authenticated()
                         //Iniciativa Controller
+                        .requestMatchers(HttpMethod.GET, "/api/iniciativa/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/iniciativa/add").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/iniciativa/getAllIniciativas").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/iniciativa/getUserIniciativas/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/iniciativa/search").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/iniciativa/like").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/iniciativa/share").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/iniciativa/join").permitAll()
                         //Admin Controller
                         .requestMatchers(HttpMethod.GET, "/api/admin/getAll", "/api/cliente/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/admin/update").authenticated()

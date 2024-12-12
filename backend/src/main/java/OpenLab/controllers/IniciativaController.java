@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/iniciativa")
@@ -36,11 +37,24 @@ public class IniciativaController {
 
     @GetMapping("/getAllIniciativas")
     @Operation(summary = "Se devuelven todas las iniciativas creadas")
-    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> getAll() {
+    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> getAll() {;
         List<Iniciativa> iniciativas = iniciativaService.findAll();
         List<IniciativaResponseDTO> iniciativasResponseDTO = iniciativaMapper.toListResponseDTO(iniciativas);
         String message = "Iniciativas Encontradas";
         return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativasResponseDTO), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Obtiene una iniciativa en particular")
+    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> findById(@PathVariable("id") Long id) {
+        Optional<Iniciativa> iniciativa = iniciativaService.findById(id);
+        if (iniciativa.isPresent()) {
+            IniciativaResponseDTO iniciativaResponseDTO = iniciativaMapper.toResponseDTO(iniciativa.get());
+            String message = "Iniciativa encontrado";
+            return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativaResponseDTO), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(new ApiResponseDTO<>(false, "Iniciativa no encontrada", null), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/getUserIniciativas/{id}")
@@ -51,12 +65,31 @@ public class IniciativaController {
         return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativas), HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    @Operation(summary = "Busca iniciativas dinámicamente por nombre")
-    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> searchIniciativas(@RequestParam String query) {
-        List<IniciativaResponseDTO> iniciativas = iniciativaService.searchIniciativasByNombre(query);
-        String message = iniciativas.isEmpty() ? "No se encontraron iniciativas" : "Iniciativas encontradas";
-        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativas), HttpStatus.OK);
-    }
+//    @GetMapping("/search")
+//    @Operation(summary = "Busca iniciativas dinámicamente por nombre")
+//    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> searchIniciativas(@RequestParam String query) {
+//        List<IniciativaResponseDTO> iniciativas = iniciativaService.searchIniciativasByNombre(query);
+//        String message = iniciativas.isEmpty() ? "No se encontraron iniciativas" : "Iniciativas encontradas";
+//        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativas), HttpStatus.OK);
+//    }
+
+//
+//    @PutMapping("/like")
+//    public ResponseEntity<?> saveLike(@RequestBody LikesRequestDTO likesRequestDTO) {
+//        iniciativaService.saveLike(likesRequestDTO);
+//        return ResponseEntity.status(HttpStatus.OK).body("Like Guardado");
+//    }
+//
+//    @PutMapping("/share")
+//    public ResponseEntity<?> saveShare(@RequestBody SharesRequestDTO sharesRequestDTO) {
+//        iniciativaService.saveShare(sharesRequestDTO);
+//        return ResponseEntity.status(HttpStatus.OK).body("Share Guardado");
+//    }
+//
+//    @PutMapping("/join")
+//    public ResponseEntity<?> saveJoin(@RequestBody JoinedRequestDTO joinedRequestDTO) {
+//        iniciativaService.saveJoin(joinedRequestDTO);
+//        return ResponseEntity.status(HttpStatus.OK).body("Join Guardado");
+//    }
 
 }

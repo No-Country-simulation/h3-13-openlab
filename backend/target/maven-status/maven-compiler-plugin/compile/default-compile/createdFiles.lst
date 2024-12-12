@@ -46,6 +46,7 @@ OpenLab\security\SecretKeyConfig.class
 OpenLab\orderbook\BuyOrderRequestDTO.class
 OpenLab\controllers\EstadisticasController.class
 OpenLab\security\AudienceValidator.class
+OpenLab\dtos\SocialsDTO\SocialsResponseDTO.class
 OpenLab\mappers\AdminMapperImpl.class
 OpenLab\repositorys\IBuyOrderRepository.class
 OpenLab\mappers\IniciativaMapper.class

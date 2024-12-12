@@ -1,5 +1,7 @@
 package OpenLab.dtos.IiniciativaDTO;
 
+import OpenLab.dtos.SocialsDTO.SocialsResponseDTO;
+
 import java.time.LocalDate;
 
 public record IniciativaResponseDTO(

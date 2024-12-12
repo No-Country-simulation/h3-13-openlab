@@ -81,17 +81,17 @@ public class ClienteController {
 //        clienteService.delete(id);
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
-
-    @GetMapping("/email")
-    @Operation(summary = "Obtiene el perfil del cliente")
-    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> findByEmail(@RequestParam String correo) {
-        Optional<Cliente> cliente = clienteService.findByEmail(correo);
-        if (cliente.isPresent()) {
-            ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(cliente.get());
-            String message = "Cliente encontrado";
-            return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(new ApiResponseDTO<>(false, "Cliente no encontrado", null), HttpStatus.NOT_FOUND);
-        }
-    }
+//
+//    @GetMapping("/email")
+//    @Operation(summary = "Obtiene el perfil del cliente")
+//    public ResponseEntity<ApiResponseDTO<ClienteResponseDTO>> findByEmail(@RequestParam String correo) {
+//        Optional<Cliente> cliente = clienteService.findByEmail(correo);
+//        if (cliente.isPresent()) {
+//            ClienteResponseDTO clienteResponseDTO = clienteMapper.toResponseDTO(cliente.get());
+//            String message = "Cliente encontrado";
+//            return new ResponseEntity<>(new ApiResponseDTO<>(true, message, clienteResponseDTO), HttpStatus.CREATED);
+//        } else {
+//            return new ResponseEntity<>(new ApiResponseDTO<>(false, "Cliente no encontrado", null), HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
