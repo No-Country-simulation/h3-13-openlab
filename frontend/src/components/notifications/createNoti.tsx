@@ -1,12 +1,12 @@
 import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { createOrder, fetchOrders, OrderCreate } from '../../store/user/ordersUserSlice';
 import { AppDispatch } from '../../store/store';
 
 const CreateNoti: React.FC<{orderData: OrderCreate, onClose: () => void , type: "Sells" | "Buys" }> = ({orderData, onClose , type}) => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
   const handleCreate = () => {
     dispatch(createOrder({ orderData, type }));
@@ -22,7 +22,7 @@ const CreateNoti: React.FC<{orderData: OrderCreate, onClose: () => void , type: 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
         <p className="text-xl font-semibold">Do you want to create this order?</p><br/>
         <p className="text-center"><strong>{type} </strong>Order for <strong>{orderData.quantity} {orderData.tokenDao}</strong> to $<strong>{orderData.price}</strong></p>
         <br/>

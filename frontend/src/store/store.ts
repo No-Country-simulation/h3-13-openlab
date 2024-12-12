@@ -12,6 +12,7 @@ import { userStatsSlice } from "./user/statsUserSlice";
 import { ordersBooksSlice } from "./user/ordersUserSlice";
 import { transactionsSlice } from "./user/transactionsUserSlice";
 import contractsSlice from "./contracts/contractsSlices";
+import { darkModeSlice } from "./darkmode/DarckSlice";
 
 
 export const store = configureStore({
@@ -26,8 +27,8 @@ export const store = configureStore({
     userStadistics: userStatsSlice.reducer,
     ordersBooks: ordersBooksSlice.reducer,
     transactions: transactionsSlice.reducer,
-     contracts: contractsSlice,
-
+    contracts: contractsSlice,
+    darkMode:darkModeSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

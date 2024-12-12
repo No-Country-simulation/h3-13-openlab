@@ -7,9 +7,11 @@ import { useState } from 'react';
 import { AppDispatch } from '../../store/store';
 import { toast, ToastContainer } from 'react-toastify';
 
+
 const ModalCreate = () => {
   const dispatch = useDispatch<AppDispatch>()
   const isOpen = useSelector((state: RootState) => state.create.isOpen);
+  const isDarkMode = useSelector ((state: RootState) => state.darkMode.isDarkMode);
   const { width } = useWindowSize();
   const isMobile = width <= 768;
 
@@ -112,7 +114,7 @@ const ModalCreate = () => {
       };
     
       try {
-        // await dispatch(createInitiative(requestData)).unwrap(); 
+        await dispatch(createInitiative(requestData)).unwrap(); 
     
         toast.success('Initiative successfully created!', {
           style: { backgroundColor: '#1e8736', color: '#fff' },
@@ -143,11 +145,12 @@ const ModalCreate = () => {
       {isMobile ? (
         <>
           {/* Mobile */}
-          <div className="bg-white rounded shadow-lg w-[320px] max-h-[90vh] mt-[100px] flex flex-col gap-4 overflow-hidden">
+          <div className="bg-white rounded shadow-lg w-[320px] max-h-[90vh] mt-[100px] flex flex-col gap-4 overflow-hidden"
+           style={{ backgroundColor: isDarkMode ? "#3a3a3a" :""}}>
             <div className='flex flex-row justify-between items-center p-6'>
               <h1 className='text-3xl font-semibold mt-4 ml-5'>New Initiative</h1>
               <button onClick={() => dispatch(closeModal())} className="p-2 mt-4">
-                <img src={close} alt="close" />
+                <img src={close} alt="close" style={{ backgroundColor: isDarkMode? "grey":"", borderRadius: isDarkMode ? "0.5em":"" }} />
               </button>
             </div>
 
@@ -183,7 +186,7 @@ const ModalCreate = () => {
                 <h1 className='text-sm font-bold m-2'>Name</h1>
                 <input
                   type="text"
-                  className="border w-[260px] h-[39px] p-2 rounded shadow-sm text-sm"
+                  className="border w-[260px] h-[39px] p-2 rounded shadow-sm text-sm  text-black"
                   placeholder="Name"
                   name="name"
                   value={data.name} 
@@ -195,7 +198,7 @@ const ModalCreate = () => {
               <div className="flex flex-col gap-3 w-full px-5">
                 <h1 className='text-sm font-bold m-2'>Idea</h1>
                 <textarea
-                  className="border w-[260px] h-[143px] p-2 rounded shadow-sm text-sm"
+                  className="border w-[260px] h-[143px] p-2 rounded shadow-sm text-sm  text-black"
                   placeholder="Idea"
                   name="idea"
                   value={data.idea} 
@@ -207,7 +210,7 @@ const ModalCreate = () => {
               <div className="flex flex-col gap-3 w-full px-5">
                 <h1 className='text-sm font-bold m-2'>Problem</h1>
                 <textarea
-                  className="border w-[260px] h-[94px] p-2 rounded shadow-sm text-sm"
+                  className="border w-[260px] h-[94px] p-2 rounded shadow-sm text-sm  text-black"
                   placeholder="Problem"
                   name="problem"
                   value={data.problem} 
@@ -219,7 +222,7 @@ const ModalCreate = () => {
               <div className="flex flex-col gap-3 w-full px-5">
                 <h1 className='text-sm font-bold m-2'>Oportunity</h1>
                 <textarea
-                  className="border w-[260px] h-[94px] p-2 rounded shadow-sm text-sm"
+                  className="border w-[260px] h-[94px] p-2 rounded shadow-sm text-sm  text-black"
                   placeholder="Oportunity"
                   name="oportunity"
                   value={data.oportunity} 
@@ -231,7 +234,7 @@ const ModalCreate = () => {
               <div className="flex flex-col gap-3 w-full px-5">
                 <h1 className='text-sm font-bold m-2'>Solution</h1>
                 <textarea
-                  className="border w-[260px] h-[94px] p-2 rounded shadow-sm text-sm"
+                  className="border w-[260px] h-[94px] p-2 rounded shadow-sm text-sm  text-black"
                   placeholder="Solution"
                   name="solution"
                   value={data.solution} 
@@ -255,11 +258,12 @@ const ModalCreate = () => {
       ) : (
         <>
           {/* WebApp */}
-          <div className="bg-white rounded shadow-lg w-[964px] h-[678px] flex flex-col gap-2">
+          <div className="bg-white rounded shadow-lg w-[964px] h-[678px] flex flex-col gap-2"  
+          style={{ backgroundColor: isDarkMode ? "#3a3a3a" :""}}>
             <div className='flex flex-row justify-between items-center p-6'>
               <h1 className='text-3xl font-semibold mt-4 ml-5'>New Inititive</h1>
               <button onClick={() => dispatch(closeModal())} className='p-2'>
-                <img src={close} />
+                <img src={close}  style={{ backgroundColor: isDarkMode? "grey":"", borderRadius: isDarkMode ? "0.5em":"" }}/>
               </button>
             </div>
 
@@ -270,7 +274,7 @@ const ModalCreate = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    className="absolute inset-0 opacity-0 cursor-pointer text-black"
                     style={{ width: '109px', height: '92px' }}
                     onChange={handleFileChange} 
                   />
@@ -293,7 +297,7 @@ const ModalCreate = () => {
                   <h1 className='text-sm font-bold m-2'>Name</h1>
                   <input
                     type="text"
-                    className="border w-[406px] h-[40px] p-2 rounded shadow-sm text-sm"
+                    className="border w-[406px] h-[40px] p-2 rounded shadow-sm text-sm  text-black"
                     placeholder='Name'
                     name="name"
                     value={data.name} 
@@ -304,7 +308,7 @@ const ModalCreate = () => {
                 <div>
                   <h1 className='text-sm font-bold m-2'>Idea</h1>
                   <textarea
-                    className="border w-[406px] h-[143px] p-2 rounded shadow-sm text-sm"
+                    className="border w-[406px] h-[143px] p-2 rounded shadow-sm text-sm  text-black"
                     placeholder='Idea'
                     name="idea"
                     value={data.idea} 
@@ -317,7 +321,7 @@ const ModalCreate = () => {
                 <div>
                   <h1 className='text-sm font-bold m-2'>Problem</h1>
                   <textarea
-                    className="border w-[406px] h-[94px] rounded p-2 shadow-sm text-sm"
+                    className="border w-[406px] h-[94px] rounded p-2 shadow-sm text-sm  text-black"
                     placeholder='Problem'
                     name="problem"
                     value={data.problem}
@@ -328,7 +332,7 @@ const ModalCreate = () => {
                 <div>
                   <h1 className='text-sm font-bold m-2'>Oportunity</h1>
                   <textarea
-                    className="border w-[406px] h-[94px] rounded p-2 shadow-sm text-sm"
+                    className="border w-[406px] h-[94px] rounded p-2 shadow-sm text-sm  text-black"
                     placeholder='Oportunity'
                     name="oportunity"
                     value={data.oportunity} 
@@ -339,7 +343,7 @@ const ModalCreate = () => {
                 <div>
                   <h1 className='text-sm font-bold m-2'>Solution</h1>
                   <textarea
-                    className="border w-[406px] h-[94px] rounded p-2 shadow-sm text-sm"
+                    className="border w-[406px] h-[94px] rounded p-2 shadow-sm text-sm  text-black"
                     placeholder='Solution'
                     name="solution"
                     value={data.solution} 

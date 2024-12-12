@@ -16,6 +16,7 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
   const { address } = useAppKitAccount();
 
   const { initiatives } = useSelector((state: RootState) => state.initiatives);
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
   const [orderData, setOrderData] = useState<OrderCreate>({
     logoDao: "",
@@ -28,7 +29,6 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
   const [type, setType] = useState<'Sells' | 'Buys'>('Buys');
   const [selectedInitiative, setSelectedInitiative] = useState<any>(null);
   const [modalNoti, setModalNoti] = useState(false)
-  
 
   const handleInitiativeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = e.target.value;
@@ -71,7 +71,7 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-black flex flex-col bg-opacity-70 flex justify-center items-center z-50">
         {modalNoti === true ? <CreateNoti orderData={orderData} type={type} onClose={() => { setModalNoti(false); onClose(); }}/> :""}
-      <div className="bg-white rounded-lg shadow-lg border p-3 w-[30em]">
+      <div className="bg-white rounded-lg shadow-lg border p-3 w-[30em]" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
         <button onClick={onClose} className="float-end">
           <img src={close} alt="close" />
         </button>
@@ -102,7 +102,7 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
 
           <div className="m-1 p-2 flex flex-row gap-8 border-b border-gray-200">
             <label className="font-semibold">Name:</label>
-            <select onChange={handleInitiativeSelect} className="border rounded-lg shadow w-[16em]">
+            <select onChange={handleInitiativeSelect} className="border rounded-lg shadow w-[16em]" style={{ color: isDarkMode? "black" :""}}>
               <option value="">Select a Token</option>
               {initiatives?.map((initiative) => (
                 <option key={initiative.id} value={initiative.id}>
@@ -123,6 +123,7 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
               value={orderData.quantity}
               onChange={handleInputChange}
               className="border rounded-lg shadow w-[5em] text-center"
+              style={{ color: isDarkMode? "black" :""}}
             />
           </div>
 
@@ -137,6 +138,7 @@ const CreateOrders: React.FC<CreateOrdersProps> = ({ onClose }) => {
               value={orderData.price}
               onChange={handleInputChange}
               className="border rounded-lg shadow w-[5em] text-center"
+              style={{ color: isDarkMode? "black" :""}}
             />
           </div>
 

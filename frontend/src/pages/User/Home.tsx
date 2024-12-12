@@ -28,6 +28,7 @@ const Dashboard = () => {
   const { width } = useWindowSize();
   const isMobile = width <= 768;
   const provider = caipNetwork ? new ethers.providers.JsonRpcProvider(caipNetwork.rpcUrls.default.http[0]) : null;
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
   const fetchData = async () => {
     if (!address || !provider) return;
@@ -71,164 +72,166 @@ const Dashboard = () => {
   
   if (loading || isDataLoading) {
     return (
-      <div className="flex items-center flex-col justify-center h-[40em] bg-gray-100">
+      <div className="flex items-center flex-col justify-center h-[40em] bg-gray-100" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
         <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
         <p className="p-2">Cargando...</p>
       </div>
     );
   }
 
-  return (<>
-    {isMobile
-    ?
-    <div className="flex flex-col  bg-[#afafaf1a]/10  gap-3" >
-
-      <div className="flex flex-col p-1">
-        <h1 className="text-3xl p-4">Dashboard</h1>
-          <SearchBar/>
-      </div>
-
-      {isConnected
-        ?
-          <div className="flex flex-row justify-evenly items-center">
-            <div className="w-[8em] h-[7em] bg-white shadow-lg border rounded-lg flex flex-col gap-1 p-3">
-              <img src={wallet} alt="wallet" className="w-7" />
-              <h3 className="text-l font-semibold italic">Balance</h3>
-              <p>{balanceETH ? `${balanceETH} ETH` : "Cargando..."}</p>
-            </div>
-
-            <div className="w-[8em] h-[7em] bg-white shadow-lg rounded-lg border flex flex-col gap-1 p-3">
-              <img src={segurity} alt="segurity" className="w-7" />
-              <h3 className="text-l font-semibold italic">Bloque Nº</h3>
-              <p>{blockNumber !== null ? blockNumber : "Cargando..."}</p>
-            </div>
-            <div className="w-[8em] h-[7em] bg-white shadow-lg rounded-lg border flex flex-col gap-1 p-3">
-              <img src={gas} alt="gas" className="w-7" />
-              <h3 className="text-l font-semibold italic">Gas Price</h3>
-              <p>{gasPrice ? `${gasPrice}` : "Cargando..."}</p>
-            </div>
+  return (
+    <>
+      {isMobile ? (
+        <div className={`flex flex-col ${isDarkMode ? 'bg-[#2d2d2d]' : 'bg-[#afafaf1a]/10'} gap-3`}>
+          <div className="flex flex-col p-1">
+            <h1 className="text-3xl p-4">Dashboard</h1>
+            <SearchBar />
           </div>
-
-        : <div className="flex flex-col w-[15em] m-auto h-[10em] bg-white shadow-lg rounded-lg content-center items-center justify-center gap-10">
-          <img src={warning} alt="warning" className="w-20" />
-          <h1>Por favor conecta tu billetera </h1>
-          </div>
-        }
-
-        <div className="h-[15em] m-auto bg-white shadow-lg border rounded-lg p-1">
+  
+          {isConnected ? (
+            <div className="flex flex-row justify-evenly items-center">
+              <div className={`w-[8em] h-[7em] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg  rounded-lg flex flex-col gap-1 p-3`}>
+                <img src={wallet} alt="wallet" className="w-7" />
+                <h3 className="text-l font-semibold italic">Balance</h3>
+                <p>{balanceETH ? `${balanceETH} ETH` : "Cargando..."}</p>
+              </div>
+  
+              <div className={`w-[8em] h-[7em] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg flex flex-col gap-1 p-3`}>
+                <img src={segurity} alt="segurity" className="w-7" />
+                <h3 className="text-l font-semibold italic">Bloque Nº</h3>
+                <p>{blockNumber !== null ? blockNumber : "Cargando..."}</p>
+              </div>
+              <div className={`w-[8em] h-[7em] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg  flex flex-col gap-1 p-3`}>
+                <img src={gas} alt="gas" className="w-7" />
+                <h3 className="text-l font-semibold italic">Gas Price</h3>
+                <p>{gasPrice ? `${gasPrice}` : "Cargando..."}</p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col w-[15em] m-auto h-[10em] bg-white shadow-lg rounded-lg content-center items-center justify-center gap-10">
+              <img src={warning} alt="warning" className="w-20" />
+              <h1>Por favor conecta tu billetera </h1>
+            </div>
+          )}
+  
+          <div className={`h-[15em] m-auto ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg p-1`}>
             <div className="flex flex-row gap-5 mr-[5em]">
               <img src={estadist} alt="analitycs" className="w-8" />
-              <Link to="/initiatives"  className="content-end ">
-              <h1 className="text-l font-semibold italic content-end mr-[5em]">Iniciativas</h1>
+              <Link to="/initiatives" className="content-end ">
+                <h1 className="text-l font-semibold italic content-end mr-[5em]">Iniciativas</h1>
               </Link>
             </div>
-              <DashBar initiatives={lastTenInitiatives} />
-        </div>
-
-        <div className="flex flex-row justify-evenly ">
-          <Link to="/iniciatives"
-          className="bg-white p-4 border shadow-lg rounded-lg text-l font-semibold text-center "
-          >Iniciativas</Link>
-          <Link to="/Myiniciatives"
-          className="bg-white p-4 border shadow-lg rounded-lg text-l font-semibold text-center "
-          >Mis Iniciativas</Link>
-        </div>.
-
-        <TransactionsUser/>
-    </div> 
-    :
-
-    ////////////////////////WEB APP ///////////////////
-    <div className="flex flex-col  bg-[#afafaf1a]/10 gap-4">
-      <div className="flex flex-row p-1 justify-between">
-        <h1 className="text-3xl p-4">Dashboard</h1>
-        <div className="">
-          <SearchBar/>
-        </div>
-      </div>
-
-      {!isConnected ? (
-        <div className="flex flex-row w-[40em] m-auto h-[10em] bg-white shadow-lg rounded-lg content-center items-center justify-center gap-10">
-          <img src={warning} alt="warning" className="w-20" />
-          <h1>Por favor conecta tu billetera </h1>
+            <DashBar initiatives={lastTenInitiatives} />
+          </div>
+  
+          <div className="flex flex-row justify-evenly ">
+            <Link
+              to="/iniciatives"
+              className={`p-4  shadow-lg rounded-lg text-l font-semibold text-center ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'}`}
+            >
+              Iniciativas
+            </Link>
+            <Link
+              to="/Myiniciatives"
+              className={`p-4  shadow-lg rounded-lg text-l font-semibold text-center ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'}`}
+            >
+              Mis Iniciativas
+            </Link>
+          </div>
+  
+          <TransactionsUser />
         </div>
       ) : (
-        <>
+        ////////////////////////WEB APP ///////////////////
+        <div className={`flex flex-col ${isDarkMode ? 'bg-[#2d2d2d]' : 'bg-[#afafaf1a]/10'} gap-4`}>
+          <div className="flex flex-row p-1 justify-between">
+            <h1 className="text-3xl p-4">Dashboard</h1>
+            <div className="">
+              <SearchBar />
+            </div>
+          </div>
+  
+          {!isConnected ? (
+            <div className={`flex flex-row w-[40em] m-auto h-[10em] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg content-center items-center justify-center gap-10`}>
+              <img src={warning} alt="warning" className="w-20" />
+              <h1>Por favor conecta tu billetera </h1>
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-row justify-evenly items-center">
+                <div className={`w-[240px] h-[120px] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg  rounded-lg flex flex-col gap-1 p-3`}>
+                  <img src={wallet} alt="wallet" className="w-10" />
+                  <h3 className="text-l font-semibold italic">Balance</h3>
+                  <p>{balanceETH ? `${balanceETH} ETH` : "Cargando..."}</p>
+                </div>
+                <div className={`w-[240px] h-[120px] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg flex flex-col gap-1 p-3`}>
+                  <img src={segurity} alt="segurity" className="w-10" />
+                  <h3 className="text-l font-semibold italic">Número de Bloque</h3>
+                  <p>{blockNumber !== null ? blockNumber : "Cargando..."}</p>
+                </div>
+                <div className={`w-[240px] h-[120px] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg flex flex-col gap-1 p-3`}>
+                  <img src={gas} alt="gas" className="w-10" />
+                  <h3 className="text-l font-semibold italic">Gas Price</h3>
+                  <p>{gasPrice ? `${gasPrice} Gwei` : "Cargando..."}</p>
+                </div>
+                <div className={`w-[480px] h-[120px] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg flex flex-col gap-1 p-3`}>
+                  <div className="flex flex-row gap-5">
+                    <img src={acount} alt="acount" className="w-10" />
+                    <h1 className="text-l font-semibold italic content-end">Información de la cuenta</h1>
+                  </div>
+                  <div className="p-1 m-auto flex flex-col">
+                    <p>
+                      <strong className="text-l italic">Network:</strong>{" "}
+                      {networkName ? networkName : "Cargando..."}
+                    </p>
+                    <p>
+                      <strong className="text-l italic">Dirección:</strong>{" "}
+                      {address ? address : "Cargando..."}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+  
           <div className="flex flex-row justify-evenly items-center">
-            <div className="w-[240px] h-[120px] bg-white shadow-lg border rounded-lg flex flex-col gap-1 p-3">
-              <img src={wallet} alt="wallet" className="w-10" />
-              <h3 className="text-l font-semibold italic">Balance</h3>
-              <p>{balanceETH ? `${balanceETH} ETH` : "Cargando..."}</p>
-            </div>
-            <div className="w-[240px] h-[120px] bg-white shadow-lg rounded-lg border flex flex-col gap-1 p-3">
-              <img src={segurity} alt="segurity" className="w-10" />
-              <h3 className="text-l font-semibold italic">Número de Bloque</h3>
-              <p>{blockNumber !== null ? blockNumber : "Cargando..."}</p>
-            </div>
-            <div className="w-[240px] h-[120px] bg-white shadow-lg rounded-lg border flex flex-col gap-1 p-3">
-              <img src={gas} alt="gas" className="w-10" />
-              <h3 className="text-l font-semibold italic">Gas Price</h3>
-              <p>{gasPrice ? `${gasPrice} Gwei` : "Cargando..."}</p>
-            </div>
-            <div className="w-[480px] h-[120px] bg-white shadow-lg rounded-lg border flex flex-col gap-1 p-3">
+            <div className={`h-[300px] w-[800px] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg p-1`}>
               <div className="flex flex-row gap-5">
-                <img src={acount} alt="acount" className="w-10" />
-                <h1 className="text-l font-semibold italic content-end">
-                  Información de la cuenta
-                </h1>
+                <img src={estadist} alt="analitycs" className="w-8" />
+                <Link to="/initiatives" className="content-end ">
+                  <h1 className="text-l font-semibold italic content-end mr-[5em]">Iniciativas</h1>
+                </Link>
               </div>
-              <div className="p-1 m-auto flex flex-col">
-                <p>
-                  <strong className="text-l italic">Network:</strong>{" "}
-                  {networkName ? networkName : "Cargando..."}
-                </p>
-                <p>
-                  <strong className="text-l italic">Dirección:</strong>{" "}
-                  {address ? address : "Cargando..."}
-                </p>
+              <DashBar initiatives={lastTenInitiatives} />
+            </div>
+  
+            <div className={`h-[300px] w-[350px] ${isDarkMode ? 'bg-[#3a3a3a]' : 'bg-white border'} shadow-lg rounded-lg p-1`}>
+              <div className="flex flex-row gap-5">
+                <img src={newiniBlue} alt="initiatives" className="w-8 m-1" />
+                <Link to="/MyInitiatives" className="content-end">
+                  <h1 className="text-l font-semibold italic content-end mr-2">Mis Iniciativas</h1>
+                </Link>
               </div>
+              <ul className="p-2 flex flex-col ml-[6em]">
+                {myInitiatives.length > 0
+                  ? lastTenMyInitiatives.map((initiative: any) => (
+                      <Link to={`/initiative/${initiative.id}`} className="flex flex-row">
+                        <img src={initiative.logo} className="w-8 h-8 rounded-lg shadow" />
+                        <li key={initiative.id} className="p-2">
+                          {initiative.name}
+                        </li>
+                      </Link>
+                    ))
+                  : <li className="ml-[-3em] mt-4">You have not created initiatives</li>}
+              </ul>
             </div>
           </div>
-        </>
+          <TransactionsUser />
+        </div>
       )}
-
-      <div className="flex flex-row justify-evenly items-center">
-
-        <div className="h-[300px] w-[800px] bg-white shadow-lg border rounded-lg p-1">
-          <div className="flex flex-row gap-5">
-            <img src={estadist} alt="analitycs" className="w-8" />
-            <Link to="/initiatives"  className="content-end ">
-            <h1 className="text-l font-semibold italic content-end mr-[5em]">Iniciativas</h1>
-            </Link>
-          </div>
-            <DashBar initiatives={lastTenInitiatives} />
-        </div>
-
-        <div className="h-[300px] w-[350px] bg-white shadow-lg border rounded-lg p-1">
-          <div className="flex flex-row gap-5">
-            <img src={newiniBlue} alt="initiatives" className="w-8 m-1" />
-            <Link to="/MyInitiatives" className="content-end">
-              <h1 className="text-l font-semibold italic content-end mr-2">Mis Iniciativas</h1>
-            </Link>
-          </div>
-          <ul className="p-2 flex flex-col ml-[6em]">
-            {myInitiatives.length > 0
-            ?lastTenMyInitiatives.map((initiative: any) => (
-              <Link to={`/initiative/${initiative.id}`} className="flex flex-row">
-                <img src={initiative.logo} className="w-8 h-8 rounded-lg shadow"/>
-                <li key={initiative.id} className="p-2">
-                {initiative.name}
-              </li>
-              </Link>
-            ))
-            :<li className="ml-[-3em] mt-4">You have not created initiatives</li>}
-          </ul>
-        </div>
-      </div>
-          <TransactionsUser/>
-    </div>
-  }
-  </>);
+    </>
+  );
+  
 };
 
 export default Dashboard;

@@ -1,12 +1,12 @@
 import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector} from 'react-redux';
 import { deleteOrder, fetchOrders } from '../../store/user/ordersUserSlice';
 import { AppDispatch } from '../../store/store';
 
 const DeleteNoti: React.FC<{ orderId: string, type: "Sells" | "Buys", onClose: () => void }> = ({ orderId, type, onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
   const handleDelete = () => {
 
     dispatch(deleteOrder({ orderId, type }));
@@ -21,7 +21,7 @@ const DeleteNoti: React.FC<{ orderId: string, type: "Sells" | "Buys", onClose: (
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
         <h2 className="text-xl font-semibold mb-4">Delete Order</h2>
         <p>Are you sure you want to delete order?</p><br />
         <p className="font-semibold italic text-center p-2">This action cannot be undone.</p>
