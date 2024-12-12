@@ -1,11 +1,12 @@
 import React from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector} from 'react-redux';
 import { desactivateOrder, fetchOrders } from '../../store/user/ordersUserSlice';
 import { AppDispatch } from '../../store/store';
 
 const CancelNoti: React.FC<{ orderId: string, type: "Sells" | "Buys", onClose: () => void }> = ({ orderId, type, onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
   const handleCancel = () => {
 
@@ -21,7 +22,7 @@ const CancelNoti: React.FC<{ orderId: string, type: "Sells" | "Buys", onClose: (
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
         <h2 className="text-xl font-semibold mb-4">Cancel Order</h2>
         <p className="p-3">Are you sure you want to cancel order ?</p><br/>
         <div className="flex justify-between gap-4">

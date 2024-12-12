@@ -33,6 +33,8 @@ import historial from "./icons/transaccion.svg"
 import profileW from "./icons/profileW.svg"
 import profileB from "./icons/profileB.svg"
 import items from "./icons/Rectangle.svg"
+import Sun from "./icons/sun.svg"
+import Moon from "./icons/full-moon.svg"
 
 export{
     profile,
@@ -70,4 +72,6 @@ export{
     estadist,
     historial,
     items,
+    Sun,
+    Moon
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { OrderCreate, Order , updateOrder} from "../../store/user/ordersUserSlice"; 
 import { AppDispatch } from "../../store/store";
 import { close, sumIcon } from "../../assets";
@@ -14,7 +14,7 @@ interface EditOrdersProps {
 
 const EditOrders: React.FC<EditOrdersProps> = ({ order, onClose , type}) => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
   const [orderData, setOrderData] = useState<OrderCreate>({
     logoDao: order.logoDao,
@@ -51,7 +51,7 @@ const EditOrders: React.FC<EditOrdersProps> = ({ order, onClose , type}) => {
 
   return (
     <div className="fixed inset-0 bg-black flex flex-col bg-opacity-70 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg shadow-lg border p-3 w-[30em]">
+      <div className="bg-white rounded-lg shadow-lg border p-3 w-[30em]" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
         <button onClick={onClose} className="float-end">
           <img src={close} alt="close" />
         </button>
@@ -70,6 +70,7 @@ const EditOrders: React.FC<EditOrdersProps> = ({ order, onClose , type}) => {
               value={orderData.quantity}
               onChange={handleInputChange}
               className="border rounded-lg shadow w-[5em] text-center"
+              style={{ color: isDarkMode? "black" :""}}
             />
           </div>
 
@@ -84,6 +85,7 @@ const EditOrders: React.FC<EditOrdersProps> = ({ order, onClose , type}) => {
               value={orderData.price}
               onChange={handleInputChange}
               className="border rounded-lg shadow w-[5em] text-center"
+              style={{ color: isDarkMode? "black" :""}}
             />
           </div>
 

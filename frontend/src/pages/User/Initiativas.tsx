@@ -227,7 +227,7 @@ const handleSortClick = (criteria: string) => {
               type="text"
               placeholder="Search"
               value={searchTerm}  
-              className="border shadow p-1 rounded-lg w-[3em]"
+              className="border shadow p-1 rounded-lg w-[3em] text-black"
               onChange={handleSearchChange} 
               />
           </div>
@@ -367,7 +367,7 @@ const handleSortClick = (criteria: string) => {
             type="text"
             placeholder="Search initiatives ..."
             value={searchTerm}  
-            className="border p-1 rounded-lg  w-[30em] mr-4 shadow"
+            className="border p-1 rounded-lg  w-[30em] mr-4 shadow text-black"
             onChange={handleSearchChange} 
             />
 

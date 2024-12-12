@@ -53,7 +53,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="relative p-2 ">
+    <div className="relative p-2 text-black ">
       <input
         type="text"
         placeholder="Search for anything ..."
@@ -78,7 +78,7 @@ const SearchBar = () => {
       )}
       {searchTerm && filteredResults.length === 0 && (
         <div className="absolute top-[35px] left-0 w-[30em] bg-white rounded-lg shadow-lg px-4 py-2 text-gray-500">
-          No se encontraron resultados.
+          No results found.
         </div>
       )}
     </div>

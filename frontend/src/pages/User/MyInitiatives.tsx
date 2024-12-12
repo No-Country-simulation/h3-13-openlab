@@ -24,6 +24,7 @@ const MyInitiatives = () => {
   const [menuOpenId, setMenuOpenId] = useState<string | null>(null);
   const { isConnected } = useAppKitAccount();
   const dispatch = useDispatch<AppDispatch>();
+  // const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
 
   const [sortState, setSortState] = useState({
@@ -172,7 +173,7 @@ const MyInitiatives = () => {
               type="text"
               placeholder="Search"
               value={searchTerm}  
-              className="border shadow-lg w-[30em] p-1 rounded-lg"
+              className="border shadow-lg w-[30em] p-1 rounded-lg text-black"
               onChange={handleSearchChange} 
               />
           </div>
@@ -268,7 +269,7 @@ const MyInitiatives = () => {
                     type="text"
                     placeholder="Search in my initiatives..."
                     value={searchTerm}
-                    className="border p-1 rounded-lg mr-4 w-[30em] shadow-lg"
+                    className="border p-1 rounded-lg mr-4 w-[30em] shadow-lg text-black"
                     onChange={handleSearchChange}
                   ></input>
                 </div>
