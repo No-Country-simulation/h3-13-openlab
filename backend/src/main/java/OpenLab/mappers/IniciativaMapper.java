@@ -2,13 +2,17 @@ package OpenLab.mappers;
 
 import OpenLab.dtos.IiniciativaDTO.IniciativaRequestDTO;
 import OpenLab.dtos.IiniciativaDTO.IniciativaResponseDTO;
+import OpenLab.dtos.IiniciativaDTO.IniciativasAndSocialsDTO;
 import OpenLab.models.Iniciativa;
 
+import OpenLab.models.Socials;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface IniciativaMapper {

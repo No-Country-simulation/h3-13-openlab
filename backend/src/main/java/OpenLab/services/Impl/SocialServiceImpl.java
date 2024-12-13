@@ -81,6 +81,12 @@ public class SocialServiceImpl extends GenericServiceImpl<Socials, Long> impleme
             socials.set_joined(join);
         }
     }
+
+    @Override
+    public List<Socials> findByClienteId(Long clienteId) {
+        return repo.findByClienteId(clienteId);
+    }
+
     @Override
     public List<IniciativaResponseDTO> getUserLikes(Long id){
         List<Socials> socials = repo.findLikesByClienteId(id);

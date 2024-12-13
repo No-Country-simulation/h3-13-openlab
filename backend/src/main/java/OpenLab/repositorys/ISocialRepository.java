@@ -20,4 +20,5 @@ public interface ISocialRepository extends IGenericRepository<Socials, Long>{
     @Query("SELECT s FROM Socials s WHERE s.cliente.id = :clienteId AND s.is_shared = true")
     List<Socials> findSharesByClienteId(Long clienteId);
 
+    List<Socials> findByClienteId(Long clienteId);
 }

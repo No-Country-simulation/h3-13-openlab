@@ -3,8 +3,11 @@ package OpenLab.controllers;
 import OpenLab.dtos.ApiResponseDTO;
 import OpenLab.dtos.IiniciativaDTO.IniciativaRequestDTO;
 import OpenLab.dtos.IiniciativaDTO.IniciativaResponseDTO;
+import OpenLab.dtos.IiniciativaDTO.IniciativasAndSocialsDTO;
 import OpenLab.mappers.IniciativaMapper;
 import OpenLab.models.Iniciativa;
+import OpenLab.models.Socials;
+import OpenLab.services.ISocialService;
 import OpenLab.services.IniciativaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -13,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/iniciativa")
@@ -21,9 +26,11 @@ public class IniciativaController {
 
     private final IniciativaService iniciativaService;
     private final IniciativaMapper iniciativaMapper;
+    private final ISocialService socialService;
 
-    public IniciativaController(IniciativaService iniciativaService, IniciativaMapper iniciativaMapper) {
+    public IniciativaController(IniciativaService iniciativaService, ISocialService socialService, IniciativaMapper iniciativaMapper) {
         this.iniciativaService = iniciativaService;
+        this.socialService = socialService;
         this.iniciativaMapper = iniciativaMapper;
     }
 
@@ -43,6 +50,49 @@ public class IniciativaController {
         String message = "Iniciativas Encontradas";
         return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativasResponseDTO), HttpStatus.OK);
     }
+
+    @GetMapping("/getAllIniciativasAndSocials")
+    @Operation(summary = "Se devuelven todas las iniciativas y socials creados")
+    public ResponseEntity<List<IniciativasAndSocialsDTO>> getAllIniciativas(@RequestParam Long clienteId) {
+        List<Iniciativa> iniciativas = iniciativaService.findAll();
+        List<Socials> socials = socialService.findByClienteId(clienteId);
+
+        // Crear un mapa para acceso rápido
+        Map<Long, Socials> socialsMap = socials.stream()
+                .collect(Collectors.toMap(s -> s.getIniciativa().getId(), s -> s));
+
+        List<IniciativasAndSocialsDTO> iniciativasResponseDTO = iniciativas.stream()
+                .map(iniciativa -> {
+                    Socials social = socialsMap.get(iniciativa.getId());
+                    return new IniciativasAndSocialsDTO(
+                            iniciativa.getId(),
+                            iniciativa.getImagen(),
+                            iniciativa.getBilletera(),
+                            iniciativa.getNombre(),
+                            iniciativa.getIdea(),
+                            iniciativa.getProblema(),
+                            iniciativa.getOportunidad(),
+                            iniciativa.getSolucion(),
+                            iniciativa.getFecha_creacion(),
+                            iniciativa.getMonto_requerido(),
+                            iniciativa.getBuy_price(),
+                            iniciativa.getSell_price(),
+                            iniciativa.getMisiones_actuales(),
+                            iniciativa.getMisiones_objetivo(),
+                            iniciativa.getColaboradores(),
+                            iniciativa.getLikes(),
+                            iniciativa.getShares(),
+                            social != null && social.is_liked(),
+                            social != null && social.is_shared(),
+                            social != null && social.is_joined()
+                    );
+                })
+                .collect(Collectors.toList());
+
+        String message = "Iniciativas Encontradas";
+        return new ResponseEntity<>(iniciativasResponseDTO, HttpStatus.CREATED);
+    }
+
 
     @GetMapping("/{id}")
     @Operation(summary = "Obtiene una iniciativa en particular")

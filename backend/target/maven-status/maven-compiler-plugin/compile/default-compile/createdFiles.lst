@@ -7,6 +7,7 @@ OpenLab\dtos\EstadisticasDTO\EstadisticasResponseDTO.class
 OpenLab\services\IUserService.class
 OpenLab\services\Impl\SocialServiceImpl.class
 OpenLab\services\Impl\AutenticacionServiceImpl.class
+OpenLab\dtos\IiniciativaDTO\IniciativasAndSocialsDTO.class
 OpenLab\dtos\AdminDTO\AdminRequestDTO.class
 OpenLab\mappers\AdminMapper.class
 OpenLab\services\Impl\UserServiceImpl.class
