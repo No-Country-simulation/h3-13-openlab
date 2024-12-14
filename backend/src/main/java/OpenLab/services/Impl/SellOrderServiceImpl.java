@@ -1,5 +1,8 @@
 package OpenLab.services.Impl;
 
+import OpenLab.dtos.SellOrderDTO.SellOrderRequestDTO;
+import OpenLab.dtos.SellOrderDTO.SellOrderResponseDTO;
+import OpenLab.mappers.SellOrderMapper;
 import OpenLab.models.SellOrder;
 import OpenLab.repositorys.IGenericRepository;
 import OpenLab.repositorys.ISellOrderRepository;
@@ -13,8 +16,22 @@ public class SellOrderServiceImpl extends GenericServiceImpl<SellOrder, Long> im
     @Autowired
     private ISellOrderRepository repo;
 
+    private final SellOrderMapper sellOrderMapper;
+
+    public SellOrderServiceImpl(SellOrderMapper sellOrderMapper) {
+        this.sellOrderMapper = sellOrderMapper;
+    }
+
     @Override
     protected IGenericRepository<SellOrder, Long> getRepo() {
         return repo;
+    }
+
+    @Override
+    public SellOrderResponseDTO saveSellOrder(SellOrderRequestDTO sellOrderRequestDTO) {
+        SellOrder sellOrder = sellOrderMapper.toEntity(sellOrderRequestDTO);
+        repo.save(sellOrder);
+        SellOrderResponseDTO sellOrderResponseDTO = sellOrderMapper.toResponseDTO(sellOrder);
+        return sellOrderResponseDTO;
     }
 }

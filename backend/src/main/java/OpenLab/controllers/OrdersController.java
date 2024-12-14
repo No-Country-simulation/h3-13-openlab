@@ -1,17 +1,20 @@
 package OpenLab.controllers;
 
 import OpenLab.dtos.ApiResponseDTO;
+import OpenLab.dtos.BuyOrderDTO.BuyOrderRequestDTO;
+import OpenLab.dtos.BuyOrderDTO.BuyOrderResponseDTO;
+import OpenLab.dtos.SellOrderDTO.SellOrderRequestDTO;
+import OpenLab.dtos.SellOrderDTO.SellOrderResponseDTO;
 import OpenLab.exceptions.ApplicationException;
 import OpenLab.models.BuyOrder;
 import OpenLab.models.SellOrder;
 import OpenLab.services.IBuyOrderService;
 import OpenLab.services.ISellOrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,6 +50,22 @@ public class OrdersController {
         } catch (ApplicationException e) {
             throw new ApplicationException(" Ha ocurrido un error " + e.getMessage());
         }
+    }
+
+    @PostMapping("/addBuyOrder")
+    @Operation(summary = "Agrega una nueva orden de compra")
+    public ResponseEntity<ApiResponseDTO<BuyOrderResponseDTO>> saveBuyOrder(@RequestBody @Valid BuyOrderRequestDTO buyOrderRequestDTO) {
+        BuyOrderResponseDTO buyOrderResponseDTO = buyOrderService.saveBuyOrder(buyOrderRequestDTO);
+        String message = "Orden de compra creada";
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, buyOrderResponseDTO), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/addSellOrder")
+    @Operation(summary = "Agrega una nueva orden de venta")
+    public ResponseEntity<ApiResponseDTO<SellOrderResponseDTO>> saveBuyOrder(@RequestBody @Valid SellOrderRequestDTO sellOrderRequestDTO) {
+        SellOrderResponseDTO sellOrderResponseDTO = sellOrderService.saveSellOrder(sellOrderRequestDTO);
+        String message = "Orden de venta creada";
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, sellOrderResponseDTO), HttpStatus.CREATED);
     }
 
 }

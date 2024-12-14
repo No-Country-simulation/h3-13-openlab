@@ -47,9 +47,6 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/admin/getAll", "/api/cliente/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/admin/update").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/admin/{id}").authenticated()
-                        //Contratos Controller
-                        .requestMatchers(HttpMethod.GET, "/orderbook/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/orderbook/**").permitAll()
                         // Socials Controller
                         .requestMatchers(HttpMethod.POST, "/api/social/socials").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/social/getUserLikes/{id}").permitAll()
@@ -58,6 +55,8 @@ public class SecurityConfiguration {
                         // BuyOrder Controller - SellOrder Controller
                         .requestMatchers(HttpMethod.GET, "api/orders/getAllBuyOrders").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/orders/getAllSellOrders").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/orders/addBuyOrder").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/orders/addSellOrder").permitAll()
                         // Estadisticas Controller
                         .requestMatchers(HttpMethod.GET, "api/stadistics/{id}").permitAll()
                         //Swagger

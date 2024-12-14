@@ -1,3 +1,5 @@
+OpenLab\mappers\BuyOrderMapperImpl.class
+OpenLab\mappers\SellOrderMapperImpl.class
 OpenLab\services\IClienteService.class
 OpenLab\dtos\UserDTO\GoogleUserInfoCompleta.class
 OpenLab\models\Cliente.class
@@ -5,6 +7,7 @@ OpenLab\services\Impl\ClienteServiceImpl.class
 OpenLab\controllers\OrdersController.class
 OpenLab\dtos\EstadisticasDTO\EstadisticasResponseDTO.class
 OpenLab\services\IUserService.class
+OpenLab\dtos\BuyOrderDTO\BuyOrderResponseDTO.class
 OpenLab\services\Impl\SocialServiceImpl.class
 OpenLab\services\Impl\AutenticacionServiceImpl.class
 OpenLab\dtos\IiniciativaDTO\IniciativasAndSocialsDTO.class
@@ -18,7 +21,6 @@ OpenLab\services\Impl\EstadisticasServiceImpl.class
 OpenLab\dtos\SocialsDTO\SocialsRequestDTO.class
 OpenLab\dtos\IiniciativaDTO\IniciativaRequestDTO.class
 OpenLab\OpenLabApplication.class
-OpenLab\orderbook\OrderBookService.class
 OpenLab\controllers\ClienteController.class
 OpenLab\exceptions\GlobalExceptionHandler.class
 OpenLab\services\IAdminService.class
@@ -31,11 +33,13 @@ OpenLab\dtos\ClienteDTO\ClienteUpdateDTO.class
 OpenLab\models\Admin.class
 OpenLab\dtos\ClienteDTO\ClienteResponseDTO.class
 OpenLab\models\User.class
-OpenLab\orderbook\OrderBookController.class
+OpenLab\dtos\BuyOrderDTO\BuyOrderRequestDTO.class
+OpenLab\dtos\SellOrderDTO\SellOrderRequestDTO.class
 OpenLab\repositorys\IGenericRepository.class
 OpenLab\services\IAutenticacionService.class
 OpenLab\services\Impl\GenericServiceImpl.class
 OpenLab\config\OpenAPI3Configuration.class
+OpenLab\mappers\SellOrderMapper.class
 OpenLab\security\SecurityConfiguration.class
 OpenLab\dtos\UserDTO\UserDTO.class
 OpenLab\services\IGenericService.class
@@ -44,7 +48,6 @@ OpenLab\services\ITokenService.class
 OpenLab\controllers\AutenticacionController.class
 OpenLab\mappers\ClienteMapperImpl.class
 OpenLab\security\SecretKeyConfig.class
-OpenLab\orderbook\BuyOrderRequestDTO.class
 OpenLab\controllers\EstadisticasController.class
 OpenLab\security\AudienceValidator.class
 OpenLab\dtos\SocialsDTO\SocialsResponseDTO.class
@@ -66,6 +69,7 @@ OpenLab\dtos\IiniciativaDTO\IniciativaResponseDTO.class
 OpenLab\mappers\IniciativaMapperImpl.class
 OpenLab\repositorys\IClienteRepository.class
 OpenLab\exceptions\ApplicationException.class
+OpenLab\mappers\BuyOrderMapper.class
 OpenLab\repositorys\IEstaditicasRepository.class
 OpenLab\dtos\UserDTO\DatosAutenticacionUsuario.class
 OpenLab\services\IniciativaService.class
@@ -79,6 +83,7 @@ OpenLab\services\Impl\AdminServiceImpl.class
 OpenLab\services\Impl\TokenServiceImpl.class
 OpenLab\cors\CorsConfig.class
 OpenLab\models\SellOrder.class
+OpenLab\dtos\SellOrderDTO\SellOrderResponseDTO.class
 OpenLab\mappers\UserMapper.class
 OpenLab\services\ISocialService.class
 OpenLab\mappers\EstadisticasMapperImpl.class

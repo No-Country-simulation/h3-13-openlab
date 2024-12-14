@@ -19,6 +19,6 @@ public class BuyOrder {
     private Long id;
     private String logo;
     private String name;
-    private String tokens;
-    private String price;
+    private int tokens;
+    private double price;
 }

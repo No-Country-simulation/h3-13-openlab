@@ -42,14 +42,14 @@ public class IniciativaController {
         return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativaResponseDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAllIniciativas")
-    @Operation(summary = "Se devuelven todas las iniciativas creadas")
-    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> getAll() {;
-        List<Iniciativa> iniciativas = iniciativaService.findAll();
-        List<IniciativaResponseDTO> iniciativasResponseDTO = iniciativaMapper.toListResponseDTO(iniciativas);
-        String message = "Iniciativas Encontradas";
-        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativasResponseDTO), HttpStatus.OK);
-    }
+//    @GetMapping("/getAllIniciativas")
+//    @Operation(summary = "Se devuelven todas las iniciativas creadas")
+//    public ResponseEntity<ApiResponseDTO<IniciativaResponseDTO>> getAll() {;
+//        List<Iniciativa> iniciativas = iniciativaService.findAll();
+//        List<IniciativaResponseDTO> iniciativasResponseDTO = iniciativaMapper.toListResponseDTO(iniciativas);
+//        String message = "Iniciativas Encontradas";
+//        return new ResponseEntity<>(new ApiResponseDTO<>(true, message, iniciativasResponseDTO), HttpStatus.OK);
+//    }
 
     @GetMapping("/getAllIniciativasAndSocials")
     @Operation(summary = "Se devuelven todas las iniciativas y socials creados")
