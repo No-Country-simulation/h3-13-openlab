@@ -10,17 +10,37 @@ class MessageParser {
   parse(message: string) {
     const lowercasedMessage = message.toLowerCase();
 
-    // Si el mensaje contiene "hola", ejecuta la acción handleHello
-    if (lowercasedMessage.includes("hola")) {
-      this.actionProvider.handleHello();
+    if (lowercasedMessage.includes("hola") || lowercasedMessage.includes("bienvenido")) {
+      this.actionProvider.handleWelcome();
+      return;
     }
 
-    // Si el mensaje contiene "ayuda", ejecuta la acción handleHelp
-    if (lowercasedMessage.includes("ayuda")) {
+    if (lowercasedMessage.includes("crear dao") || lowercasedMessage.includes("nueva iniciativa")) {
+      this.actionProvider.handleCreateDAO();
+      return;
+    }
+
+    if (lowercasedMessage.includes("¿qué es una dao") || lowercasedMessage.includes("dao")) {
+      this.actionProvider.handleDefineDAO();
+      return;
+    }
+
+    if (lowercasedMessage.includes("¿qué es una iniciativa") || lowercasedMessage.includes("iniciativa")) {
+      this.actionProvider.handleDefineInitiative();
+      return;
+    }
+
+    if (lowercasedMessage.includes("¿qué es el libro de órdenes") || lowercasedMessage.includes("libro de órdenes")) {
+      this.actionProvider.handleDefineOrderBook();
+      return;
+    }
+
+    if (lowercasedMessage.includes("ayuda") || lowercasedMessage.includes("soporte")) {
       this.actionProvider.handleHelp();
+      return;
     }
 
-    // Puedes agregar más condiciones para manejar otros mensajes
+    this.actionProvider.handleUnknown();
   }
 }
 

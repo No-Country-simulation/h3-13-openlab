@@ -3,9 +3,11 @@ import Chatbot from 'react-chatbot-kit';
 import config from './config';
 import MessageParser from './MessageParser';
 import ActionProvider from './ActionProvider';
+import 'react-chatbot-kit/build/main.css'
+import { close , Bot } from '../../assets';
 
 const MyChatbot = () => {
-    const [showChatbot, setShowChatbot] = useState(false); 
+    const [showChatbot, setShowChatbot] = useState(false);
 
     const toggleChatbot = () => {
       setShowChatbot(!showChatbot);
@@ -13,12 +15,11 @@ const MyChatbot = () => {
   
     return (
       <div>
-
         <button
-          className="fixed bottom-5 right-5 p-3 bg-blue-500 text-white rounded-full"
+          className="fixed bottom-5 right-5 bg-white rounded-full shadow-lg w-[5em] h-[5em] border"
           onClick={toggleChatbot}
         >
-          {showChatbot ? 'Cerrar Chatbot' : 'Abrir Chatbot'}
+          {showChatbot ? 'Close' : <img src={Bot} />}
         </button>
   
         {showChatbot && (
@@ -26,14 +27,14 @@ const MyChatbot = () => {
             className="fixed bottom-5 right-5 z-50 transition-transform duration-300 ease-in-out transform"
             style={{ transform: 'translateY(0)' }}
           >
-            <div className="bg-white p-8 rounded-lg shadow-lg">
+            <div className="bg-gradient-to-r from-blue-700 to-sky-400 pt-9 pb-2 pl-2 pr-2 rounded-lg shadow-lg">
               <button
-                className="absolute top-2 right-1 bg-red-500 text-white p-1 rounded-full"
+                className="absolute top-2 right-2 rounded-lg shadow-lg items-centerjustify-center "
                 onClick={toggleChatbot}
               >
-                X
+                <img src={close} className='bg-white/80 rounded-lg'/>
               </button>
-
+  
               <Chatbot
                 config={config}
                 messageParser={MessageParser}
