@@ -152,17 +152,5 @@ public class AuthController {
         return ResponseEntity.ok("hola estoy en el home");
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-        logoutHandler.logout(request, response, null);
-
-        //String logoutUrl = authService.logoutt(request.getHeader("Authorization"));
-        String logoutUrl = authService.logout();
-
-        return ResponseEntity.status(302).header("Location", logoutUrl).build();
-    }
-
 }
 

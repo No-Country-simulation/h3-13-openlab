@@ -45,6 +45,11 @@ public class TokenServiceImpl implements ITokenService {
     }
 
     @Override
+    public String generateCustomToken(String token) {
+        return null;
+    }
+
+    @Override
     public String generateTokenn(User user, UserInfo userInfo) {
 
         try {
@@ -52,7 +57,7 @@ public class TokenServiceImpl implements ITokenService {
             return JWT.create()
                     .withIssuer(domain)
                     .withSubject(userInfo.getSub())
-                    //.withAudience(audience)
+                    .withAudience(audience)
                     .withClaim("id", user.getId())
                     .withClaim("email", user.getEmail())
                     .withClaim("name", user.getName())
@@ -116,6 +121,7 @@ public class TokenServiceImpl implements ITokenService {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer(domain.trim())
+                    .withAudience(audience.trim())
                     .build();
 
 

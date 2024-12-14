@@ -51,8 +51,6 @@ public class AuthService {
             if (userResponse == null) {
                 User newUser = userService.save(userMapper.toEntitySave(userinfo));
 
-                JWTTokenDTO tokennew = new JWTTokenDTO(jwtService.generateTokenn(newUser, userinfo));
-
                 return new JWTTokenDTO(jwtService.generateTokenn(newUser, userinfo));
             }
 
@@ -82,14 +80,15 @@ public class AuthService {
     }
 
 
-    public String logout() throws Exception {
+    public String logout(String returnTo) {
 
-        String logoutUrl = String.format("https://" + "%s/v2/logout?client_id=%s",
+        return String.format("https://%s/v2/logout?client_id=%s&returnTo=%s",
+                auth0Domain, clientId, returnTo);
+    }
+    public String logoutt() {
+
+        return String.format("https://%s/v2/logout?client_id=%s",
                 auth0Domain, clientId);
-        System.out.println("saliendo del logout global");
-        System.out.println("logoutUrl: " + logoutUrl);
-
-        return logoutUrl;
     }
 
 

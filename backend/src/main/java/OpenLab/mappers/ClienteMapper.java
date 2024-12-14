@@ -21,7 +21,6 @@ public abstract class ClienteMapper {
 @Autowired
     private IniciativaRepository iniciativaRepository;
 
-    //  ClienteMapper INSTANCE = Mappers.getMapper(ClienteMapper.class);
 
     @Mapping(source = "usuario", target = "usuario")
     abstract Cliente toEntity(ClienteRequestDTO clienteRequestDTO);

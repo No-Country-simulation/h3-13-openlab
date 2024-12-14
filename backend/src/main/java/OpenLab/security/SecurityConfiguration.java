@@ -1,9 +1,11 @@
 package OpenLab.security;
 
+import OpenLab.controllers.LogoutController;
 import OpenLab.services.Impl.CustomJwtDecoderService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,6 +27,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -58,7 +62,7 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, @Lazy AuthenticationSuccessHandler authenticationSuccessHandler) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -68,6 +72,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/apii/access-token**").permitAll()
                         .requestMatchers("/apii/saludo**").permitAll()
                         .requestMatchers("/apii/home**").authenticated()
+                        .requestMatchers("/logout**").authenticated()
 
                         //Cliente Controller
                         .requestMatchers(HttpMethod.GET, "/api/cliente/getAll", "/api/cliente/{id}").permitAll()
@@ -95,7 +100,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 //Login a traves de Auth0
                 .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("/apii/access-token", true)
+                        .successHandler(authenticationSuccessHandler)
                         .userInfoEndpoint(userInfo -> userInfo.oidcUserService(oidcUserService()))
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
@@ -103,13 +108,11 @@ public class SecurityConfiguration {
                 )
                 .addFilterBefore(securityFilter, OAuth2LoginAuthenticationFilter.class)
                 .logout(logout -> logout
-                        .logoutSuccessHandler((request, response, authentication) -> {
-                            response.sendRedirect("/");
-                        })
-                        // Redirige a esta URL después de logout
-                        .deleteCookies("JSESSIONID")
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(true)
+                                .logoutSuccessHandler(logoutSuccessHandler())
+//
+                                .deleteCookies("JSESSIONID")
+                                .clearAuthentication(true)
+                                .invalidateHttpSession(true)
                 );
 
 
@@ -117,6 +120,10 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new LogoutController();
+    }
 
     @Bean
     public OidcUserService oidcUserService() {
@@ -139,6 +146,7 @@ public class SecurityConfiguration {
         };
     }
 
+
     @Bean
     public OAuth2AuthorizedClientService authorizedClientService(ClientRegistrationRepository clientRegistrationRepository) {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
@@ -153,10 +161,11 @@ public class SecurityConfiguration {
                 .authorizationUri(authorizationUrl)
                 .tokenUri(tokenUrl)
                 .userInfoUri(userInfoUrl)
+                .jwkSetUri("https://dev-byesylnv0qhe4lwt.us.auth0.com/.well-known/jwks.json")
                 .userNameAttributeName("sub")
                 .clientName("Auth0")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-               // .scope("openid", "profile", "email")
+                .scope("openid", "profile", "email")
                 .build();
 
         return new InMemoryClientRegistrationRepository(registration);

@@ -12,6 +12,7 @@ import java.util.Date;
 @Service
 public interface ITokenService {
     String generateToken(User user);
+    String generateCustomToken(String token);
 
     String generateTokenn(User user, UserInfo userInfo);
 
