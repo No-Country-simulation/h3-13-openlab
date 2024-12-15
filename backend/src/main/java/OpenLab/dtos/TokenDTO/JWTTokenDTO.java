@@ -1,7 +1,9 @@
 package OpenLab.dtos.TokenDTO;
 
 
-public record JWTTokenDTO(
+import java.io.Serializable;
+
+public record JWTTokenDTO (
         String jwtToken
-) {
+)  implements Serializable{
 }

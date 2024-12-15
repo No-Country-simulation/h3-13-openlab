@@ -46,11 +46,11 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
         try {
             JWTTokenDTO tokenDTO =authService.autentificarUser(accessToken);
 
-            System.out.println("token custom: " + tokenDTO);
+            System.out.println("token custom: " + tokenDTO.jwtToken());
 
             // Devolver el custom token como parte de la respuesta
             response.setContentType("application/json");
-            response.getWriter().write("{\"custom_token\": \"" + tokenDTO + "\"}");
+            response.getWriter().write("{\"custom_token\": \"" + tokenDTO.jwtToken() + "\"}");
             response.sendRedirect("/apii/home");
         }catch (Exception e) {
             e.printStackTrace();
