@@ -68,29 +68,29 @@ public class OrdersController {
 
     @DeleteMapping("deleteBuyOrder/{id}")
     @Operation(summary = "Elimina un orden de compra")
-    public ResponseEntity<String> deleteBuyOrder(@PathVariable("id") Long id) {
+    public ResponseEntity<ApiResponseDTO<Object>> deleteBuyOrder(@PathVariable("id") Long id) {
         buyOrderService.delete(id);
-        return ResponseEntity.ok("Buy Order Eliminado");
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, "Buy Order Eliminado", null), HttpStatus.OK);
     }
 
     @DeleteMapping("deleteSellOrder/{id}")
     @Operation(summary = "Elimina un orden de venta")
-    public ResponseEntity<String> deleteSellOrder(@PathVariable("id") Long id) {
+    public ResponseEntity<ApiResponseDTO<Object>> deleteSellOrder(@PathVariable("id") Long id) {
         sellOrderService.delete(id);
-        return ResponseEntity.ok("Sell Order Eliminado");
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, "Sell Order Eliminado", null), HttpStatus.OK);
     }
 
     @PutMapping("/updateBuyOrder")
     @Operation(summary = "Modifica un orden de compra")
-    public ResponseEntity<String> updateBuyOrder(@RequestBody @Valid BuyOrderUpdateDTO buyOrderUpdateDTO) {
+    public ResponseEntity<ApiResponseDTO<Object>> updateBuyOrder(@RequestBody @Valid BuyOrderUpdateDTO buyOrderUpdateDTO) {
         BuyOrderResponseDTO buyOrder = buyOrderService.updateBuyOrder(buyOrderUpdateDTO);
-        return ResponseEntity.ok("Buy Order Acualizado");
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, "Buy Order Modificado", null), HttpStatus.OK);
     }
 
     @PutMapping("/updateSellOrder")
     @Operation(summary = "Modifica un orden de venta")
-    public ResponseEntity<String> updateSellOrder(@RequestBody @Valid SellOrderUpdateDTO sellOrderUpdateDTO) {
+    public ResponseEntity<ApiResponseDTO<Object>> updateSellOrder(@RequestBody @Valid SellOrderUpdateDTO sellOrderUpdateDTO) {
         SellOrderResponseDTO buyOrder = sellOrderService.updateSellOrder(sellOrderUpdateDTO);
-        return ResponseEntity.ok("Sell Order Acualizado");
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, "Sell Order Modificado", null), HttpStatus.OK);
     }
 }

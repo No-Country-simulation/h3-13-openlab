@@ -1,8 +1,10 @@
 package OpenLab.controllers;
 
+import OpenLab.dtos.ApiResponseDTO;
 import OpenLab.dtos.SocialsDTO.*;
 import OpenLab.services.ISocialService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,23 +27,23 @@ public class SocialController {
 
     @PostMapping("/like")
     @Operation(summary = "Maneja los likes")
-    public ResponseEntity<String> handleLike(@RequestBody LikeRequestDTO likeRequestDTO) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleLike(@RequestBody LikeRequestDTO likeRequestDTO) {
         socialService.saveLike(likeRequestDTO);
-        return ResponseEntity.ok("Like procesado exitosamente.");
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, "Like procesado exitosamente", null), HttpStatus.OK);
     }
 
     @PostMapping("/share")
     @Operation(summary = "Maneja los shares")
-    public ResponseEntity<String> handleShare(@RequestBody ShareRequestDTO shareRequestDTO) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleShare(@RequestBody ShareRequestDTO shareRequestDTO) {
         socialService.saveShare(shareRequestDTO);
-        return ResponseEntity.ok("Share procesado exitosamente.");
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, "Share procesado exitosamente", null), HttpStatus.OK);
     }
 
     @PostMapping("/join")
     @Operation(summary = "Maneja los joins")
-    public ResponseEntity<String> handleJoin(@RequestBody JoinRequestDTO joinRequestDTO) {
+    public ResponseEntity<ApiResponseDTO<Object>> handleJoin(@RequestBody JoinRequestDTO joinRequestDTO) {
         socialService.saveJoin(joinRequestDTO);
-        return ResponseEntity.ok("Join procesado exitosamente.");
+        return new ResponseEntity<>(new ApiResponseDTO<>(true, "Join procesado exitosamente", null), HttpStatus.OK);
     }
 
 //    @GetMapping("/getUserLikes/{id}")
