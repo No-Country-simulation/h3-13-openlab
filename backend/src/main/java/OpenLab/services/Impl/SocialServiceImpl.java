@@ -1,6 +1,9 @@
 package OpenLab.services.Impl;
 
 import OpenLab.dtos.IiniciativaDTO.IniciativaResponseDTO;
+import OpenLab.dtos.SocialsDTO.JoinRequestDTO;
+import OpenLab.dtos.SocialsDTO.LikeRequestDTO;
+import OpenLab.dtos.SocialsDTO.ShareRequestDTO;
 import OpenLab.dtos.SocialsDTO.SocialsRequestDTO;
 import OpenLab.mappers.IniciativaMapper;
 import OpenLab.models.Cliente;
@@ -39,23 +42,59 @@ public class SocialServiceImpl extends GenericServiceImpl<Socials, Long> impleme
         return repo;
     }
 
+//    @Override
+//    public void saveSocials(SocialsRequestDTO socialsRequestDTO) {
+//        Iniciativa iniciativa = iniciativaRepository.findById(socialsRequestDTO.idIniciativa())
+//                .orElseThrow(() -> new IllegalArgumentException("Iniciativa no encontrada con ID: " + socialsRequestDTO.idIniciativa()));
+//
+//        Cliente cliente = clienteRepository.findById(socialsRequestDTO.idCliente())
+//                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con ID: " + socialsRequestDTO.idCliente()));
+//
+//        Socials socials = repo.findByClienteIdAndIniciativaId(cliente.getId(), iniciativa.getId())
+//                .orElseGet(() -> new Socials(cliente, iniciativa)); // Crea una nueva si no existe
+//
+//        handleLikes(iniciativa, socials, socialsRequestDTO.like());
+//        handleShares(iniciativa, socials, socialsRequestDTO.share());
+//        handleJoins(iniciativa, socials, socialsRequestDTO.join());
+//
+//        repo.save(socials);
+//        iniciativaRepository.save(iniciativa);
+//    }
+
     @Override
-    public void saveSocials(SocialsRequestDTO socialsRequestDTO) {
-        Iniciativa iniciativa = iniciativaRepository.findById(socialsRequestDTO.idIniciativa())
-                .orElseThrow(() -> new IllegalArgumentException("Iniciativa no encontrada con ID: " + socialsRequestDTO.idIniciativa()));
-
-        Cliente cliente = clienteRepository.findById(socialsRequestDTO.idCliente())
-                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con ID: " + socialsRequestDTO.idCliente()));
-
-        Socials socials = repo.findByClienteIdAndIniciativaId(cliente.getId(), iniciativa.getId())
-                .orElseGet(() -> new Socials(cliente, iniciativa)); // Crea una nueva si no existe
-
-        handleLikes(iniciativa, socials, socialsRequestDTO.like());
-        handleShares(iniciativa, socials, socialsRequestDTO.share());
-        handleJoins(iniciativa, socials, socialsRequestDTO.join());
-
+    public void saveLike(LikeRequestDTO likeRequestDTO) {
+        Socials socials = getOrCreateSocials(likeRequestDTO.idCliente(), likeRequestDTO.idIniciativa());
+        Iniciativa iniciativa = socials.getIniciativa();
+        handleLikes(iniciativa, socials, likeRequestDTO.like());
         repo.save(socials);
         iniciativaRepository.save(iniciativa);
+    }
+    @Override
+    public void saveShare(ShareRequestDTO shareRequestDTO) {
+        Socials socials = getOrCreateSocials(shareRequestDTO.idCliente(), shareRequestDTO.idIniciativa());
+        Iniciativa iniciativa = socials.getIniciativa();
+        handleShares(iniciativa, socials, shareRequestDTO.share());
+        repo.save(socials);
+        iniciativaRepository.save(iniciativa);
+    }
+    @Override
+    public void saveJoin(JoinRequestDTO joinRequestDTO) {
+        Socials socials = getOrCreateSocials(joinRequestDTO.idCliente(), joinRequestDTO.idIniciativa());
+        Iniciativa iniciativa = socials.getIniciativa();
+        handleJoins(iniciativa, socials, joinRequestDTO.join());
+        repo.save(socials);
+        iniciativaRepository.save(iniciativa);
+    }
+
+    private Socials getOrCreateSocials(Long idCliente, Long idIniciativa) {
+        Iniciativa iniciativa = iniciativaRepository.findById(idIniciativa)
+                .orElseThrow(() -> new IllegalArgumentException("Iniciativa no encontrada con ID: " + idIniciativa));
+
+        Cliente cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado con ID: " + idCliente));
+
+        return repo.findByClienteIdAndIniciativaId(cliente.getId(), iniciativa.getId())
+                .orElseGet(() -> new Socials(cliente, iniciativa));
     }
 
     private void handleLikes(Iniciativa iniciativa, Socials socials, boolean like) {
@@ -113,14 +152,4 @@ public class SocialServiceImpl extends GenericServiceImpl<Socials, Long> impleme
         List<IniciativaResponseDTO> iniciativaResponseDTOS = iniciativaMapper.toListResponseDTO(iniciativas);
         return iniciativaResponseDTOS;
     }
-
-//    private Socials obtenerOSocials(Long idCliente, Long idIniciativa) {
-//        Cliente cliente = clienteRepository.findById(idCliente)
-//                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
-//        Iniciativa iniciativa = iniciativaRepository.findById(idIniciativa)
-//                .orElseThrow(() -> new RuntimeException("Iniciativa no encontrada"));
-//
-//        return socialRepository.findByClienteAndIniciativa(cliente, iniciativa)
-//                .orElse(new Socials(null, false, false, false, iniciativa, cliente));
-//    }
 }

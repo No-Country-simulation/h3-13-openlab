@@ -6,6 +6,7 @@ F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\repositorys\
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\Impl\SocialServiceImpl.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\OpenLabApplication.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\controllers\AdminController.java
+F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\SocialsDTO\JoinRequestDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\security\AuthDomainConfig.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\IiniciativaDTO\IniciativasAndSocialsDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\IClienteService.java
@@ -54,6 +55,7 @@ F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\mappers\Admi
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\EstadisticasDTO\EstadisticasResponseDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\BuyOrderDTO\BuyOrderUpdateDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\IAutenticacionService.java
+F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\SocialsDTO\LikeRequestDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\Impl\EstadisticasServiceImpl.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\AdminDTO\AdminRequestDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\AdminDTO\AdminResponseDTO.java
@@ -68,6 +70,7 @@ F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\controllers\
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\ApiResponseDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\repositorys\IniciativaRepository.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\Impl\GenericServiceImpl.java
+F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\SocialsDTO\ShareRequestDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\Impl\TokenServiceImpl.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\exceptions\GlobalExceptionHandler.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\ISellOrderService.java

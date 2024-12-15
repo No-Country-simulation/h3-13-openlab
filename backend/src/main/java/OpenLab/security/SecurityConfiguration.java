@@ -52,6 +52,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/social/getUserLikes/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/social/getUserJoins/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/social/getUserShares/{id}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/social/like").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/social/share").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/social/join").permitAll()
                         // BuyOrder Controller - SellOrder Controller
                         .requestMatchers(HttpMethod.GET, "api/orders/getAllBuyOrders").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/orders/getAllSellOrders").permitAll()

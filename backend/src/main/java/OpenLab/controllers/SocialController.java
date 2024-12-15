@@ -1,6 +1,6 @@
 package OpenLab.controllers;
 
-import OpenLab.dtos.SocialsDTO.SocialsRequestDTO;
+import OpenLab.dtos.SocialsDTO.*;
 import OpenLab.services.ISocialService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,32 @@ public class SocialController {
         this.socialService = socialService;
     }
 
-    @PostMapping("/socials")
-    @Operation(summary = "Se manejan los likes, shares y joins")
-    public ResponseEntity<String> saveSocials(@RequestBody SocialsRequestDTO socialsRequestDTO) {
-        socialService.saveSocials(socialsRequestDTO);
-        return ResponseEntity.ok("Acción social guardada exitosamente.");
+//    @PostMapping("/socials")
+//    @Operation(summary = "Se manejan los likes, shares y joins")
+//    public ResponseEntity<String> saveSocials(@RequestBody SocialsRequestDTO socialsRequestDTO) {
+//        socialService.saveSocials(socialsRequestDTO);
+//        return ResponseEntity.ok("Acción social guardada exitosamente.");
+//    }
+
+    @PostMapping("/like")
+    @Operation(summary = "Maneja los likes")
+    public ResponseEntity<String> handleLike(@RequestBody LikeRequestDTO likeRequestDTO) {
+        socialService.saveLike(likeRequestDTO);
+        return ResponseEntity.ok("Like procesado exitosamente.");
+    }
+
+    @PostMapping("/share")
+    @Operation(summary = "Maneja los shares")
+    public ResponseEntity<String> handleShare(@RequestBody ShareRequestDTO shareRequestDTO) {
+        socialService.saveShare(shareRequestDTO);
+        return ResponseEntity.ok("Share procesado exitosamente.");
+    }
+
+    @PostMapping("/join")
+    @Operation(summary = "Maneja los joins")
+    public ResponseEntity<String> handleJoin(@RequestBody JoinRequestDTO joinRequestDTO) {
+        socialService.saveJoin(joinRequestDTO);
+        return ResponseEntity.ok("Join procesado exitosamente.");
     }
 
 //    @GetMapping("/getUserLikes/{id}")

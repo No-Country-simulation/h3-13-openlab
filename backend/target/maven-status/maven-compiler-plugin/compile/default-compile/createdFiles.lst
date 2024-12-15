@@ -53,8 +53,10 @@ OpenLab\controllers\IniciativaController.class
 OpenLab\mappers\SellOrderMapperImpl.class
 OpenLab\services\Impl\ClienteServiceImpl.class
 OpenLab\controllers\OrdersController.class
+OpenLab\dtos\SocialsDTO\JoinRequestDTO.class
 OpenLab\services\IUserService.class
 OpenLab\services\Impl\SocialServiceImpl.class
+OpenLab\dtos\SocialsDTO\LikeRequestDTO.class
 OpenLab\mappers\AdminMapper.class
 OpenLab\models\Estadisticas.class
 OpenLab\services\Impl\SellOrderServiceImpl.class
@@ -80,6 +82,7 @@ OpenLab\exceptions\GlobalExceptionHandler$ErrorResponse.class
 OpenLab\repositorys\ISellOrderRepository.class
 OpenLab\services\ISellOrderService.class
 OpenLab\dtos\IiniciativaDTO\IniciativaResponseDTO.class
+OpenLab\dtos\SocialsDTO\ShareRequestDTO.class
 OpenLab\mappers\IniciativaMapperImpl.class
 OpenLab\dtos\UserDTO\DatosAutenticacionUsuario.class
 OpenLab\services\IBuyOrderService.class
