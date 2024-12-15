@@ -57,6 +57,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "api/orders/getAllSellOrders").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/orders/addBuyOrder").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/orders/addSellOrder").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "api/orders/updateBuyOrder").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "api/orders/updateSellOrder").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "api/orders/deleteBuyOrder/{id}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "api/orders/deleteSellOrder/{id}").permitAll()
                         // Estadisticas Controller
                         .requestMatchers(HttpMethod.GET, "api/stadistics/{id}").permitAll()
                         //Swagger

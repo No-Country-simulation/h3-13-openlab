@@ -23,6 +23,7 @@ F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\Imp
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\models\Cliente.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\repositorys\IAdminRepository.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\Impl\SellOrderServiceImpl.java
+F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\SellOrderDTO\SellOrderUpdateDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\mappers\EstadisticasMapper.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\mappers\BuyOrderMapper.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\IniciativaService.java
@@ -51,6 +52,7 @@ F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\IBu
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\BuyOrderDTO\BuyOrderResponseDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\mappers\AdminMapper.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\EstadisticasDTO\EstadisticasResponseDTO.java
+F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\BuyOrderDTO\BuyOrderUpdateDTO.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\IAutenticacionService.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\services\Impl\EstadisticasServiceImpl.java
 F:\Cosas\Programas\Java\h3-13-openlab\backend\src\main\java\OpenLab\dtos\AdminDTO\AdminRequestDTO.java

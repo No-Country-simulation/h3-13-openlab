@@ -1,10 +1,8 @@
 package OpenLab.controllers;
 
 import OpenLab.dtos.ApiResponseDTO;
-import OpenLab.dtos.BuyOrderDTO.BuyOrderRequestDTO;
-import OpenLab.dtos.BuyOrderDTO.BuyOrderResponseDTO;
-import OpenLab.dtos.SellOrderDTO.SellOrderRequestDTO;
-import OpenLab.dtos.SellOrderDTO.SellOrderResponseDTO;
+import OpenLab.dtos.BuyOrderDTO.*;
+import OpenLab.dtos.SellOrderDTO.*;
 import OpenLab.exceptions.ApplicationException;
 import OpenLab.models.BuyOrder;
 import OpenLab.models.SellOrder;
@@ -68,4 +66,31 @@ public class OrdersController {
         return new ResponseEntity<>(new ApiResponseDTO<>(true, message, sellOrderResponseDTO), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("deleteBuyOrder/{id}")
+    @Operation(summary = "Elimina un orden de compra")
+    public ResponseEntity<String> deleteBuyOrder(@PathVariable("id") Long id) {
+        buyOrderService.delete(id);
+        return ResponseEntity.ok("Buy Order Eliminado");
+    }
+
+    @DeleteMapping("deleteSellOrder/{id}")
+    @Operation(summary = "Elimina un orden de venta")
+    public ResponseEntity<String> deleteSellOrder(@PathVariable("id") Long id) {
+        sellOrderService.delete(id);
+        return ResponseEntity.ok("Sell Order Eliminado");
+    }
+
+    @PutMapping("/updateBuyOrder")
+    @Operation(summary = "Modifica un orden de compra")
+    public ResponseEntity<String> updateBuyOrder(@RequestBody @Valid BuyOrderUpdateDTO buyOrderUpdateDTO) {
+        BuyOrderResponseDTO buyOrder = buyOrderService.updateBuyOrder(buyOrderUpdateDTO);
+        return ResponseEntity.ok("Buy Order Acualizado");
+    }
+
+    @PutMapping("/updateSellOrder")
+    @Operation(summary = "Modifica un orden de venta")
+    public ResponseEntity<String> updateSellOrder(@RequestBody @Valid SellOrderUpdateDTO sellOrderUpdateDTO) {
+        SellOrderResponseDTO buyOrder = sellOrderService.updateSellOrder(sellOrderUpdateDTO);
+        return ResponseEntity.ok("Sell Order Acualizado");
+    }
 }

@@ -1,7 +1,6 @@
 package OpenLab.services.Impl;
 
-import OpenLab.dtos.BuyOrderDTO.BuyOrderRequestDTO;
-import OpenLab.dtos.BuyOrderDTO.BuyOrderResponseDTO;
+import OpenLab.dtos.BuyOrderDTO.*;
 import OpenLab.mappers.BuyOrderMapper;
 import OpenLab.models.BuyOrder;
 import OpenLab.repositorys.IBuyOrderRepository;
@@ -9,8 +8,6 @@ import OpenLab.repositorys.IGenericRepository;
 import OpenLab.services.IBuyOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 public class BuyOrderServiceImpl extends GenericServiceImpl<BuyOrder, Long> implements IBuyOrderService {
@@ -35,5 +32,25 @@ public class BuyOrderServiceImpl extends GenericServiceImpl<BuyOrder, Long> impl
         repo.save(buyOrder);
         BuyOrderResponseDTO buyOrderResponseDTO = buyOrderMapper.toResponseDTO(buyOrder);
         return buyOrderResponseDTO;
+    }
+
+    public BuyOrderResponseDTO updateBuyOrder(BuyOrderUpdateDTO buyOrderUpdateDTO) {
+        BuyOrder existingBuyOrder = repo.findById(buyOrderUpdateDTO.id())
+                .orElseThrow(() -> new IllegalArgumentException("Buy Order no encontrado"));
+        if (buyOrderUpdateDTO.logo() != null) {
+            existingBuyOrder.setLogo(buyOrderUpdateDTO.logo());
+        }
+        if (buyOrderUpdateDTO.name() != null) {
+            existingBuyOrder.setName(buyOrderUpdateDTO.name());
+        }
+        if (buyOrderUpdateDTO.tokens() != 0) {
+            existingBuyOrder.setTokens(buyOrderUpdateDTO.tokens());
+        }
+        if (buyOrderUpdateDTO.price() != 0.0) {
+            existingBuyOrder.setPrice(buyOrderUpdateDTO.price());
+        }
+        repo.save(existingBuyOrder);
+        BuyOrderResponseDTO buyOrder = buyOrderMapper.toResponseDTO(existingBuyOrder);
+        return buyOrder;
     }
 }
