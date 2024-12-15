@@ -35,6 +35,7 @@ import profileB from "./icons/profileB.svg"
 import items from "./icons/Rectangle.svg"
 import Sun from "./icons/sun.svg"
 import Moon from "./icons/full-moon.svg"
+import Bot from "./icons/bot.png"
 
 export{
     profile,
@@ -73,5 +74,6 @@ export{
     historial,
     items,
     Sun,
-    Moon
+    Moon, 
+    Bot
 };

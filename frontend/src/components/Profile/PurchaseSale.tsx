@@ -63,7 +63,7 @@ export const PurchaseSaleOrders = () =>{
         {isMobile
         ?
         // Mobile
-        <div className="flex flex-col w-[30em] h-[30em] pt-4 bg-white shadow-lg rounded-lg" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}
+        <div className="flex flex-col w-screen h-[30em] pt-4 bg-white shadow-lg rounded-lg" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}
         >
             
           <h1 className="text-xl p-2 ml-[2em] font-semibold">Purchase and Sale Orders</h1>
@@ -95,7 +95,7 @@ export const PurchaseSaleOrders = () =>{
                 <div className="col-span-2">    </div>
             </div>
             {filterOrders.map((order)=>(
-            <div className="grid grid-cols-4 grid-rows-1 bg-white gap-4 text-center justify-center  items-center border-b border-gray-200 h-[4em] " style={{ backgroundColor: isDarkMode? "#817f7f" :""}}>
+            <div className="grid grid-cols-4 grid-rows-1 bg-white gap-2 text-center justify-center  items-center border-b border-gray-200 h-[4em] " style={{ backgroundColor: isDarkMode? "#817f7f" :""}}>
                 <div className="ml-[1em] text-base flex flex-row gap-4">
                     <img src={order.logoDao} className="w-4 h-4 m-auto"/>
                     <div className="flex flex-row gap-1"> 

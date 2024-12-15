@@ -69,9 +69,9 @@ const Profile = () => {
   return ( <> {isMobile
     ?
   // Mobile
-  <div className="bg-[#afafaf1a]/10 p-3 ">
+  <div className="bg-[#afafaf1a]/10 p-3 w-screen">
         <h1 className="text-3xl p-1">Profile</h1>
-        <div className="p-3 flex flex-col bg-white shadow-lg rounded-lg w-[30em]" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
+        <div className="p-3 flex flex-col bg-white shadow-lg rounded-lg w-screen" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
           
           <div className="flex flex-row gap-3 m-[1em]">
             <img src={profile} alt="user" className="w-16" />

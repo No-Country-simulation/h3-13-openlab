@@ -140,7 +140,7 @@ const MyInitiatives = () => {
   }, [dispatch]);
 
   return (
-    <>
+    < div className={`bg-[#afafaf1a] w-screen`}>
       {isMobile ? (
         <>
         <div className="flex flex-row items-center justify-between m-4">
@@ -180,7 +180,7 @@ const MyInitiatives = () => {
           
         </div>
           <br/>
-      <div className="bg-white rounded-lg" style={{ backgroundColor: isDarkMode ? '#3a3a3a' : '#ffffff',
+      <div className="bg-white rounded-lg w-screen" style={{ backgroundColor: isDarkMode ? '#3a3a3a' : '#ffffff',
         color: isDarkMode ? '#ffffff' : '#000000',}}>
       
         {myInitiatives.length > 0 ? filteredAndSortedInitiatives.map((item, index) => (
@@ -257,7 +257,7 @@ const MyInitiatives = () => {
  
       </div> 
       </div> 
-        </>
+    </>
       ) : (
         <>
           <div className="bg-[#afafaf1a]/10 h-[80] flex flex-col">
@@ -412,7 +412,7 @@ const MyInitiatives = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -23,7 +23,7 @@ export const CriptoBar = () =>{
       }, );
 
     return(
-        <div className="flex flex-col lg:w-[48em] bg-white shadow-lg rounded-lg pl-[em] sm:w-[20em]" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
+        <div className="flex flex-col lg:w-[48em] bg-white shadow-lg rounded-lg pl-[em] sm:w-screen" style={{ backgroundColor: isDarkMode? "#3a3a3a" :"white"}}>
           <SimpleBar style={{ maxHeight: 500 }} className='sm:w-[20em] lg:w-[48em]'>
             <ul>
               {Object.keys(precios).map((cryptoKey) => (

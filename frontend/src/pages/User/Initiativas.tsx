@@ -178,7 +178,7 @@ const handleSortClick = (criteria: string) => {
     
         return (
 
-      <div className="bg-[#afafaf1a]/10 flex flex-col justify">
+      <div className={`bg-[#afafaf1a]/10 flex flex-col justify ${isMobile ? "w-screen" :""}`} >
         {isMobile
         ? <>
         <div className="flex flex-row items-center justify-between m-4">

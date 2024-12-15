@@ -4,10 +4,11 @@ import { defineChain } from "@reown/appkit/networks";
 import { createAppKit } from "@reown/appkit/react";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppRouter } from "./router/AppRouter";
 import { store } from "./store/store";
+import { ToastContainer } from "react-toastify";
+import MyChatbot from "./components/chatBot/buttonChat";
 
 // 1. Define custom Hardhat network
 const hardhatNetwork = defineChain({
@@ -96,7 +97,8 @@ export const App = () => {
     >
       <Provider store={store}>
         <RouterProvider router={AppRouter} />
-        <ToastContainer position="top-center" />
+        <MyChatbot/>
+        <ToastContainer/>
       </Provider>
     </Auth0Provider>
   );

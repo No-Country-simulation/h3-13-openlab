@@ -2,7 +2,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'rec
 import { Initiative } from '../../store/Initiatives/showInitiativesSlice';
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import useWindowSize from '../hooks/Responsive';
+import { useMediaQuery } from 'react-responsive';
 
 interface MyBarChartProps {
     initiatives: Initiative[];
@@ -12,12 +12,11 @@ interface MyBarChartProps {
 const DashBar: FC<MyBarChartProps> = ({ initiatives }) => {
     const navigate = useNavigate();
 
-    const { width } = useWindowSize();
-    const isMobile = width <= 768;
+    const isMobile = useMediaQuery({ maxWidth: 767 });
 
     return (
         <BarChart
-            width={!isMobile ? 730: 440}
+            width={!isMobile ? 730: 0.8}
             height={!isMobile ? 270: 200}
             data={initiatives}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
