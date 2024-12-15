@@ -9,7 +9,7 @@ import { fetchMyInitiatives } from "../../store/Initiatives/myIniSlice";
 import { fetchInitiatives } from "../../store/Initiatives/showInitiativesSlice";
 import DashBar from "../../components/graf/dash";
 import SearchBar from "../../components/searchBar/searchDash";
-import useWindowSize from "../../components/hooks/Responsive";
+import { useMediaQuery } from 'react-responsive';
 import { TransactionsUser } from "../../components/transactions/transa";
 
 const Dashboard = () => {
@@ -25,8 +25,7 @@ const Dashboard = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const userId = user?.id ?? ""; 
   const dispatch = useDispatch<AppDispatch>();
-  const { width } = useWindowSize();
-  const isMobile = width <= 768;
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const provider = caipNetwork ? new ethers.providers.JsonRpcProvider(caipNetwork.rpcUrls.default.http[0]) : null;
   const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
@@ -82,7 +81,7 @@ const Dashboard = () => {
   return (
     <>
       {isMobile ? (
-        <div className={`flex flex-col ${isDarkMode ? 'bg-[#2d2d2d]' : 'bg-[#afafaf1a]/10'} gap-3`}>
+        <div className={`flex flex-col ${isDarkMode ? 'bg-[#2d2d2d]' : 'bg-[#afafaf1a]/10'} gap-3 w-screen`}>
           <div className="flex flex-col p-1">
             <h1 className="text-3xl p-4">Dashboard</h1>
             <SearchBar />
@@ -108,9 +107,9 @@ const Dashboard = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col w-[15em] m-auto h-[10em] bg-white shadow-lg rounded-lg content-center items-center justify-center gap-10">
+            <div className="flex flex-col w-[20em] m-auto h-[10em] bg-white shadow-lg rounded-lg content-center items-center justify-center " style={{ backgroundColor: isDarkMode ? '#3a3a3a' : ''}}>
               <img src={warning} alt="warning" className="w-20" />
-              <h1>Por favor conecta tu billetera </h1>
+              <h1 className="p-2">Por favor conecta tu billetera </h1>
             </div>
           )}
   

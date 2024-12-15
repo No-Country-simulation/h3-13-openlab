@@ -15,7 +15,7 @@ return(
     {isMobile
     ?
     // Mobile
-    <div className="flex flex-col bg-white rounded-lg shadow-lg w-[30em]" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
+    <div className="flex flex-col bg-white rounded-lg shadow-lg w-screen" style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
                 <ul className="p-4 w-[27em] m-auto">
                     <li className=" p-6 flex flex-row justify-between font-semibold border-b border-gray-300 text-xl ">
                         Founded projects 

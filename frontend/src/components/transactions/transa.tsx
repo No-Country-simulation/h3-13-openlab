@@ -1,5 +1,5 @@
 import { line, historial } from "../../assets";
-import useWindowSize from "../hooks/Responsive";
+import { useMediaQuery } from 'react-responsive';
 import { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import SimpleBar from "simplebar-react";
@@ -7,16 +7,15 @@ import "../../index.css"
 import 'simplebar/dist/simplebar.min.css';
 
 export const TransactionsUser = () => {
-  const { width } = useWindowSize();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const { sells, buys } = useSelector((state: RootState) => state.transactions);
-  const isMobile = width <= 768;
   const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
 
   return (
     <>
       {isMobile ? (
-        <div className="flex flex-col items-center shadow-lg" >
-          <div className="flex flex-col w-[30em] bg-white rounded-lg "  style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
+        <div className="flex flex-col items-center shadow-lg" style={{ width: isMobile ? "100vw" : "" }} >
+          <div className="flex flex-col bg-white rounded-lg "  style={{ backgroundColor: isDarkMode? "#3a3a3a" :""}}>
             <div className="flex flex-row gap-5 mb-[1em] p-1">
               <img src={historial} alt="Historial" className="w-10 h-10" />
               <h1 className="text-l font-semibold italic content-end mr-[5em]">
@@ -24,8 +23,8 @@ export const TransactionsUser = () => {
               </h1>
             </div>
 
-            <div className="flex flex-row justify-evenly">
-              <div className="flex flex-col w-[30em] h-[12em]">
+            <div className="flex flex-col justify-evenly">
+              <div className="flex flex-col  h-[12em]">
                 <h1 className="text-l font-semibold bg-color-1/20 ">Compras </h1>
                 <div className="flex flex-row bg-color-1/10 italic">
                   <h1 className="text-sm">Resumen</h1>
@@ -39,7 +38,7 @@ export const TransactionsUser = () => {
                 )}
               </div>
 
-              <div className="flex flex-col w-[30em] h-[12em]">
+              <div className="flex flex-col h-[12em]">
                 <h1 className="text-l font-semibold bg-color-1/20">Ventas</h1>
                 <div className="flex flex-row bg-color-1/10 italic">
                   <h1 className="text-sm">Resumen</h1>

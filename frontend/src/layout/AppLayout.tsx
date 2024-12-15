@@ -3,11 +3,13 @@ import NavbarApp from "../components/navbar/NavbarApp";
 import MenuApp from "../components/Menu/MenuApp";
 import Modal from "../components/createInit/modalCreate";
 import { useDarkMode } from "../components/hooks/DarkMode";
+import { useMediaQuery } from 'react-responsive';
 import { useSelector } from "react-redux";
 
 const AppLayout = () => {
   const { toggleDarkMode } = useDarkMode();
   const isDarkMode = useSelector ((state: any) => state.darkMode.isDarkMode);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
     return (
       <div className="flex h-screen" style={{ backgroundColor: isDarkMode ? '#121212' : '#ffffff',
@@ -21,7 +23,7 @@ const AppLayout = () => {
             <NavbarApp toggleDarkMode={toggleDarkMode} />
           </header>
   
-          <main className="flex-1 overflow-y-auto">
+          <main className={`flex-1 overflow-y-auto ${isMobile? "w-screen":""}`}>
             <Outlet />
             <Modal/>
           </main>
