@@ -18,9 +18,9 @@ Openlab is a collaborative platform for the creation of startups, facilitated by
 | Folder/File              | Description                                                                                  |
 | ------------------------ | -------------------------------------------------------------------------------------------- |
 | **/docs**                | Folder containing PDF files (in Spanish) with the documentation about the main ideas of the project.|
-| **backend**                 | Folder containing back-end processes and back-end deploy. |
-| **frontend**     | Folder containing front-end processes and front-end deploy                           |
-| **hardhat**            | Folder with DAOs contracts implementation.                           |
+| **/backend**                 | Folder containing back-end processes and back-end deploy. |
+| **/frontend**     | Folder containing front-end processes and front-end deploy                           |
+| **/hardhat**            | Folder with DAOs contracts implementation.                           |
 | **README.md**            | Main project documentation in English.                                                         |
 
 
