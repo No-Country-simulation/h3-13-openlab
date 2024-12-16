@@ -12,7 +12,7 @@
 # Project: Open Lab DAOs Implementation
 
 <p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1S9LZflAHWQpMPC74yrqal6M0_sfe3jCh" alt="Logo del Proyecto" width="200">
+  <img src="https://drive.google.com//uc?export=view&id=13NblxLx9q9K4ET-YHbR2f2vwUGbc4EOC" alt="Logo del Proyecto" width="200">
 </p>
 
 ## Project Description
