@@ -24,23 +24,21 @@ Openlab is a collaborative platform for the creation of startups, facilitated by
 | Folder/File              | Description                                                                                  |
 | ------------------------ | -------------------------------------------------------------------------------------------- |
 | **/docs**                | Folder containing PDF files (in Spanish) with the documentation about the main ideas of the project.|
-| **/backend**                 | Folder containing back-end processes and back-end deploy. |
-| **/frontend**     | Folder containing front-end processes and front-end deploy                           |
-| **/hardhat**            | Folder with DAOs contracts implementation.                           |
+| **/backend**             | Folder containing back-end processes and back-end deploy. |
+| **/frontend**            | Folder containing front-end processes and front-end deploy                           |
+| **/hardhat**             | Folder with DAOs contracts implementation.                           |
 | **README.md**            | Main project documentation in English.                                                         |
 
 
 ## Team
-
-<p align="center">
-|  | Name / ROL                  | GitHub                                                                                      | LinkedIn                                                                                           |
-|------|------------------------|--------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+|  | Name / ROL  | GitHub  | LinkedIn  |
+|--|-------------|---------|-----------|
 | <img src="https://drive.google.com/uc?export=view&id=1bKk25gBW5-KdsSWzl4B2g68N-tqb2Hjj" alt="Leo" width="50"> | **Leonardo Cortés** / Team Leader   | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/leocortes85/) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%231DA1F2.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/leonardo-cort%C3%A9s-zambrano/) |
 | <img src="https://drive.google.com/uc?export=view&id=1EGetWqb2XcOIv0_BqcfhUXE_d94wG5Mr" alt="Abel" width="50"> | **Abel Acuña**  /  Front End Dev   | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Ronin-21 )     | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%231DA1F2.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abel-acuña-roninwebdesign/) |
 | <img src="https://drive.google.com/uc?export=view&id=1oCibq-HMzcC9flDSmvWsQZXzwRWHSDae" alt="Barbara" width="50"> | **Bárbara Espinola**  /  Front End Dev   | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/BaEsp1/) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%231DA1F2.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/Baesp/) |
 | <img src="https://drive.google.com/uc?export=view&id=1JYRKTyn_HgFL7XQPGglwGDLo3Z51dekQ" alt="Cristian" width="50">  | **Cristian Gómez** Back End Dev      | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Cristian-Maxi) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%231DA1F2.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cristian-gomez-montenegro/) |
 | <img src="https://drive.google.com/uc?export=view&id=1JP-IQsGd3vxMzRAnAioQOqb-NGhbrsSi" alt="Angel" width="50">  | **Angel Suarez**  /  Back End Dev         | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/angeljs95/) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%231DA1F2.svg?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/angel-suarez-232744210/) |
-</p>
+
 
 ## Objectives
 - Create a space where users can propose and collaborate on initiatives for startups through the use of DAO's.
