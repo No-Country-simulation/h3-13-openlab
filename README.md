@@ -10,6 +10,12 @@
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
 
 # Project: Open Lab DAOs Implementation
+
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1S9LZflAHWQpMPC74yrqal6M0_sfe3jCh" alt="Logo del Proyecto" width="200">
+</p>
+
+## Project Description
 Openlab is a collaborative platform for the creation of startups, facilitated by DAO's (Decentralized Autonomous Organizations) and the use of tokens linked to intellectual property. Through this platform, users can interact with initiatives, buy and sell tokens, and participate in the creation of new business opportunities. The system seeks to promote transparency and meritocracy in the startup ecosystem.
 
 
