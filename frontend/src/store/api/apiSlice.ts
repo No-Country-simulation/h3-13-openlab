@@ -48,6 +48,7 @@ export const apiSlice = createApi({
     // Trae todas las iniciativas de un usuario
     getIniciativasUser: builder.query({
       query: (userId) => `iniciativa/getUserIniciativas/${userId}`,
+      providesTags: ["Iniciativas"],
     }),
     // ORDERBOOKS
     // Trae todas las ordenes de venta

@@ -1,11 +1,10 @@
-import { ethers } from "ethers";
-import { getOrderbook, getOrderbookFactory } from "./contracts";
+import { getOrderbook, getOrderbookFactory, getToken } from "./contracts";
 
 // Orderbook Factory
 export const addPair = async (
   token1: string,
   token2: string,
-  userAddress: string
+  userAddress: string | undefined
 ) => {
   const orderbookFactoryContract = await getOrderbookFactory();
 
@@ -47,20 +46,18 @@ export const loadOrderbook = async (pairIdentifier: string) => {
 
 // Tokens
 export const approveTokens = async (
+  userAddress: string | undefined,
   orderbookAddress: string,
+  tokenAddress: string,
   amount: number
 ) => {
-  // Token1 instance
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const erc20ABI = [
-    "function approve(address spender, uint256 amount) public returns (bool)",
-  ];
-  const token1Contract = new ethers.Contract("0x000...", erc20ABI, signer); // reemplazar por el address del token
-
   // Llama a approve
   try {
-    const tx = await token1Contract.approve(orderbookAddress, amount);
+    // Token1 instance
+    const token1Contract = await getToken(tokenAddress);
+    const tx = await token1Contract.methods
+      .approve(orderbookAddress, amount)
+      .send({ from: userAddress, gas: "30000000", gasPrice: "200000" });
 
     console.log("Aprobación exitosa:", tx);
   } catch (error) {
@@ -91,13 +88,15 @@ export const loadBuyOrders = async (
 export const placeBuy = async (
   buyPrice: number,
   buyQuantity: number,
-  orderbook: any,
-  userAddress: string
+  orderbookAddress: string,
+  userAddress: string | undefined
 ) => {
   try {
-    const receipt = await orderbook.methods
+    const orderbookContract = await getOrderbook(orderbookAddress);
+
+    const receipt = await orderbookContract.methods
       .placeBuy(buyPrice, buyQuantity)
-      .send({ from: userAddress, gas: "30000000" });
+      .send({ from: userAddress, gas: "300000000", gasPrice: "200000" });
 
     // Acceder a los logs del evento
     const event = receipt.events?.BuyOrderPlaced;

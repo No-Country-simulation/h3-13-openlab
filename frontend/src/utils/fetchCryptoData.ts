@@ -32,3 +32,20 @@ export const fetchEthereumData = async () => {
     console.log("Error al cargar los datos de criptomonedas.", err);
   }
 };
+
+export const fetchCryptoAddress = async () => {
+  try {
+    const response = await axios.get(
+      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/map",
+      {
+        headers: {
+          "X-CMC_PRO_API_KEY": "f2cc723f-62e6-46d1-8071-d2e1a4478355",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (err) {
+    console.log("Error al cargar los datos de criptomonedas.", err);
+  }
+};

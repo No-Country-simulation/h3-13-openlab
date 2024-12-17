@@ -16,7 +16,6 @@ import {
 } from "../../store/api/apiSlice";
 import { selectCurrentUser } from "../../store/auth/authSlice";
 import { store } from "../../store/store";
-const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT;
 
 const Detail = () => {
   const { id } = useParams();
@@ -65,7 +64,8 @@ const Detail = () => {
   };
 
   const handleShares = (isShared: boolean, iniId: number) => {
-    const initiativeUrl = `${URL_DEL_FRONT}/initiatives/${iniId}`;
+    const URL_DEL_FRONT = import.meta.env.VITE_ORIGIN_URL;
+    const initiativeUrl = `${URL_DEL_FRONT}initiative/${iniId}`;
     const dataToSend = {
       share: !isShared,
       idCliente: userId,

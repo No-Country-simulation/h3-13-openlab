@@ -21,7 +21,6 @@ import {
 } from "../../store/api/apiSlice";
 import { selectCurrentUser } from "../../store/auth/authSlice";
 import { store } from "../../store/store";
-const URL_DEL_FRONT = import.meta.env.URL_DEL_FRONT;
 
 const Initiativas = () => {
   const { id: userId } = useSelector(selectCurrentUser);
@@ -83,7 +82,8 @@ const Initiativas = () => {
   };
 
   const handleShares = (isShared: boolean, iniId: number) => {
-    const initiativeUrl = `${URL_DEL_FRONT}/initiatives/${iniId}`;
+    const URL_DEL_FRONT = import.meta.env.VITE_ORIGIN_URL;
+    const initiativeUrl = `${URL_DEL_FRONT}initiative/${iniId}`;
     const dataToSend = {
       share: !isShared,
       idCliente: userId,
@@ -202,123 +202,144 @@ const Initiativas = () => {
           </div>
         </div>
         <div className="m-1">
-          <SimpleBar style={{ maxHeight: 500 }}>
-            <div className="grid grid-cols-9 grid-rows-1 gap-0 bg-[#6193FF]/10 h-[68px] p-1 mr-8 shadow">
-              <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
-                Name
-              </div>
-              <div className="flex items-center m-auto text-sm font-semibold">
-                Price Fluctuaction
-              </div>
-              <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
-                Colaborators
-              </div>
-              <div className="flex items-center gap-1 m-auto text-sm font-semibold">
-                <div className="flex flex-row cursor-pointer">Buy</div>/
-                <div className="flex flex-row cursor-pointer">Sell</div>
-              </div>
-              <div className="flex items-center m-auto text-sm font-semibold">
-                Tokens
-              </div>
-              <div className="flex items-center m-auto text-sm font-semibold">
-                Missions
-              </div>
-              <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
-                Likes
-              </div>
-              <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
-                Shares
-              </div>
-              <div className="flex items-center m-auto text-sm font-semibold">
-                {" "}
-              </div>
-            </div>
+  <SimpleBar style={{ maxHeight: 500 }}>
+    <div className="grid grid-cols-10 grid-rows-1 gap-0 bg-[#6193FF]/10 h-[68px] p-1 mr-8 shadow">
+      <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
+        Logo
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
+        Name
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold">
+        Price Fluctuaction
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
+        Colaborators
+      </div>
+      <div className="flex items-center gap-1 m-auto text-sm font-semibold">
+        <div className="flex flex-row cursor-pointer">Buy</div>/
+        <div className="flex flex-row cursor-pointer">Sell</div>
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold">
+        Tokens
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold">
+        Missions
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
+        Likes
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold cursor-pointer">
+        Shares
+      </div>
+      <div className="flex items-center m-auto text-sm font-semibold"> </div>
+    </div>
 
-            {activeInitiatives?.map((item: any, index: number) => (
-              <div
-                key={index}
-                className="grid grid-cols-9 grid-rows-1 gap-0 h-[68px] p-2 border-b mr-8"
-              >
-                <div className="flex items-center m-auto text-sm text-center">
-                  <Link to={`/initiative/${item?.id}`}>{item?.nombre}</Link>
-                </div>
-                <div className="flex items-center m-auto text-sm">
-                  {" "}
-                  <MiniGraph color="#3D7BFF" />
-                </div>
-                <div className="flex items-center justify-center m-auto text-sm bg-[#00B2FF]/20 rounded-lg p-1 w-[73px]">
-                  {item?.colaboradores}
-                </div>
-                <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm">
-                  {" "}
-                  {item?.buy_price + "/" + item?.sell_price}
-                </div>
-                <div className="flex items-center m-auto text-sm">
-                  {item?.monto_requerido}
-                </div>
-                <div className="flex items-center m-auto text-sm">
-                  {item?.misiones_actuales}
-                </div>
-                <div className="flex items-center m-auto text-sm">
-                  {item?.likes}
-                </div>
-                <div className="flex items-center m-auto text-sm">
-                  {item?.shares}
-                </div>
-                <div className="flex flex-row items-center gap-2 m-auto text-sm">
-                  {isConnected ? (
-                    <button
-                      className="bg-[#00B2FF] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
-                      onClick={() => handleBuy(item)}
-                    >
-                      Buy
-                    </button>
-                  ) : (
-                    <button
-                      className="bg-[#E0E0E0] text-black p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
-                      onClick={() => {
-                        toast.info("Please connect the wallet first");
-                      }}
-                    >
-                      Buy
-                    </button>
-                  )}
-
-                  {!item.isJoined ? (
-                    <button
-                      className="bg-[#E0E0E0] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
-                      onClick={() => handleJoins(item.isJoined, item.id)}
-                    >
-                      Join
-                    </button>
-                  ) : (
-                    <button
-                      className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
-                      onClick={() => handleJoins(item.isJoined, item.id)}
-                    >
-                      Join
-                    </button>
-                  )}
-                  <button
-                    className="m-1"
-                    onClick={() => handleLikes(item.isLiked, item.id)}
-                  >
-                    <img
-                      src={item.isLiked ? likeIcon : dislikeIcon}
-                      className="h-[20px]"
-                    />
-                  </button>
-                  <button
-                    className="m-1"
-                    onClick={() => handleShares(item.isShared, item.id)}
-                  >
-                    <img src={shareIcon} className="h-[20px]" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </SimpleBar>
+    {activeInitiatives?.map((item: any, index: number) => (
+      <div
+        key={index}
+        className="grid grid-cols-10 grid-rows-1 gap-0 h-[68px] p-2 border-b mr-8"
+      >
+        {/* Logo */}
+        <div className="flex items-center m-auto">
+          <img
+            src={item?.imagen}
+            alt="imagen"
+            className="h-[40px] w-[40px] object-cover rounded-full"
+          />
         </div>
+
+        {/* Name */}
+        <div className="flex items-center m-auto text-sm text-center">
+          <Link to={`/initiative/${item?.id}`}>{item?.nombre}</Link>
+        </div>
+
+        {/* Price Fluctuation */}
+        <div className="flex items-center m-auto text-sm">
+          <MiniGraph color="#3D7BFF" />
+        </div>
+
+        {/* Collaborators */}
+        <div className="flex items-center justify-center m-auto text-sm bg-[#00B2FF]/20 rounded-lg p-1 w-[73px]">
+          {item?.colaboradores}
+        </div>
+
+        {/* Buy/Sell Prices */}
+        <div className="flex items-center text-[#00A065] font-semibold m-auto text-sm">
+          {item?.buy_price + "/" + item?.sell_price}
+        </div>
+
+        {/* Tokens */}
+        <div className="flex items-center m-auto text-sm">
+          {item?.monto_requerido}
+        </div>
+
+        {/* Missions */}
+        <div className="flex items-center m-auto text-sm">
+          {item?.misiones_actuales}
+        </div>
+
+        {/* Likes */}
+        <div className="flex items-center m-auto text-sm">{item?.likes}</div>
+
+        {/* Shares */}
+        <div className="flex items-center m-auto text-sm">{item?.shares}</div>
+
+        {/* Actions */}
+        <div className="flex flex-row items-center gap-2 m-auto text-sm">
+          {isConnected ? (
+            <button
+              className="bg-[#00B2FF] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+              onClick={() => handleBuy(item)}
+            >
+              Buy
+            </button>
+          ) : (
+            <button
+              className="bg-[#E0E0E0] text-black p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+              onClick={() => {
+                toast.info("Please connect the wallet first");
+              }}
+            >
+              Buy
+            </button>
+          )}
+
+          {!item.isJoined ? (
+            <button
+              className="bg-[#E0E0E0] text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+              onClick={() => handleJoins(item.isJoined, item.id)}
+            >
+              Join
+            </button>
+          ) : (
+            <button
+              className="bg-color-1 text-white p-2 rounded-full w-[54px] h-[34px] flex items-center shadow"
+              onClick={() => handleJoins(item.isJoined, item.id)}
+            >
+              Join
+            </button>
+          )}
+          <button
+            className="m-1"
+            onClick={() => handleLikes(item.isLiked, item.id)}
+          >
+            <img
+              src={item.isLiked ? likeIcon : dislikeIcon}
+              className="h-[20px]"
+            />
+          </button>
+          <button
+            className="m-1"
+            onClick={() => handleShares(item.isShared, item.id)}
+          >
+            <img src={shareIcon} className="h-[20px]" />
+          </button>
+        </div>
+      </div>
+    ))}
+  </SimpleBar>
+</div>
       </div>
     </div>
   );

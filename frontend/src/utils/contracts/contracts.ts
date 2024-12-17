@@ -4,10 +4,11 @@ import {
   OrderbookFactory_ABI,
   OrderbookFactory_Address,
   Orderbook_ABI,
+  Token_ABI,
 } from "./constants";
 
 // Inicializar Web3 con el proveedor de MetaMask
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+const web3 = new Web3(window.ethereum);
 
 export const getOrderbookFactory = async () => {
   // Crear instancias de contratos
@@ -20,4 +21,9 @@ export const getOrderbookFactory = async () => {
 export const getOrderbook = async (address: string) => {
   // Crear instancias de contratos
   return new web3.eth.Contract(Orderbook_ABI as AbiItem[], address);
+};
+
+export const getToken = async (address: string) => {
+  // Crear instancias de contratos
+  return new web3.eth.Contract(Token_ABI as AbiItem[], address);
 };

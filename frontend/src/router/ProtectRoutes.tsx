@@ -1,11 +1,12 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
+import { selectTokenUser } from "../store/auth/authSlice";
 
 const ProtectedRoute = () => {
-  const { isAuthenticated } = useAuth0();
+  const token = useSelector(selectTokenUser);
 
-  if (!isAuthenticated) {
+  if (!token) {
     toast.error("Login is needed", {
       style: { backgroundColor: "#991e2a", color: "#fff" },
     });

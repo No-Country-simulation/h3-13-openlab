@@ -8,8 +8,13 @@ import { addCircle, close, tickCircle } from "../../assets";
 import { useAddIniciativaMutation } from "../../store/api/apiSlice";
 import { selectCurrentUser } from "../../store/auth/authSlice";
 import useWindowSize from "../hooks/Responsive";
+import React, { ChangeEvent } from "react";
 
 const ModalCreate = () => {
+  const preset_name = "openlab";
+  const cloud_name = "dyuq16otf";
+  const [image, setImage] = useState("");
+
   const { address } = useAppKitAccount();
   const [addIniciativa, { isSuccess, isError, error }] =
     useAddIniciativaMutation();
@@ -48,18 +53,43 @@ const ModalCreate = () => {
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setData((prevData) => ({
-          ...prevData,
-          image: file,
-          imageUrl: reader.result as string,
-        }));
-      };
-      reader.readAsDataURL(file);
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files ? e.target.files[0] : null;
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setData((prevData) => ({
+  //         ...prevData,
+  //         image: file,
+  //         imageUrl: reader.result as string,
+  //       }));
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
+  const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+  
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", preset_name); // reemplaza con tu nombre de preset
+  
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+  
+      const file = await response.json();
+      setImage(file.secure_url);
+      console.log(file.secure_url);
+    } catch (error) {
+      console.error("Error uploading image:", error);
     }
   };
 
@@ -104,7 +134,7 @@ const ModalCreate = () => {
   };
 
   const handleCreate = () => {
-    const { name, idea, problem, oportunity, solution, image } = data;
+    const { name, idea, problem, oportunity, solution} = data;
 
     if (!validateFields()) {
       toast.error("Please complete all the data in the form", {
@@ -119,8 +149,7 @@ const ModalCreate = () => {
       oportunidad: oportunity,
       solucion: solution,
       monto_requerido: 100,
-      imagen:
-        "https://blogs.iadb.org/conocimiento-abierto/wp-content/uploads/sites/10/2022/03/La-respuesta-a-la-pandemia-%C2%BFQue%CC%81-podemos-aprender-de-las-iniciativas-ciudadanas.jpg",
+      imagen: image,
       billetera: address,
       clienteId: id,
     };
@@ -180,7 +209,7 @@ const ModalCreate = () => {
                     accept="image/*"
                     className="absolute inset-0 opacity-0 cursor-pointer"
                     style={{ width: "260px", height: "94px" }}
-                    onChange={handleFileChange}
+                    onChange={(e) => uploadImage(e)}
                   />
                   {data.imageUrl ? (
                     <img
@@ -306,7 +335,7 @@ const ModalCreate = () => {
                     accept="image/*"
                     className="absolute inset-0 opacity-0 cursor-pointer"
                     style={{ width: "109px", height: "92px" }}
-                    onChange={handleFileChange}
+                    onChange={(e) => uploadImage(e)}
                   />
                   {data.imageUrl ? (
                     <img

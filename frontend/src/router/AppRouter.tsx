@@ -26,8 +26,8 @@ export const AppRouter = createBrowserRouter(
         <Route path="/" element={<AppLayout />}>
           <Route path="home" element={<HomeUser />} />
           <Route path="initiatives" element={<Initiativas />} />
-          <Route path="orders" element={<CreateOrdersPage />} />
           <Route path="initiative/:id" element={<Detail />} />
+          <Route path="orders" element={<CreateOrdersPage />} />
           <Route path="profile" element={<Profile />} />
         </Route>
       </Route>

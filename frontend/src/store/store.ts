@@ -11,6 +11,7 @@ import { showInitiativesSlice } from "./Initiatives/showInitiativesSlice";
 import { ordersBooksSlice } from "./user/ordersUserSlice";
 import { userStatsSlice } from "./user/statsUserSlice";
 import { transactionsSlice } from "./user/transactionsUserSlice";
+import { orderbookFactorySlice } from "./orderbooks/orderbookSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     userStadistics: userStatsSlice.reducer,
     ordersBooks: ordersBooksSlice.reducer,
     transactions: transactionsSlice.reducer,
+    orderbookFactory: orderbookFactorySlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
